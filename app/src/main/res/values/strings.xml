@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DailyChallenges</string>
+    <string name="streak_label">Streaks: </string>
+    <string name="skips_label">Skips: </string>
+    <string name="complete_label">Complete</string>
+    <string name="skip_label">Skip</string>
 </resources>
