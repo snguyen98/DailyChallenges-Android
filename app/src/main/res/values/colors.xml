@@ -5,4 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="lightGray">#F3F3F3</color>
     <color name="splashBackground">#F1DB8C</color>
+    <color name="screenBackground">#50C864</color>
+    <color name="button_color">#E6C53C</color>
+    <color name="button_grad_end">#F7D651</color>
 </resources>
