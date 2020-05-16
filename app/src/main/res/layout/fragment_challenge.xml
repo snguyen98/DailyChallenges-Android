@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:textAlignment="center"
-    card_view:cardBackgroundColor="#F3F3F3"
+    card_view:cardBackgroundColor="@color/lightGray"
     card_view:cardCornerRadius="15dp"
     card_view:cardElevation="15dp"
     card_view:contentPadding="30dp">
