@@ -1,4 +1,4 @@
-package com.firstventuresgroup.dailychallenges.ui
+package com.firstventuresgroup.dailychallenges.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.firstventuresgroup.dailychallenges.R
 
-class ButtonBarFragment : Fragment() {
+class ChallengeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_button_bar, container, false)
+        return inflater.inflate(R.layout.fragment_challenge, container, false)
     }
 }
