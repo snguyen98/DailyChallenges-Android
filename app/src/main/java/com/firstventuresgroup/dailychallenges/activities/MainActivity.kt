@@ -1,7 +1,8 @@
-package com.firstventuresgroup.dailychallenges
+package com.firstventuresgroup.dailychallenges.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.firstventuresgroup.dailychallenges.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -9,4 +10,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
 }
