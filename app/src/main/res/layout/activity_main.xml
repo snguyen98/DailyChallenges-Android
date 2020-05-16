@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screenBackground"
     android:gravity="center"
-    android:orientation="vertical"
     android:padding="30dp"
     tools:context=".MainActivity">
 
@@ -12,17 +12,22 @@
         android:id="@+id/info_bar"
         android:name="com.firstventuresgroup.dailychallenges.ui.InfoBarFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp" />
 
     <fragment
         android:id="@+id/challenge_card"
         android:name="com.firstventuresgroup.dailychallenges.ui.ChallengeFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="275dp"
+        android:layout_centerInParent="true" />
 
     <fragment
         android:id="@+id/button_bar"
         android:name="com.firstventuresgroup.dailychallenges.ui.ButtonBarFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp" />
+</RelativeLayout>
