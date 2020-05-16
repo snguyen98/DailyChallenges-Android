@@ -10,10 +10,10 @@
     card_view:cardElevation="15dp"
     card_view:contentPadding="30dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/challengeCategory"
@@ -25,12 +25,12 @@
 
         <TextView
             android:id="@+id/challengeTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Write a paragraph on how you wish your life to be in 5 years"
+            android:layout_centerInParent="true"
+            android:text="Write a paragraph picturing your life in five years"
             android:textAlignment="center"
             android:textSize="22sp"
             android:textStyle="bold" />
-    </LinearLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
