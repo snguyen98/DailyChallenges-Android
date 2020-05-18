@@ -1,23 +1,23 @@
 package com.firstventuresgroup.dailychallenges.activities
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.transition.Fade
+import android.view.Window
+import com.firstventuresgroup.dailychallenges.R
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delay = 1000L
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         val intent = Intent(this, MainActivity::class.java)
 
-        Handler().postDelayed({
-            startActivity(intent)
-            finish()
-        }, delay)
-
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        finish()
     }
 }
