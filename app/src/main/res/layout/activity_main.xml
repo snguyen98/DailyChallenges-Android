@@ -14,14 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="50dp" />
 
     <fragment
         android:id="@+id/challenge_card"
         android:name="com.firstventuresgroup.dailychallenges.fragments.ChallengeFragment"
         android:layout_width="match_parent"
-        android:layout_height="275dp"
-        android:layout_centerInParent="true" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_bar"
+        android:layout_below="@+id/info_bar"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
 
     <fragment
         android:id="@+id/button_bar"
