@@ -19,7 +19,6 @@
             android:id="@+id/challengeCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Personal Wellbeing"
             android:textAlignment="center"
             android:textSize="15sp" />
 
@@ -28,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Write a paragraph picturing your life in five years"
             android:textAlignment="center"
             android:textSize="22sp"
             android:textStyle="bold" />
