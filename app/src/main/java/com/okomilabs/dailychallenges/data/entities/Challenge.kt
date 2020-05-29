@@ -1,4 +1,4 @@
-package com.firstventuresgroup.dailychallenges.data.entities
+package com.okomilabs.dailychallenges.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

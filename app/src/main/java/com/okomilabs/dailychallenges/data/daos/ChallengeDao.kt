@@ -1,8 +1,8 @@
-package com.firstventuresgroup.dailychallenges.data.daos
+package com.okomilabs.dailychallenges.data.daos
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.firstventuresgroup.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.Challenge
 
 @Dao
 interface ChallengeDao {

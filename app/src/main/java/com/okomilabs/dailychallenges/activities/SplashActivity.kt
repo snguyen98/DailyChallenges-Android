@@ -1,4 +1,4 @@
-package com.firstventuresgroup.dailychallenges.activities
+package com.okomilabs.dailychallenges.activities
 
 import android.content.Intent
 import android.os.Bundle

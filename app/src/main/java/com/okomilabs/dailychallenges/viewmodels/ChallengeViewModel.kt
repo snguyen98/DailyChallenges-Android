@@ -1,4 +1,4 @@
-package com.firstventuresgroup.dailychallenges.viewmodels
+package com.okomilabs.dailychallenges.viewmodels
 
 import android.app.Application
 import android.content.Context
@@ -6,9 +6,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.firstventuresgroup.dailychallenges.R
-import com.firstventuresgroup.dailychallenges.data.entities.Challenge
-import com.firstventuresgroup.dailychallenges.data.repos.ChallengeRepo
+import com.okomilabs.dailychallenges.R
+import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.repos.ChallengeRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

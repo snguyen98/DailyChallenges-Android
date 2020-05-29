@@ -1,4 +1,4 @@
-package com.firstventuresgroup.dailychallenges.fragments
+package com.okomilabs.dailychallenges.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.firstventuresgroup.dailychallenges.R
-import com.firstventuresgroup.dailychallenges.viewmodels.ChallengeViewModel
+import com.okomilabs.dailychallenges.R
+import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 
 class ChallengeFragment : Fragment() {
     private lateinit var challengeViewModel: ChallengeViewModel
