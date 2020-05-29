@@ -7,9 +7,9 @@
 
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.firstventuresgroup.dailychallenges.challenge</string>
-    <string name="current_date">current_date</string>
-    <string name="challenge_title">challenge_title</string>
-    <string name="challenge_category">challenge_category</string>
-    <string name="challenge_summary">challenge_summary</string>
-    <string name="challenge_desc">challenge_desc</string>
+    <string name="curr_date">date</string>
+    <string name="curr_title">title</string>
+    <string name="curr_category">category</string>
+    <string name="curr_summary">summary</string>
+    <string name="curr_desc">desc</string>
 </resources>
