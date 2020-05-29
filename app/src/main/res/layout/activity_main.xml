@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/info_bar"
-        android:name="com.firstventuresgroup.dailychallenges.fragments.InfoBarFragment"
+        android:name="com.okomilabs.dailychallenges.fragments.InfoBarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/challenge_card"
-        android:name="com.firstventuresgroup.dailychallenges.fragments.ChallengeFragment"
+        android:name="com.okomilabs.dailychallenges.fragments.ChallengeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button_bar"
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/button_bar"
-        android:name="com.firstventuresgroup.dailychallenges.fragments.ButtonBarFragment"
+        android:name="com.okomilabs.dailychallenges.fragments.ButtonBarFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

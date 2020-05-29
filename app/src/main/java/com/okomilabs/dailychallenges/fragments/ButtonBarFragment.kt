@@ -1,17 +1,17 @@
-package com.firstventuresgroup.dailychallenges.fragments
+package com.okomilabs.dailychallenges.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.firstventuresgroup.dailychallenges.R
+import androidx.fragment.app.Fragment
+import com.okomilabs.dailychallenges.R
 
-class ChallengeFragment : Fragment() {
+class ButtonBarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_challenge, container, false)
+        return inflater.inflate(R.layout.fragment_button_bar, container, false)
     }
 }

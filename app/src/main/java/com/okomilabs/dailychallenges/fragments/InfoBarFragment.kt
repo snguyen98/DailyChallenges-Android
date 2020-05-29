@@ -1,11 +1,11 @@
-package com.firstventuresgroup.dailychallenges.fragments
+package com.okomilabs.dailychallenges.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.firstventuresgroup.dailychallenges.R
+import androidx.fragment.app.Fragment
+import com.okomilabs.dailychallenges.R
 
 class InfoBarFragment : Fragment() {
     override fun onCreateView(

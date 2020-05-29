@@ -4,11 +4,12 @@
     <string name="skips_label">Skips: </string>
     <string name="complete_label">Complete</string>
     <string name="skip_label">Skip</string>
-    <string name="challenge_title">Go for a brisk walk</string>
-    <string name="challenge_category">Personal Wellbeing</string>
-    <string name="challenge_introduction">This is a sentence introducing the challenge in all its wonderfully amazing glory hoihoi blabla</string>
-    <string name="challenge_overview">Challenge Overview</string>
-    <string name="challenge_description">Regularly walking is one of the simplest and best exercises for boosting physical and mental wellbeing. Not to mention having a significantly lower risk of producing any injuries, especially when compared to high impact exercises such as running.
-        \n\nTo fully reap the health benefits of cutting excess fat and building stamina, try walking at a brisk pace – around 3mph. If you can still talk but cannot sing the words to a song, then you are at the perfect pace.
-</string>
+  
+    <!--  SHARED PREFERENCES KEYS  -->
+    <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
+    <string name="curr_date">date</string>
+    <string name="curr_title">title</string>
+    <string name="curr_category">category</string>
+    <string name="curr_summary">summary</string>
+    <string name="curr_desc">desc</string>
 </resources>

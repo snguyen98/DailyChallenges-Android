@@ -19,7 +19,6 @@
             android:id="@+id/challengeCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/challenge_category"
             android:textAlignment="center"
             android:textSize="15sp" />
 
@@ -28,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/challenge_title"
             android:textAlignment="center"
             android:textSize="22sp"
             android:textStyle="bold" />
