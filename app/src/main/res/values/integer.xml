@@ -2,5 +2,4 @@
 <resources>
     <!--  CHALLENGE DATABASE INFO  -->
     <integer name="challenge_db_ver">1</integer>
-    <integer name="total_challenges">1</integer>
 </resources>
