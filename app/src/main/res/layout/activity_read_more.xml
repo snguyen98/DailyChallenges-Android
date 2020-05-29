@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:paddingHorizontal="20dp"
-            android:text="@string/challenge_category"
+            android:text="Challenge Category"
             android:textSize="16sp" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="20dp"
-            android:text="@string/challenge_title"
+            android:text="Challenge Title"
             android:textColor="@android:color/black"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -46,13 +46,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:paddingHorizontal="20dp"
-            android:text="@string/challenge_introduction"
+            android:text="Challenge Summary"
             android:textColor="@color/cardview_dark_background"
             android:textSize="16sp" />
 
         <fragment
             android:id="@+id/button_bar"
-            android:name="com.firstventuresgroup.dailychallenges.fragments.ButtonBarFragment"
+            android:name="com.okomilabs.dailychallenges.fragments.ButtonBarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingHorizontal="20dp"
-                android:text="@string/challenge_overview"
+                android:text="@string/overview_label"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:paddingHorizontal="20dp"
-                android:text="@string/challenge_description"
+                android:text="Challenge Description"
                 android:textSize="16sp" />
 
             <TextView

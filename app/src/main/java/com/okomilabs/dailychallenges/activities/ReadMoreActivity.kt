@@ -1,8 +1,8 @@
-package com.firstventuresgroup.dailychallenges.activities
+package com.okomilabs.dailychallenges.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.firstventuresgroup.dailychallenges.R
+import androidx.appcompat.app.AppCompatActivity
+import com.okomilabs.dailychallenges.R
 
 class ReadMoreActivity : AppCompatActivity() {
 
