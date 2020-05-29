@@ -9,7 +9,11 @@ class ChallengeRepo(application: Application) {
     private val dao: ChallengeDao = ChallengeDatabase.getInstance(application).challengeDao()
 
     suspend fun challengeById(id: Int): Challenge {
-        return dao.findById(id)[0]
+        return dao.challengeById(id)[0]
+    }
+
+    suspend fun getTotal(): Int {
+        return dao.getTotal()
     }
 
 }
