@@ -16,14 +16,14 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/challengeCategory"
+            android:id="@+id/challenge_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/challengeTitle"
+            android:id="@+id/challenge_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

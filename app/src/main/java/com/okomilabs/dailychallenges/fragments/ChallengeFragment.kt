@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 
-class ChallengeFragment : Fragment() {
+class ChallengeFragment: Fragment() {
     private lateinit var challengeViewModel: ChallengeViewModel
 
     override fun onCreateView(
@@ -22,8 +22,8 @@ class ChallengeFragment : Fragment() {
         challengeViewModel = ViewModelProvider(this).get(ChallengeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_challenge, container, false)
 
-        val title: TextView = root.findViewById(R.id.challengeTitle)
-        val category: TextView = root.findViewById(R.id.challengeCategory)
+        val title: TextView = root.findViewById(R.id.challenge_title)
+        val category: TextView = root.findViewById(R.id.challenge_category)
 
         val titleObserver = Observer<String> { newTitle ->
             title.text = newTitle

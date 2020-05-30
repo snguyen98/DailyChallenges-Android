@@ -16,7 +16,6 @@
         android:layout_marginTop="50dp" />
 
     <include layout="@layout/challenge_card"
-        android:id="@+id/challenge_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button_bar"
