@@ -30,15 +30,12 @@ class ReadMoreFragment : Fragment() {
         val titleObserver = Observer<String> { newTitle ->
             title.text = newTitle
         }
-
         val categoryObserver = Observer<String> { newCategory ->
             category.text = newCategory
         }
-
         val summaryObserver = Observer<String> { newSummary ->
             summary.text = newSummary
         }
-
         val descObserver = Observer<String> { newDesc ->
             desc.text = newDesc
         }

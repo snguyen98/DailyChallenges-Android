@@ -28,7 +28,6 @@ class ChallengeFragment: Fragment() {
         val titleObserver = Observer<String> { newTitle ->
             title.text = newTitle
         }
-
         val categoryObserver = Observer<String> { newCategory ->
             category.text = newCategory
         }
