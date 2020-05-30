@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBackground"
+    android:gravity="center"
+    android:padding="30dp"
+    tools:context=".activities.SplashActivity">
+
+    <include layout="@layout/info_bar"
+        android:id="@+id/info_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp" />
+
+    <include layout="@layout/challenge_card"
+        android:id="@+id/challenge_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_bar"
+        android:layout_below="@+id/info_bar"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
+
+    <include layout="@layout/button_bar"
+        android:id="@+id/button_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp" />
+</RelativeLayout>
