@@ -34,14 +34,14 @@ class ChallengeViewModel(application: Application) : AndroidViewModel(applicatio
     var desc: MutableLiveData<String> = MutableLiveData<String>()
 
     init {
+        updateCurrent()
+        challengePrefs.registerOnSharedPreferenceChangeListener(listener)
+
         if (getDateToday() != challengePrefs.getString(
                 R.string.curr_date.toString(), null)
         ) {
             setChallengeToday()
         }
-
-        updateCurrent()
-        challengePrefs.registerOnSharedPreferenceChangeListener(listener)
     }
 
     override fun onCleared() {

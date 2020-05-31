@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:textAlignment="center"
-    card_view:cardBackgroundColor="@color/lightGray"
-    card_view:cardCornerRadius="15dp"
-    card_view:cardElevation="15dp"
-    card_view:contentPadding="30dp">
+    android:background="@color/screenBackground"
+    android:gravity="center"
+    android:padding="30dp"
+    tools:context=".activities.SplashActivity">
 
-    <RelativeLayout
+    <include layout="@layout/info_bar"
+        android:id="@+id/info_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp" />
 
-        <TextView
-            android:id="@+id/challengeCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="15sp" />
+    <include layout="@layout/challenge_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_bar"
+        android:layout_below="@+id/info_bar"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
 
-        <TextView
-            android:id="@+id/challengeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+    <include layout="@layout/button_bar"
+        android:id="@+id/button_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp" />
+</RelativeLayout>
