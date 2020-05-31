@@ -50,6 +50,11 @@ class ChallengeFragment: Fragment() {
             ))
         }
 
+        // TEMPORARY NAVIGATION
+        title.setOnClickListener {
+            card.findNavController().navigate(ChallengeFragmentDirections.challengeToStreak())
+        }
+
         return root
     }
 }
