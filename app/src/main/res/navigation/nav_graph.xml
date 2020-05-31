@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/challenge_fragment" >
+    app:startDestination="@id/challenge_fragment">
 
     <fragment
         android:id="@+id/challenge_fragment"
@@ -11,12 +11,15 @@
         <action
             android:id="@+id/challenge_to_read_more"
             app:destination="@id/read_more_fragment" />
+        <action
+            android:id="@+id/challenge_to_streak"
+            app:destination="@id/streak_fragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/read_more_fragment"
-        android:name="com.okomilabs.dailychallenges.fragments.ReadMoreFragment" >
+        android:name="com.okomilabs.dailychallenges.fragments.ReadMoreFragment">
         <action
             android:id="@+id/read_more_to_challenge"
             app:destination="@id/challenge_fragment" />
@@ -25,6 +28,13 @@
             app:argType="string[]"
             app:nullable="true"
             android:defaultValue="@null" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/streak_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.StreakFragment"
+        android:label="fragment_streak">
 
     </fragment>
 
