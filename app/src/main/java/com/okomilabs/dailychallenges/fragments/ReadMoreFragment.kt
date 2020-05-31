@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.okomilabs.dailychallenges.R
-import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 
 class ReadMoreFragment : Fragment() {
     
