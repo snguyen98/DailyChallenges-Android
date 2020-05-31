@@ -12,8 +12,7 @@ import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 
 class ReadMoreFragment : Fragment() {
-    private lateinit var challengeViewModel: ChallengeViewModel
-
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
