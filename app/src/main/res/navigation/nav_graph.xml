@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/challenge_fragment">
@@ -8,6 +9,7 @@
         android:id="@+id/challenge_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.ChallengeFragment"
         android:label="fragment_challenge">
+
         <action
             android:id="@+id/challenge_to_read_more"
             app:destination="@id/read_more_fragment" />
@@ -20,6 +22,7 @@
     <fragment
         android:id="@+id/read_more_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.ReadMoreFragment">
+
         <action
             android:id="@+id/read_more_to_challenge"
             app:destination="@id/challenge_fragment" />
@@ -37,5 +40,4 @@
         android:label="fragment_streak">
 
     </fragment>
-
 </navigation>
