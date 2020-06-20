@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/challenge_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -29,10 +28,10 @@
                 android:id="@+id/challenge_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:transitionName="title_element"/>
+                android:transitionName="title_element" />
 
             <ImageView
                 android:id="@+id/category_image"
@@ -47,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:paddingHorizontal="20dp"
                 android:text="@string/overview_label"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
@@ -58,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:paddingHorizontal="20dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -67,14 +64,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:paddingHorizontal="20dp"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:paddingHorizontal="20dp"
                 android:text="@string/links_label"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -85,7 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:paddingHorizontal="20dp"
                 android:text="links"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp" />
