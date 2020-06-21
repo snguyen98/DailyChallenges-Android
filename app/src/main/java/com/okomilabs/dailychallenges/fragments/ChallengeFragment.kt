@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ class ChallengeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         challengeViewModel = ViewModelProvider(this).get(ChallengeViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_challenge, container, false)
 
         val title: TextView = root.findViewById(R.id.challenge_title)
@@ -37,17 +39,28 @@ class ChallengeFragment: Fragment() {
         challengeViewModel.title.observe(viewLifecycleOwner, titleObserver)
         challengeViewModel.category.observe(viewLifecycleOwner, categoryObserver)
 
+        val skip: Button = root.findViewById(R.id.skip_button)
+        skip.setOnClickListener {
+            challengeViewModel.setChallengeToday()
+        }
+
         // TEMPORARY NAVIGATION
         val card: CardView = root.findViewById(R.id.challenge_card)
         card.setOnClickListener {
-            card.findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore(
-                arrayOf(
+            card.findNavController().navigate(
+                ChallengeFragmentDirections.challengeToReadMore(arrayOf(
                     challengeViewModel.title.value.toString(),
                     challengeViewModel.category.value.toString(),
                     challengeViewModel.summary.value.toString(),
                     challengeViewModel.desc.value.toString()
-                )
-            ))
+                ))/*,
+                // Code for shared element transition
+                FragmentNavigatorExtras(
+                    card to "card_element",
+                    title to "title_element",
+                    category to "category_element"
+                )*/
+            )
         }
 
         return root
