@@ -55,7 +55,7 @@ class ChallengeViewModel(application: Application) : AndroidViewModel(applicatio
         desc.value = challengePrefs.getString(R.string.curr_desc.toString(), "")
     }
 
-    private fun setChallengeToday() {
+    fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
             val total: Int = repo.getTotal()
             val challenge: Challenge = repo.challengeById(chooseRandomChallenge(total))
@@ -67,7 +67,7 @@ class ChallengeViewModel(application: Application) : AndroidViewModel(applicatio
                 putString(R.string.curr_summary.toString(), challenge.summary)
 
                 if (challenge.desc != null) {
-                    putString(R.string.curr_desc.toString(), challenge.summary)
+                    putString(R.string.curr_desc.toString(), challenge.desc)
                 }
                 else {
                     putString(R.string.curr_desc.toString(), null)
