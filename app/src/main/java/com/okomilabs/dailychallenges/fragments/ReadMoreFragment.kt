@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.okomilabs.dailychallenges.R
 
-class ReadMoreFragment : Fragment() {
-    
+
+
+class ReadMoreFragment :
+
+
+    Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,6 +32,9 @@ class ReadMoreFragment : Fragment() {
         val summary: TextView = root.findViewById(R.id.challenge_summary)
         val desc: TextView = root.findViewById(R.id.challenge_desc)
 
+        //Adds back button to action bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         title.text = challenge?.get(0) ?: ""
         category.text = challenge?.get(1) ?: ""
         summary.text = challenge?.get(2) ?: ""
@@ -36,6 +45,7 @@ class ReadMoreFragment : Fragment() {
         image.setOnClickListener {
             image.findNavController().navigate(ReadMoreFragmentDirections.readMoreToChallenge())
         }
+
 
         return root
     }
