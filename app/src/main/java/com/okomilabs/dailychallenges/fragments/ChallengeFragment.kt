@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,6 +34,9 @@ class ChallengeFragment: Fragment() {
         val categoryObserver = Observer<String> { newCategory ->
             category.text = newCategory
         }
+        //Removes back button from action bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
 
         challengeViewModel.title.observe(viewLifecycleOwner, titleObserver)
         challengeViewModel.category.observe(viewLifecycleOwner, categoryObserver)
@@ -40,14 +44,16 @@ class ChallengeFragment: Fragment() {
         // TEMPORARY NAVIGATION
         val card: CardView = root.findViewById(R.id.challenge_card)
         card.setOnClickListener {
-            card.findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore(
-                arrayOf(
-                    challengeViewModel.title.value.toString(),
-                    challengeViewModel.category.value.toString(),
-                    challengeViewModel.summary.value.toString(),
-                    challengeViewModel.desc.value.toString()
+            card.findNavController().navigate(
+                ChallengeFragmentDirections.challengeToReadMore(
+                    arrayOf(
+                        challengeViewModel.title.value.toString(),
+                        challengeViewModel.category.value.toString(),
+                        challengeViewModel.summary.value.toString(),
+                        challengeViewModel.desc.value.toString()
+                    )
                 )
-            ))
+            )
         }
 
         return root
