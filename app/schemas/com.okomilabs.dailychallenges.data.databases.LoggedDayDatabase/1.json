@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ba76070105a07d68a30ec0879cbd9282",
+    "identityHash": "dd2d23f7136f83bfb59c6b727a37d15b",
     "entities": [
       {
         "tableName": "LoggedDay",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` INTEGER NOT NULL, `challenge` INTEGER NOT NULL, `completed` INTEGER NOT NULL, `skipped` INTEGER NOT NULL, PRIMARY KEY(`date`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` INTEGER NOT NULL, `challenge` INTEGER NOT NULL, `completed` INTEGER NOT NULL, `frozen` INTEGER NOT NULL, PRIMARY KEY(`date`))",
         "fields": [
           {
             "fieldPath": "date",
@@ -27,8 +27,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "skipped",
-            "columnName": "skipped",
+            "fieldPath": "frozen",
+            "columnName": "frozen",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba76070105a07d68a30ec0879cbd9282')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd2d23f7136f83bfb59c6b727a37d15b')"
     ]
   }
 }
