@@ -11,4 +11,8 @@ class LoggedDayRepo(application: Application) {
     suspend fun addLoggedDay(day: LoggedDay) {
         dao.addLoggedDay(day)
     }
+
+    suspend fun getLoggedDays(): List<LoggedDay> {
+        return dao.getLoggedDays()
+    }
 }
