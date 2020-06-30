@@ -41,7 +41,12 @@ class ChallengeFragment: Fragment() {
 
         val skip: Button = root.findViewById(R.id.skip_button)
         skip.setOnClickListener {
-            challengeViewModel.setChallengeToday()
+            challengeViewModel.skipChallenge()
+        }
+
+        val complete: Button = root.findViewById(R.id.complete_button)
+        complete.setOnClickListener {
+            challengeViewModel.markComplete()
         }
 
         // TEMPORARY NAVIGATION
