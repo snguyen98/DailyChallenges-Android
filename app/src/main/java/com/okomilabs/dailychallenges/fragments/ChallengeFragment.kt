@@ -1,5 +1,6 @@
 package com.okomilabs.dailychallenges.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,12 +42,43 @@ class ChallengeFragment: Fragment() {
 
         val skip: Button = root.findViewById(R.id.skip_button)
         skip.setOnClickListener {
-            challengeViewModel.skipChallenge()
+
+            if (challengeViewModel.isNewDay()) {
+                refreshFragment()
+            }
+
+            else {
+                val skips: Int = challengeViewModel.getSkips()
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Skip Challenge")
+
+                if (skips > 0) {
+                    val msg = "You have $skips skips left. Would you like to skip?"
+                    builder.setMessage(msg)
+                    builder.setPositiveButton("Yes") { _, _ ->
+                        challengeViewModel.skipChallenge()
+                    }
+                    builder.setNeutralButton("Cancel") { _, _ -> }
+                }
+
+                else {
+                    builder.setMessage("You have no skips left")
+                    builder.setPositiveButton("Ok") { _, _ -> }
+                }
+
+                val alert: AlertDialog = builder.create()
+                alert.show()
+            }
         }
 
         val complete: Button = root.findViewById(R.id.complete_button)
         complete.setOnClickListener {
-            challengeViewModel.markComplete()
+            if (challengeViewModel.isNewDay()) {
+                refreshFragment()
+            }
+            else {
+                challengeViewModel.markComplete()
+            }
         }
 
         // TEMPORARY NAVIGATION
@@ -69,5 +101,13 @@ class ChallengeFragment: Fragment() {
         }
 
         return root
+    }
+
+    /**
+     * Reloads the fragment
+     */
+    private fun refreshFragment() {
+        val transaction = this.parentFragmentManager.beginTransaction()
+        transaction.detach(this).attach(this).commit()
     }
 }
