@@ -49,7 +49,7 @@ class ChallengeFragment: Fragment() {
 
             else {
                 val skips: Int = challengeViewModel.getSkips()
-                val builder = AlertDialog.Builder(context)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("Skip Challenge")
 
                 if (skips > 0) {
@@ -58,7 +58,7 @@ class ChallengeFragment: Fragment() {
                     builder.setPositiveButton("Yes") { _, _ ->
                         challengeViewModel.skipChallenge()
                     }
-                    builder.setNeutralButton("Cancel") { _, _ -> }
+                    builder.setNeutralButton("No") { _, _ -> }
                 }
 
                 else {
