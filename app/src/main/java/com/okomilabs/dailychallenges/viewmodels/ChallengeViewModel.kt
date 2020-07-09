@@ -49,8 +49,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     var desc: MutableLiveData<String> = MutableLiveData<String>()
 
     init {
-        getDateToday()      // Gets the date today first
-
         // Keeps the instance variables updated with the values in shared preferences
         challengePrefs.registerOnSharedPreferenceChangeListener(listener)
 
@@ -123,9 +121,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if today is a new day and false otherwise
      */
     fun isNewDay(): Boolean {
+        getDateToday()      // Gets the date today first
+
         val lastLoggedIn: String? = challengePrefs.getString(
             R.string.curr_date.toString(), null
         )
+
+        Log.d("Day", lastLoggedIn)
 
         return lastLoggedIn != date
     }
@@ -136,6 +138,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if today is a new week and false otherwise
      */
     private fun isNewWeek(): Boolean {
+        getDateToday()      // Gets the date today first
+
         val lastLoggedInStr: String? = challengePrefs.getString(
             R.string.curr_date.toString(), null
         )
@@ -241,6 +245,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// Button Functions /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Function to call private function setChallengeToday
+     */
+    fun refreshChallenge() {
+        setChallengeToday()
+    }
 
     /**
      * Sets today's challenge as complete in the view model, shared preferences and logged day db

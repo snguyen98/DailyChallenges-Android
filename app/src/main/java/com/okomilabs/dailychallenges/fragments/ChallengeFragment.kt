@@ -44,6 +44,7 @@ class ChallengeFragment: Fragment() {
         skip.setOnClickListener {
 
             if (challengeViewModel.isNewDay()) {
+                challengeViewModel.refreshChallenge()
                 refreshFragment()
             }
 
@@ -73,9 +74,12 @@ class ChallengeFragment: Fragment() {
 
         val complete: Button = root.findViewById(R.id.complete_button)
         complete.setOnClickListener {
+
             if (challengeViewModel.isNewDay()) {
+                challengeViewModel.refreshChallenge()
                 refreshFragment()
             }
+            
             else {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("Mark as Complete")
@@ -118,7 +122,6 @@ class ChallengeFragment: Fragment() {
      * Reloads the fragment
      */
     private fun refreshFragment() {
-        val transaction = this.parentFragmentManager.beginTransaction()
-        transaction.detach(this).attach(this).commit()
+        activity?.recreate()
     }
 }
