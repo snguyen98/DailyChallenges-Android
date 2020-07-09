@@ -17,7 +17,6 @@ class ReadMoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_read_more, container, false)
-
         /* Shared element transition
         val callback: SharedElementCallback = object: SharedElementCallback() {
             override fun onSharedElementEnd(
