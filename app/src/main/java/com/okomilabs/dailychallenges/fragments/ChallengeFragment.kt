@@ -77,7 +77,18 @@ class ChallengeFragment: Fragment() {
                 refreshFragment()
             }
             else {
-                challengeViewModel.markComplete()
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder.setTitle("Mark as Complete")
+                builder.setMessage("Would you like to mark this challenge as complete?")
+
+                builder.setPositiveButton("Yes") { _, _ ->
+                    challengeViewModel.markComplete()
+                }
+                builder.setNeutralButton("No") { _, _ -> }
+
+                val alert: AlertDialog = builder.create()
+                alert.show()
+
             }
         }
 
