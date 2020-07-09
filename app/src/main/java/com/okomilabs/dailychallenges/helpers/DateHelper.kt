@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
  */
 class DateHelper {
     private val format: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-    private val refDate: String = "01/06/2020"
+    private val refDate: String = "01/06/2020"      // Monday
     private val reference: Date = format.parse(refDate) ?: Date()
 
     /**
