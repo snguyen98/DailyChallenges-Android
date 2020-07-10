@@ -7,12 +7,19 @@
     <string name="overview_label">Challenge Overview</string>
     <string name="links_label">Useful Links</string>
     <string name="icon_desc">Category Icon</string>
-  
+
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
     <string name="curr_date">date</string>
+    <string name="curr_id">id</string>
+    <string name="curr_completed">complete</string>
+    <string name="curr_frozen">frozen</string>
     <string name="curr_title">title</string>
     <string name="curr_category">category</string>
     <string name="curr_summary">summary</string>
     <string name="curr_desc">desc</string>
+
+    <string name="skips_key">com.okomilabs.dailychallenges.skips</string>
+    <string name="skipped_challenges">skipped</string>
+    <string name="skips_remaining">skips</string>
 </resources>

@@ -8,5 +8,5 @@ data class LoggedDay(
     @PrimaryKey val date: Int,
     val challenge: Int,
     val completed: Boolean,
-    val skipped: Boolean
+    val frozen: Boolean
 )
