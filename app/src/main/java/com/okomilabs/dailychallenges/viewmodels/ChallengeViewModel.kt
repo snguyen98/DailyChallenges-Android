@@ -291,6 +291,19 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         return skipsPrefs.getInt(R.string.skips_remaining.toString(), 0)
     }
 
+    /**
+     * Checks if the current challenge is complete
+     */
+    fun isComplete(): Boolean {
+        return completed
+    }
+
+    /**
+     * Checks if the current challenge is frozen
+     */
+    fun isFrozen(): Boolean {
+        return frozen
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////// Skip Helper Functions //////////////////////////////////

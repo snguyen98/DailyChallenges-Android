@@ -50,21 +50,22 @@ class ChallengeFragment: Fragment() {
 
             else {
                 val skips: Int = challengeViewModel.getSkips()
-                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
                 builder.setTitle("Skip Challenge")
 
-                if (skips > 0) {
-                    val msg = "You have $skips skips left. Would you like to skip?"
-                    builder.setMessage(msg)
-                    builder.setPositiveButton("Yes") { _, _ ->
-                        challengeViewModel.skipChallenge()
+                if (!built) {
+                    if (skips <= 0) {
+                        builder.setMessage("You have no skips left")
+                        builder.setPositiveButton("Ok") { _, _ -> }
+                    } else {
+                        val msg = "You have $skips skips left. Would you like to skip?"
+                        builder.setMessage(msg)
+                        builder.setPositiveButton("Yes") { _, _ ->
+                            challengeViewModel.skipChallenge()
+                        }
+                        builder.setNeutralButton("No") { _, _ -> }
                     }
-                    builder.setNeutralButton("No") { _, _ -> }
-                }
-
-                else {
-                    builder.setMessage("You have no skips left")
-                    builder.setPositiveButton("Ok") { _, _ -> }
                 }
 
                 val alert: AlertDialog = builder.create()
@@ -79,16 +80,19 @@ class ChallengeFragment: Fragment() {
                 challengeViewModel.refreshChallenge()
                 refreshFragment()
             }
-            
-            else {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder.setTitle("Mark as Complete")
-                builder.setMessage("Would you like to mark this challenge as complete?")
 
-                builder.setPositiveButton("Yes") { _, _ ->
-                    challengeViewModel.markComplete()
+            else {
+                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
+                builder.setTitle("Mark as Complete")
+
+                if (!built) {
+                    builder.setMessage("Would you like to mark this challenge as complete?")
+
+                    builder.setPositiveButton("Yes") { _, _ ->
+                        challengeViewModel.markComplete()
+                    }
+                    builder.setNeutralButton("No") { _, _ -> }
                 }
-                builder.setNeutralButton("No") { _, _ -> }
 
                 val alert: AlertDialog = builder.create()
                 alert.show()
@@ -124,4 +128,29 @@ class ChallengeFragment: Fragment() {
     private fun refreshFragment() {
         activity?.recreate()
     }
+
+    /**
+     * Initialises alert dialog builder and adds the completed or frozen messages if applicable
+     *
+     * @return A pair containing the alert dialog and a boolean declaring if the builder is finished
+     */
+    private fun initialBuilder(): Pair<AlertDialog.Builder, Boolean> {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        var built = false
+
+        if (challengeViewModel.isComplete()) {
+            builder.setMessage("Challenge is already complete")
+            builder.setPositiveButton("Ok") { _, _ -> }
+            built = true
+        }
+
+        else if (challengeViewModel.isFrozen()) {
+            builder.setMessage("Challenge is currently frozen")
+            builder.setPositiveButton("Ok") { _, _ -> }
+            built = true
+        }
+
+        return Pair(builder, built)
+    }
+
 }
