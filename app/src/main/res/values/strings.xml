@@ -6,8 +6,9 @@
     <string name="skip_label">Skip</string>
     <string name="overview_label">Challenge Overview</string>
     <string name="links_label">Useful Links</string>
+    <string name="action_settings">Settings</string>
     <string name="icon_desc">Category Icon</string>
-
+    
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
     <string name="curr_date">date</string>
