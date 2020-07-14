@@ -127,8 +127,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             R.string.curr_date.toString(), null
         )
 
-        Log.d("Day", lastLoggedIn)
-
         return lastLoggedIn != date
     }
 
