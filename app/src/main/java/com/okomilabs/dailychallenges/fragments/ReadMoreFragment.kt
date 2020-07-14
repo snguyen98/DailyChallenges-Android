@@ -5,17 +5,14 @@ import android.transition.Slide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.okomilabs.dailychallenges.R
 
-
-
-class ReadMoreFragment :
-
-
-    Fragment() {
+class ReadMoreFragment: Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
