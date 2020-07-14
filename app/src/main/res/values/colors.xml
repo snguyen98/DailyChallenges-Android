@@ -5,7 +5,6 @@
     <color name="screenBackground">#50C864</color>
     <color name="button_color">#E6C53C</color>
     <color name="button_grad_end">#F7D651</color>
-    <color name="readMoreBackground1">#40F6F1D0</color>
     <color name="actionBarPrimary">#00A86B</color>
     <color name="actionBarSecondary">@android:color/black</color>
 </resources>

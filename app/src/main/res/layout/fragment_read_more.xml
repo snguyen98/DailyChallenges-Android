@@ -15,108 +15,108 @@
       
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="18dp"
             android:orientation="vertical">
   
-          <TextView
-              android:id="@+id/challenge_category"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textSize="16sp"
-              android:transitionName="category_element" />
+            <TextView
+                android:id="@+id/challenge_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:transitionName="category_element" />
 
-          <TextView
-              android:id="@+id/challenge_title"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textAlignment="textStart"
-              android:textSize="32sp"
-              android:textStyle="bold"
-              android:transitionName="title_element" />
+            <TextView
+                android:id="@+id/challenge_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:transitionName="title_element" />
 
-          <ImageView
-              android:id="@+id/category_image"
-              android:layout_width="match_parent"
-              android:layout_height="113dp"
-              android:layout_marginTop="30dp"
-              android:contentDescription="@string/icon_desc"
-              android:paddingHorizontal="20dp"
-              app:srcCompat="@drawable/personal_wellbeing" />
+            <ImageView
+                android:id="@+id/category_image"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/category_icon_desc"
+                android:paddingHorizontal="20dp"
+                app:srcCompat="@drawable/personal_wellbeing" />
 
-          <TextView
-              android:id="@+id/challenge_summary"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textColor="@android:color/secondary_text_dark"
-              android:textSize="16sp" />
+            <TextView
+                android:id="@+id/challenge_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textSize="16sp" />
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:layout_marginTop="120dp"
-              android:text="Read More"
-              android:textSize="12sp"
-              android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="120dp"
+                android:text="@string/read_more_label"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-          <ImageView
-              android:layout_width="match_parent"
-              android:layout_height="20dp"
-              android:layout_marginTop="15dp"
-              android:layout_marginBottom="30dp"
-              android:paddingHorizontal="20dp"
-              app:srcCompat="@android:drawable/arrow_down_float" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp"
+                android:paddingHorizontal="20dp"
+                android:contentDescription="@string/arrow_icon_desc"
+                app:srcCompat="@android:drawable/arrow_down_float" />
 
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginTop="20dp"
-              android:background="@color/screenBackground"
-              android:paddingBottom="30dp">
-              android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/screenBackground"
+                android:paddingBottom="30dp"
+                android:orientation="vertical">
 
-              <View
-                  android:id="@+id/gradient"
-                  android:layout_width="match_parent"
-                  android:layout_height="50dp"
-                  android:background="@drawable/green_gradient" />
+                <View
+                    android:id="@+id/gradient"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/green_gradient" />
 
-              <TextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="20dp"
-                  android:text="@string/overview_label"
-                  android:textColor="@android:color/black"
-                  android:textSize="24sp"
-                  android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/overview_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-              <TextView
-                  android:id="@+id/challenge_desc"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="30dp"
-                  android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/challenge_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textSize="16sp" />
 
-              <TextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="50dp"
-                  android:text="@string/links_label"
-                  android:textColor="@android:color/black"
-                  android:textSize="18sp"
-                  android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/links_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-              <TextView
-                  android:id="@+id/links"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="30dp"
-                  android:text="links"
-                  android:textColor="@color/colorPrimaryDark"
-                  android:textSize="16sp" />
-            
-          </LinearLayout>
+                <TextView
+                    android:id="@+id/links"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
