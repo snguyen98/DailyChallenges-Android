@@ -54,15 +54,9 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
-
-            // Checks if a new week started and resets skips
-            if (isNewWeek()) {
-                setSkipsRemaining(3)
-                resetSkippedChallenges()
-            }
-
-            setChallengeToday()     // Gets new challenge for the day
+            refreshChallenge()
         }
+
         updateCurrent()
     }
 
@@ -248,7 +242,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Function to call private function setChallengeToday
      */
     fun refreshChallenge() {
-        setChallengeToday()
+        // Checks if a new week started and resets skips
+        if (isNewWeek()) {
+            setSkipsRemaining(3)
+            resetSkippedChallenges()
+        }
+
+        setChallengeToday()     // Gets new challenge for the day
     }
 
     /**
