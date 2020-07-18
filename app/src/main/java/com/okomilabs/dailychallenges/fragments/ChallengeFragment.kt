@@ -37,9 +37,9 @@ class ChallengeFragment: Fragment() {
         val categoryObserver = Observer<String> { newCategory ->
             category.text = newCategory
         }
-        //Removes back button from action bar
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+        // Removes back button from action bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         challengeViewModel.title.observe(viewLifecycleOwner, titleObserver)
         challengeViewModel.category.observe(viewLifecycleOwner, categoryObserver)

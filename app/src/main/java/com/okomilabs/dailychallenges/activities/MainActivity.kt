@@ -11,11 +11,18 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-//Back button function
+
+    /**
+     * Back button functionality in action bar
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
+    /**
+     * Drop down menu functionality in action bar
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.drop_menu, menu)

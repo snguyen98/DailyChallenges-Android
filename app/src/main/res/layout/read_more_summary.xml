@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ReadMoreLayout">
+
+    <TextView
+        android:id="@+id/challenge_category"
+        android:transitionName="category_element"
+        style="@style/SubText" />
+
+    <TextView
+        android:id="@+id/challenge_title"
+        android:transitionName="title_element"
+        android:textSize="27sp"
+        style="@style/BoldHeading" />
+
+    <ImageView
+        android:id="@+id/category_image"
+        app:srcCompat="@drawable/personal_wellbeing"
+        style="@style/CategoryIcon" />
+
+    <TextView
+        android:id="@+id/challenge_summary"
+        android:color="@android:color/secondary_text_dark"
+        style="@style/SubText" />
+
+</LinearLayout>

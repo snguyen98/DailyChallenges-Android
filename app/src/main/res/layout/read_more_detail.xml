@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/screenBackground"
+    style="@style/ReadMoreLayout">
+
+    <TextView
+        android:text="@string/overview_label"
+        android:textSize="24sp"
+        android:color="@android:color/black"
+        style="@style/DetailHeading" />
+
+    <TextView
+        android:id="@+id/challenge_desc"
+        style="@style/SubText" />
+
+    <TextView
+        android:text="@string/links_label"
+        android:textSize="18sp"
+        android:color="@android:color/black"
+        style="@style/DetailHeading" />
+
+    <TextView
+        android:id="@+id/links"
+        android:textColor="@color/colorPrimaryDark"
+        style="@style/SubText" />
+
+</LinearLayout>
