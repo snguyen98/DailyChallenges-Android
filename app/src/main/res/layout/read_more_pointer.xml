@@ -2,26 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/VerticalLayout">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="120dp"
         android:text="@string/read_more_label"
+        android:textAlignment="center"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        style="@style/BoldHeading" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="15dp"
-        android:paddingHorizontal="20dp"
-        android:contentDescription="@string/arrow_icon_desc"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@android:drawable/arrow_down_float"
+        style="@style/ArrowIcon" />
 
     <View
         android:layout_width="match_parent"
