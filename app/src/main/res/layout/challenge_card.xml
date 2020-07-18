@@ -1,40 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/challenge_card"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:transitionName="card_element"
-    app:cardBackgroundColor="@color/lightGray"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="15dp">
+    style="@style/ChallengeCard">
 
-    <RelativeLayout
-        android:id="@+id/heading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="30dp">
+    <RelativeLayout style="@style/ChallengeLayout">
 
         <TextView
             android:id="@+id/challenge_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:transitionName="category_element"
             android:layout_above="@id/challenge_title"
-            android:layout_centerHorizontal="true"
-            android:textSize="15sp"
-            android:transitionName="category_element" />
+            android:textAlignment="center"
+            style="@style/SubText" />
 
         <TextView
             android:id="@+id/challenge_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:transitionName="title_element"
             android:layout_centerInParent="true"
             android:textAlignment="center"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:transitionName="title_element"/>
+            style="@style/BoldHeading" />
 
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>
