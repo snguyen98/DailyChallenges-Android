@@ -5,7 +5,9 @@
     android:transitionName="card_element"
     style="@style/ChallengeCard">
 
-    <RelativeLayout style="@style/ChallengeLayout">
+    <RelativeLayout
+        android:layout_gravity="center"
+        style="@style/ChallengeLayout">
 
         <TextView
             android:id="@+id/challenge_category"

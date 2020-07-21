@@ -2,6 +2,7 @@ package com.okomilabs.dailychallenges.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +14,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
+import kotlinx.android.synthetic.main.fragment_challenge.*
 
 class ChallengeFragment: Fragment() {
     private lateinit var challengeViewModel: ChallengeViewModel
+    private lateinit var rewardedAd: RewardedAd
+
+    private var skip: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,9 +39,88 @@ class ChallengeFragment: Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_challenge, container, false)
 
+        val card: CardView = root.findViewById(R.id.challenge_card)
         val title: TextView = root.findViewById(R.id.challenge_title)
         val category: TextView = root.findViewById(R.id.challenge_category)
 
+        val bannerAd: AdView = root.findViewById(R.id.banner_ad)
+
+        val complete: Button = root.findViewById(R.id.complete_button)
+        val skip: Button = root.findViewById(R.id.skip_button)
+
+        setNavigation(card)
+        setChallengeInfo(title, category)
+
+        loadBannerAd(bannerAd)
+        loadRewardedAd()
+
+        completeFunctionality(complete)
+        skipFunctionality(skip)
+
+        // Removes back button from action bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        return root
+    }
+
+    override fun onPause() {
+        banner_ad.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        banner_ad.resume()
+    }
+
+    override fun onDestroy() {
+        banner_ad.destroy()
+        super.onDestroy()
+    }
+
+    /**
+     * Reloads the fragment
+     */
+    private fun refreshFragment() {
+        activity?.recreate()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// Navigation Functions ///////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Adds listener to navigate to read more section when clicked
+     */
+    private fun setNavigation(card: CardView) {
+        card.setOnClickListener {
+            card.findNavController().navigate(
+                ChallengeFragmentDirections.challengeToReadMore(
+                    arrayOf(
+                        challengeViewModel.title.value.toString(),
+                        challengeViewModel.category.value.toString(),
+                        challengeViewModel.summary.value.toString(),
+                        challengeViewModel.desc.value.toString()
+                    )
+                )/*,
+                // Code for shared element transition
+                FragmentNavigatorExtras(
+                    card to "card_element",
+                    title to "title_element",
+                    category to "category_element"
+                )*/
+            )
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Challenge Info Functions /////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Observes changes in title and category in view model and updates respective text view values
+     */
+    private fun setChallengeInfo(title: TextView, category: TextView) {
         val titleObserver = Observer<String> { newTitle ->
             title.text = newTitle
         }
@@ -38,46 +128,50 @@ class ChallengeFragment: Fragment() {
             category.text = newCategory
         }
 
-        // Removes back button from action bar
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         challengeViewModel.title.observe(viewLifecycleOwner, titleObserver)
         challengeViewModel.category.observe(viewLifecycleOwner, categoryObserver)
+    }
 
-        val skip: Button = root.findViewById(R.id.skip_button)
-        skip.setOnClickListener {
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// AdMob Functions //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-            if (challengeViewModel.isNewDay()) {
-                challengeViewModel.refreshChallenge()
-                refreshFragment()
-            }
+    /**
+     * Loads the banner ad on the challenge page
+     */
+    private fun loadBannerAd(bannerAd: AdView) {
+        val adRequest = AdRequest.Builder().build()
+        bannerAd.loadAd(adRequest)
+    }
 
-            else {
-                val skips: Int = challengeViewModel.getSkips()
-
-                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
-                builder.setTitle("Skip Challenge")
-
-                if (!built) {
-                    if (skips <= 0) {
-                        builder.setMessage("You have no skips left")
-                        builder.setPositiveButton("Ok") { _, _ -> }
-                    } else {
-                        val msg = "You have $skips skips left. Would you like to skip?"
-                        builder.setMessage(msg)
-                        builder.setPositiveButton("Yes") { _, _ ->
-                            challengeViewModel.skipChallenge()
-                        }
-                        builder.setNeutralButton("No") { _, _ -> }
-                    }
+    /**
+     * Loads the rewarded ad to be shown when the user skips the challenge
+     */
+    private fun loadRewardedAd() {
+        if (!(::rewardedAd.isInitialized) || !rewardedAd.isLoaded) {
+            val adCallback = object: RewardedAdLoadCallback() {
+                override fun onRewardedAdLoaded() {
+                    Log.d("Rewarded Ad", "Loaded")
                 }
 
-                val alert: AlertDialog = builder.create()
-                alert.show()
+                override fun onRewardedAdFailedToLoad(errorCode: Int) {
+                    Log.d("Rewarded Ad", "Failed to load with code: $errorCode")
+                }
             }
-        }
 
-        val complete: Button = root.findViewById(R.id.complete_button)
+            rewardedAd = RewardedAd(context, getString(R.string.test_reward_ad))
+            rewardedAd.loadAd(AdRequest.Builder().build(), adCallback)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// Button Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Sets up the appropriate alert dialogs when the complete button is pressed
+     */
+    private fun completeFunctionality(complete: Button) {
         complete.setOnClickListener {
 
             if (challengeViewModel.isNewDay()) {
@@ -103,36 +197,80 @@ class ChallengeFragment: Fragment() {
 
             }
         }
-
-        // TEMPORARY NAVIGATION
-        val card: CardView = root.findViewById(R.id.challenge_card)
-        card.setOnClickListener {
-            card.findNavController().navigate(
-                ChallengeFragmentDirections.challengeToReadMore(
-                    arrayOf(
-                        challengeViewModel.title.value.toString(),
-                        challengeViewModel.category.value.toString(),
-                        challengeViewModel.summary.value.toString(),
-                        challengeViewModel.desc.value.toString()
-                    )
-                )/*,
-                // Code for shared element transition
-                FragmentNavigatorExtras(
-                    card to "card_element",
-                    title to "title_element",
-                    category to "category_element"
-                )*/
-            )
-        }
-
-        return root
     }
 
     /**
-     * Reloads the fragment
+     * Sets up the appropriate alert dialogs when the skip button is pressed
      */
-    private fun refreshFragment() {
-        activity?.recreate()
+    private fun skipFunctionality(skip: Button) {
+        skip.setOnClickListener {
+
+            if (challengeViewModel.isNewDay()) {
+                challengeViewModel.refreshChallenge()
+                refreshFragment()
+            }
+
+            else {
+                val skips: Int = challengeViewModel.getSkips()
+
+                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
+                builder.setTitle("Skip Challenge")
+
+                if (!built) {
+                    if (skips <= -100) {
+                        builder.setMessage("You have no skips left")
+                        builder.setPositiveButton("Ok") { _, _ -> }
+                    }
+
+                    else {
+                        if (rewardedAd.isLoaded) {
+                            val msg =
+                                "You have $skips skips left. " +
+                                "Would you like to watch a short ad to skip this challenge?"
+
+                            builder.setMessage(msg)
+                            builder.setPositiveButton("Yes") { _, _ ->
+                                showRewardedAd()
+                            }
+                            builder.setNeutralButton("No") { _, _ -> }
+                        }
+
+                        else {
+                            builder.setMessage("Sorry, there are no ads available right now")
+                            builder.setPositiveButton("Ok") { _, _ -> }
+                        }
+                    }
+                }
+
+                val alert: AlertDialog = builder.create()
+                alert.show()
+            }
+        }
+    }
+
+    /**
+     * Displays the ad to be rewarded with a skip
+     */
+    private fun showRewardedAd() {
+        val adCallback = object: RewardedAdCallback() {
+            override fun onUserEarnedReward(reward: RewardItem) {
+                skip = true
+            }
+
+            override fun onRewardedAdClosed() {
+                loadRewardedAd()
+                if (skip) {
+                    challengeViewModel.skipChallenge()
+                    skip = false
+                }
+            }
+
+            override fun onRewardedAdFailedToShow(errorCode: Int) {
+                Log.d("Rewarded Ad", "Failed to show with code: $errorCode")
+            }
+        }
+
+        rewardedAd.show(activity, adCallback)
     }
 
     /**

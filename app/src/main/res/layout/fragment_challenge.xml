@@ -2,20 +2,34 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center"
-    style="@style/ChallengeLayout">
+    style="@style/MatchHeight">
 
-    <include
-        android:id="@+id/challenge_card"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_centerInParent="true"
-        layout="@layout/challenge_card"/>
-
-    <include
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/banner_ad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_below="@id/challenge_card"
-        layout="@layout/challenge_button_bar" />
+        android:layout_alignParentTop="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/test_banner_ad" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        style="@style/ChallengeLayout">
+
+        <include
+            android:id="@+id/challenge_card"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            layout="@layout/challenge_card"/>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            layout="@layout/challenge_button_bar" />
+
+    </LinearLayout>
 
 </RelativeLayout>
