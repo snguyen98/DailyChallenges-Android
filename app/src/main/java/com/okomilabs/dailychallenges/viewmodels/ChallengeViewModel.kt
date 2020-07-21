@@ -15,28 +15,38 @@ import com.okomilabs.dailychallenges.data.repos.LoggedDayRepo
 import com.okomilabs.dailychallenges.helpers.DateHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ChallengeViewModel(application: Application): AndroidViewModel(application) {
     private val challengePrefs: SharedPreferences = application.getSharedPreferences(
-        R.string.challenge_key.toString(), Context.MODE_PRIVATE
+        application.getString(R.string.challenge_key), Context.MODE_PRIVATE
     )
 
     private val skipsPrefs: SharedPreferences = application.getSharedPreferences(
-        R.string.skips_key.toString(), Context.MODE_PRIVATE
+        application.getString(R.string.skips_key), Context.MODE_PRIVATE
     )
 
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             when (key) {
-                R.string.curr_title.toString() -> updateCurrent()
+                application.getString(R.string.curr_title) -> updateCurrent()
             }
         }
 
     private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
     private val loggedDayRepo: LoggedDayRepo = LoggedDayRepo(application)
+
+    private val datePrefs: String = application.getString(R.string.curr_date)
+    private val idPrefs: String = application.getString(R.string.curr_id)
+    private val completedPrefs: String = application.getString(R.string.curr_completed)
+    private val frozenPrefs: String = application.getString(R.string.curr_frozen)
+    private val titlePrefs: String = application.getString(R.string.curr_title)
+    private val categoryPrefs: String = application.getString(R.string.curr_category)
+    private val summaryPrefs: String = application.getString(R.string.curr_summary)
+    private val descPrefs: String = application.getString(R.string.curr_desc)
+    private val skippedChallengePrefs: String = application.getString(R.string.skipped_challenge)
+    private val skipsLeftPrefs: String = application.getString(R.string.skips_remaining)
 
     private var date: String = ""
     private var challengeId: Int = -1
@@ -47,6 +57,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     var category: MutableLiveData<String> = MutableLiveData<String>()
     var summary: MutableLiveData<String> = MutableLiveData<String>()
     var desc: MutableLiveData<String> = MutableLiveData<String>()
+
 
     init {
         // Keeps the instance variables updated with the values in shared preferences
@@ -76,14 +87,14 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Function that copies challenge preferences values to instance variables
      */
     private fun updateCurrent() {
-        challengeId = challengePrefs.getInt(R.string.curr_id.toString(), -1)
-        completed = challengePrefs.getBoolean(R.string.curr_completed.toString(), false)
-        frozen = challengePrefs.getBoolean(R.string.curr_frozen.toString(), false)
+        challengeId = challengePrefs.getInt(idPrefs, -1)
+        completed = challengePrefs.getBoolean(completedPrefs, false)
+        frozen = challengePrefs.getBoolean(frozenPrefs, false)
 
-        title.value = challengePrefs.getString(R.string.curr_title.toString(), "")
-        category.value = challengePrefs.getString(R.string.curr_category.toString(), "")
-        summary.value = challengePrefs.getString(R.string.curr_summary.toString(), "")
-        desc.value = challengePrefs.getString(R.string.curr_desc.toString(), "")
+        title.value = challengePrefs.getString(titlePrefs, "")
+        category.value = challengePrefs.getString(categoryPrefs, "")
+        summary.value = challengePrefs.getString(summaryPrefs, "")
+        desc.value = challengePrefs.getString(descPrefs, "")
     }
 
     /**
@@ -118,57 +129,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         getDateToday()      // Gets the date today first
 
         val lastLoggedIn: String? = challengePrefs.getString(
-            R.string.curr_date.toString(), null
+            datePrefs, null
         )
 
         return lastLoggedIn != date
-    }
-
-    /**
-     * Checks if a new week has started since last login
-     *
-     * @return True if today is a new week and false otherwise
-     */
-    private fun isNewWeek(): Boolean {
-        getDateToday()      // Gets the date today first
-
-        val lastLoggedInStr: String? = challengePrefs.getString(
-            R.string.curr_date.toString(), null
-        )
-
-        with(DateHelper()) {
-            // If this is the user's first login
-            if (lastLoggedInStr == null) {
-                return true
-            }
-
-            else {
-                val lastLoggedIn = dateToInt(lastLoggedInStr)
-                val today = dateToInt(date)
-
-                return when {
-                    // Comparison assumes today is the same day or after last login
-                    lastLoggedIn > today -> {
-                        throw IllegalArgumentException("Today cannot be before last login")
-                    }
-
-                    // Seven or more days difference implies a new week
-                    today - lastLoggedIn >= 7 -> {
-                        true
-                    }
-
-                    /* Reference date is a Monday so remainder represents a day of the week as a
-                     * a number between 0 and 6 (with 0 as Monday and 6 as Sunday) */
-                    else -> {
-                        val lastLoggedInRem = lastLoggedIn % 7
-                        val todayRem = today % 7
-
-                        // If today's remainder is lower then it cannot be the same week
-                        lastLoggedInRem > todayRem
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -195,19 +159,19 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
             // Adds all challenge info to shared preferences
             with (challengePrefs.edit()) {
-                putString(R.string.curr_date.toString(), date)
-                putInt(R.string.curr_id.toString(), challengeId)
-                putBoolean(R.string.curr_completed.toString(), false)                // Initially false
-                putBoolean(R.string.curr_frozen.toString(), false)                  // Initially false
-                putString(R.string.curr_title.toString(), challenge.title)
-                putString(R.string.curr_category.toString(), challenge.category)
-                putString(R.string.curr_summary.toString(), challenge.summary)
+                putString(datePrefs, date)
+                putInt(idPrefs, challengeId)
+                putBoolean(completedPrefs, false)                // Initially false
+                putBoolean(frozenPrefs, false)                  // Initially false
+                putString(titlePrefs, challenge.title)
+                putString(categoryPrefs, challenge.category)
+                putString(summaryPrefs, challenge.summary)
 
                 if (challenge.desc != null) {
-                    putString(R.string.curr_desc.toString(), challenge.desc)        // Can be null
+                    putString(descPrefs, challenge.desc)        // Can be null
                 }
                 else {
-                    putString(R.string.curr_desc.toString(), null)
+                    putString(descPrefs, null)
                 }
                 apply()
             }
@@ -223,14 +187,19 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     private fun chooseRandomChallenge(total: Int) {
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
-        val excluded: MutableSet<Int> = mutableSetOf()
+        val skipped: Int = skipsPrefs.getInt(skippedChallengePrefs, -1)
 
-        // Removes the skipped challenges
-        challengePrefs.getStringSet(
-            R.string.skipped_challenges.toString(), null
-        )?.forEach { challenge -> excluded.add(challenge.toInt()) }
+        if (challengeId != -1) {
+            challenges.remove(challengeId)
+        }
 
-        challengeId = challenges.minus(excluded).random()
+        if (skipped != -1) {
+            challenges.remove(skipped)
+        }
+
+        Log.d("Challenge Select", challenges.toString())
+        setSkippedChallenge(challengeId)
+        challengeId = challenges.random()
     }
 
 
@@ -242,11 +211,9 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Function to call private function setChallengeToday
      */
     fun refreshChallenge() {
-        // Checks if a new week started and resets skips
-        if (isNewWeek()) {
-            setSkipsRemaining(3)
-            resetSkippedChallenges()
-        }
+        // Resets skips remaining and skipped challenges
+        setSkipsRemaining(2)
+        resetSkippedChallenges()
 
         setChallengeToday()     // Gets new challenge for the day
     }
@@ -255,7 +222,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as complete in the view model, shared preferences and logged day db
      */
     fun markComplete() {
-        challengePrefs.edit().putBoolean(R.string.curr_completed.toString(), true).apply()
+        challengePrefs.edit().putBoolean(completedPrefs, true).apply()
         completed = true
         addLoggedDay()
     }
@@ -264,7 +231,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as frozen in the view model, shared preferences and logged day db
      */
     fun freezeDay() {
-        challengePrefs.edit().putBoolean(R.string.curr_frozen.toString(), true).apply()
+        challengePrefs.edit().putBoolean(frozenPrefs, true).apply()
         frozen = true
         addLoggedDay()
     }
@@ -273,11 +240,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Adds current challenge to the skipped set and sets a new challenge for today
      */
     fun skipChallenge() {
-        val skipsRemaining: Int = skipsPrefs.getInt(R.string.skips_remaining.toString(), 0)
+        val skipsRemaining: Int = skipsPrefs.getInt(skipsLeftPrefs, 0)
 
-        if (skipsRemaining > 0) {
+        if (skipsRemaining > -100) {
             setSkipsRemaining(skipsRemaining - 1)
-            setSkippedChallenges(generateSkippedSet())
             setChallengeToday()
         }
     }
@@ -286,7 +252,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Gets the remaining skips allowed
      */
     fun getSkips(): Int {
-        return skipsPrefs.getInt(R.string.skips_remaining.toString(), 0)
+        return skipsPrefs.getInt(skipsLeftPrefs, 0)
     }
 
     /**
@@ -312,8 +278,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      *
      * @param skipped The set of challenges to be added
      */
-    private fun setSkippedChallenges(skipped: Set<String>?) {
-        skipsPrefs.edit().putStringSet(R.string.skipped_challenges.toString(), skipped).apply()
+    private fun setSkippedChallenge(skipped: Int) {
+        skipsPrefs.edit().putInt(skippedChallengePrefs, skipped).apply()
     }
 
     /**
@@ -322,31 +288,14 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param skips The number of skips to be set
      */
     private fun setSkipsRemaining(skips: Int) {
-        skipsPrefs.edit().putInt(R.string.skips_remaining.toString(), skips).apply()
+        skipsPrefs.edit().putInt(skipsLeftPrefs, skips).apply()
     }
 
     /**
      * Clears the skipped set of challenges
      */
     private fun resetSkippedChallenges() {
-        setSkippedChallenges(null)
-    }
-
-    /**
-     * Combines the current challenge with the existing skipped challenges
-     *
-     * @return The resulting set of challenges
-     */
-    private fun generateSkippedSet(): Set<String> {
-        val currentSkipped: MutableSet<String>? = skipsPrefs.getStringSet(
-            R.string.skipped_challenges.toString(), null
-        )
-        return if (currentSkipped == null) {
-            setOf(challengeId.toString())
-        } else {
-            currentSkipped.add(challengeId.toString())
-            currentSkipped
-        }
+        skipsPrefs.edit().remove(skippedChallengePrefs)
     }
 
 
@@ -362,7 +311,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     private fun printSkips() {
-        val skipsRemaining: Int = skipsPrefs.getInt(R.string.skips_remaining.toString(), 0)
+        val skipsRemaining: Int = skipsPrefs.getInt(skipsLeftPrefs, 0)
         Log.d("Skips", skipsRemaining.toString())
     }
 
