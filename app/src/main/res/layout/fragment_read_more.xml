@@ -7,17 +7,18 @@
     <ScrollView
         style="@style/VerticalLayout">
       
-        <LinearLayout
-            style="@style/VerticalLayout">
+        <LinearLayout style="@style/VerticalLayout">
 
             <include layout="@layout/read_more_summary" />
 
             <include
                 android:id="@+id/read_more_pointer"
+                android:visibility="gone"
                 layout="@layout/read_more_pointer" />
 
             <include
                 android:id="@+id/read_more_detail"
+                android:visibility="gone"
                 layout="@layout/read_more_detail" />
 
         </LinearLayout>

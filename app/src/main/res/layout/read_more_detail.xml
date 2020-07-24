@@ -15,14 +15,11 @@
         style="@style/SubText" />
 
     <TextView
+        android:id="@+id/links_label"
+        android:visibility="gone"
         android:text="@string/links_label"
         android:textSize="18sp"
         android:color="@android:color/black"
         style="@style/DetailHeading" />
-
-    <TextView
-        android:id="@+id/links"
-        android:textColor="@color/colorPrimaryDark"
-        style="@style/SubText" />
 
 </LinearLayout>
