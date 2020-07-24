@@ -22,11 +22,6 @@
         <action
             android:id="@+id/read_more_to_challenge"
             app:destination="@id/challenge_fragment" />
-        <argument
-            android:name="challenge"
-            app:argType="string[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
 
 </navigation>

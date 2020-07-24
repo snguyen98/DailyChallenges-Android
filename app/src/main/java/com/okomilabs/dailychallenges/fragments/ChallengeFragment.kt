@@ -98,22 +98,7 @@ class ChallengeFragment: Fragment() {
             val challenge: Challenge = challengeViewModel.challenge.value ?:
                 Challenge(-1, "", "", "", null)
 
-            card.findNavController().navigate(
-                ChallengeFragmentDirections.challengeToReadMore(
-                    arrayOf(
-                        challenge.title,
-                        challenge.category,
-                        challenge.summary,
-                        challenge.desc ?: ""
-                    )
-                )/*,
-                // Code for shared element transition
-                FragmentNavigatorExtras(
-                    card to "card_element",
-                    title to "title_element",
-                    category to "category_element"
-                )*/
-            )
+            card.findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
         }
     }
 
