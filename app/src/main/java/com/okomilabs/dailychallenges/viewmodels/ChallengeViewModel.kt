@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.Link
 import com.okomilabs.dailychallenges.data.entities.LoggedDay
 import com.okomilabs.dailychallenges.data.repos.ChallengeRepo
 import com.okomilabs.dailychallenges.data.repos.LoggedDayRepo
@@ -30,7 +31,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             when (key) {
-                application.getString(R.string.curr_title) -> updateCurrent()
+                application.getString(R.string.curr_id) -> updateCurrent()
             }
         }
 
@@ -39,12 +40,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     private val datePrefs: String = application.getString(R.string.curr_date)
     private val idPrefs: String = application.getString(R.string.curr_id)
-    private val completedPrefs: String = application.getString(R.string.curr_completed)
-    private val frozenPrefs: String = application.getString(R.string.curr_frozen)
-    private val titlePrefs: String = application.getString(R.string.curr_title)
-    private val categoryPrefs: String = application.getString(R.string.curr_category)
-    private val summaryPrefs: String = application.getString(R.string.curr_summary)
-    private val descPrefs: String = application.getString(R.string.curr_desc)
     private val skippedChallengePrefs: String = application.getString(R.string.skipped_challenge)
     private val skipsLeftPrefs: String = application.getString(R.string.skips_remaining)
 
@@ -53,14 +48,12 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private var completed: Boolean = false
     private var frozen: Boolean = false
 
-    var title: MutableLiveData<String> = MutableLiveData<String>()
-    var category: MutableLiveData<String> = MutableLiveData<String>()
-    var summary: MutableLiveData<String> = MutableLiveData<String>()
-    var desc: MutableLiveData<String> = MutableLiveData<String>()
+    var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
+    var links: MutableLiveData<List<Link>> = MutableLiveData<List<Link>>()
 
 
     init {
-        // Keeps the instance variables updated with the values in shared preferences
+        // Keeps the challenge id instance variables updated with the value in shared preferences
         challengePrefs.registerOnSharedPreferenceChangeListener(listener)
 
         // Doesn't refresh challenge if it's the same day
@@ -70,6 +63,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
         updateCurrent()
     }
+
 
     /**
      * Detaches listener when the view model is cleared
@@ -84,17 +78,16 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Function that copies challenge preferences values to instance variables
+     * Function that updates the challenge id with the value in shared preferences and retrieves
+     * the challenge info from the database
      */
     private fun updateCurrent() {
         challengeId = challengePrefs.getInt(idPrefs, -1)
-        completed = challengePrefs.getBoolean(completedPrefs, false)
-        frozen = challengePrefs.getBoolean(frozenPrefs, false)
 
-        title.value = challengePrefs.getString(titlePrefs, "")
-        category.value = challengePrefs.getString(categoryPrefs, "")
-        summary.value = challengePrefs.getString(summaryPrefs, "")
-        desc.value = challengePrefs.getString(descPrefs, "")
+        viewModelScope.launch(Dispatchers.IO) {
+            challenge.postValue(challengeRepo.challengeById(challengeId))
+            links.postValue(challengeRepo.getLinksById(challengeId))
+        }
     }
 
     /**
@@ -155,24 +148,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             val total: Int = challengeRepo.getTotal()
             chooseRandomChallenge(total)                // Sets challenge ID instance variable
 
-            val challenge: Challenge = challengeRepo.challengeById(challengeId)
-
             // Adds all challenge info to shared preferences
             with (challengePrefs.edit()) {
                 putString(datePrefs, date)
                 putInt(idPrefs, challengeId)
-                putBoolean(completedPrefs, false)                // Initially false
-                putBoolean(frozenPrefs, false)                  // Initially false
-                putString(titlePrefs, challenge.title)
-                putString(categoryPrefs, challenge.category)
-                putString(summaryPrefs, challenge.summary)
-
-                if (challenge.desc != null) {
-                    putString(descPrefs, challenge.desc)        // Can be null
-                }
-                else {
-                    putString(descPrefs, null)
-                }
                 apply()
             }
 
@@ -197,7 +176,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             challenges.remove(skipped)
         }
 
-        Log.d("Challenge Select", challenges.toString())
         setSkippedChallenge(challengeId)
         challengeId = challenges.random()
     }
@@ -222,7 +200,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as complete in the view model, shared preferences and logged day db
      */
     fun markComplete() {
-        challengePrefs.edit().putBoolean(completedPrefs, true).apply()
         completed = true
         addLoggedDay()
     }
@@ -231,7 +208,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as frozen in the view model, shared preferences and logged day db
      */
     fun freezeDay() {
-        challengePrefs.edit().putBoolean(frozenPrefs, true).apply()
         frozen = true
         addLoggedDay()
     }

@@ -21,6 +21,7 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.okomilabs.dailychallenges.R
+import com.okomilabs.dailychallenges.data.entities.Challenge
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 import kotlinx.android.synthetic.main.fragment_challenge.*
 
@@ -94,13 +95,16 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
+            val challenge: Challenge = challengeViewModel.challenge.value ?:
+                Challenge(-1, "", "", "", null)
+
             card.findNavController().navigate(
                 ChallengeFragmentDirections.challengeToReadMore(
                     arrayOf(
-                        challengeViewModel.title.value.toString(),
-                        challengeViewModel.category.value.toString(),
-                        challengeViewModel.summary.value.toString(),
-                        challengeViewModel.desc.value.toString()
+                        challenge.title,
+                        challenge.category,
+                        challenge.summary,
+                        challenge.desc ?: ""
                     )
                 )/*,
                 // Code for shared element transition
@@ -121,15 +125,12 @@ class ChallengeFragment: Fragment() {
      * Observes changes in title and category in view model and updates respective text view values
      */
     private fun setChallengeInfo(title: TextView, category: TextView) {
-        val titleObserver = Observer<String> { newTitle ->
-            title.text = newTitle
-        }
-        val categoryObserver = Observer<String> { newCategory ->
-            category.text = newCategory
+        val challengeObserver = Observer<Challenge> { newChallenge ->
+            title.text = newChallenge.title
+            category.text = newChallenge.category
         }
 
-        challengeViewModel.title.observe(viewLifecycleOwner, titleObserver)
-        challengeViewModel.category.observe(viewLifecycleOwner, categoryObserver)
+        challengeViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +174,6 @@ class ChallengeFragment: Fragment() {
      */
     private fun completeFunctionality(complete: Button) {
         complete.setOnClickListener {
-
             if (challengeViewModel.isNewDay()) {
                 challengeViewModel.refreshChallenge()
                 refreshFragment()
