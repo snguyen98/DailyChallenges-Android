@@ -4,6 +4,7 @@ import android.app.Application
 import com.okomilabs.dailychallenges.data.daos.ChallengeDao
 import com.okomilabs.dailychallenges.data.databases.ChallengeDatabase
 import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.Link
 
 class ChallengeRepo(application: Application) {
     private val dao: ChallengeDao = ChallengeDatabase.getInstance(application).challengeDao()
@@ -16,4 +17,7 @@ class ChallengeRepo(application: Application) {
         return dao.getTotal()
     }
 
+    suspend fun getLinksById(challengeId: Int): List<Link> {
+        return dao.getLinksById(challengeId)
+    }
 }

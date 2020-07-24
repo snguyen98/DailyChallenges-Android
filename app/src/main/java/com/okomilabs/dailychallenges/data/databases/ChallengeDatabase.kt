@@ -7,8 +7,9 @@ import androidx.room.RoomDatabase
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.daos.ChallengeDao
 import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.Link
 
-@Database(entities = [Challenge::class], version = R.integer.challenge_db_ver)
+@Database(entities = [Challenge::class, Link::class], version = R.integer.challenge_db_ver)
 abstract class ChallengeDatabase: RoomDatabase() {
     abstract fun challengeDao(): ChallengeDao
 
