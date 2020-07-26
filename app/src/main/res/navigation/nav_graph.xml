@@ -8,20 +8,38 @@
     <fragment
         android:id="@+id/challenge_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.ChallengeFragment"
-        android:label="fragment_challenge">
+        android:label="@string/app_name">
 
         <action
             android:id="@+id/challenge_to_read_more"
             app:destination="@id/read_more_fragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/read_more_fragment"
-        android:name="com.okomilabs.dailychallenges.fragments.ReadMoreFragment">
+        android:name="com.okomilabs.dailychallenges.fragments.ReadMoreFragment"
+        android:label="@string/app_name">
 
         <action
-            android:id="@+id/read_more_to_challenge"
+            android:id="@+id/challenge_to_read_more"
             app:destination="@id/challenge_fragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/help_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.HelpFragment"
+        android:label="Help" />
+
+    <fragment
+        android:id="@+id/about_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.AboutFragment"
+        android:label="About" />
+
+    <fragment
+        android:id="@+id/credits_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.CreditsFragment"
+        android:label="Credits" />
 
 </navigation>

@@ -19,6 +19,15 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <!--  Style for navigation drawer  -->
+    <style name="DrawerTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
     <!--  Style for challenge card  -->
     <style name="ChallengeCard">
         <item name="android:layout_width">match_parent</item>
