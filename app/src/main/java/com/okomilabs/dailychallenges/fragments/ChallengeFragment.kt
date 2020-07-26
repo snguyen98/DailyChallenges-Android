@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,7 +22,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
-import kotlinx.android.synthetic.main.fragment_challenge.*
 
 class ChallengeFragment: Fragment() {
     private lateinit var challengeViewModel: ChallengeViewModel
@@ -58,25 +56,7 @@ class ChallengeFragment: Fragment() {
         completeFunctionality(complete)
         skipFunctionality(skip)
 
-        // Removes back button from action bar
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         return root
-    }
-
-    override fun onPause() {
-        banner_ad.pause()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        banner_ad.resume()
-    }
-
-    override fun onDestroy() {
-        banner_ad.destroy()
-        super.onDestroy()
     }
 
     /**
@@ -95,9 +75,6 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
-            val challenge: Challenge = challengeViewModel.challenge.value ?:
-                Challenge(-1, "", "", "", null)
-
             card.findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
         }
     }
