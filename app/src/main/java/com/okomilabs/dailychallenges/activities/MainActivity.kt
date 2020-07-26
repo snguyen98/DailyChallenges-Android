@@ -51,11 +51,24 @@ class MainActivity: AppCompatActivity() {
     }
 
     /**
-     * Back button functionality in action bar
+     * Back button functionality in app bar
      */
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+        return findNavController(R.id.nav_host_fragment)
+            .navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    /**
+     * Closes drawer if open when back button is pressed otherwise normal back functionality
+     */
+    override fun onBackPressed() {
+        val drawer: DrawerLayout = findViewById(R.id.drawer)
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     /**
