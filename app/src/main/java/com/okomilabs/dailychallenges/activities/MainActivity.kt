@@ -33,6 +33,7 @@ class MainActivity: AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
+                R.id.welcome_fragment,
                 R.id.challenge_fragment,
                 R.id.help_fragment,
                 R.id.about_fragment,

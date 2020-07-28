@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_gravity="center"
-        style="@style/ChallengeLayout">
+        style="@style/MatchHeight">
 
         <TextView
             android:id="@+id/challenge_category"
