@@ -3,7 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/challenge_fragment">
+    app:startDestination="@id/welcome_fragment">
+
+    <fragment
+        android:id="@+id/welcome_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.WelcomeFragment">
+
+        <action
+            android:id="@+id/welcome_to_challenge"
+            app:destination="@id/challenge_fragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/challenge_fragment"
@@ -13,6 +23,10 @@
         <action
             android:id="@+id/challenge_to_read_more"
             app:destination="@id/read_more_fragment" />
+
+        <action
+            android:id="@+id/challenge_to_welcome"
+            app:destination="@id/welcome_fragment" />
 
     </fragment>
 
