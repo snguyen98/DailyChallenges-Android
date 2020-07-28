@@ -84,6 +84,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun updateCurrent() {
         challengeId = challengePrefs.getInt(idPrefs, -1)
 
+        if (challengeId == -1) {
+            Log.d("Challenge ID", "Challenge could not be found in shared preferences")
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             challenge.postValue(challengeRepo.challengeById(challengeId))
             links.postValue(challengeRepo.getLinksById(challengeId))
