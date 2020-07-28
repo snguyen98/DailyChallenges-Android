@@ -2,7 +2,9 @@ package com.okomilabs.dailychallenges.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.transition.Slide
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.rewarded.RewardItem
@@ -56,6 +58,8 @@ class ChallengeFragment: Fragment() {
         completeFunctionality(complete)
         skipFunctionality(skip)
 
+        enterTransition = Slide(Gravity.END)
+
         return root
     }
 
@@ -63,7 +67,7 @@ class ChallengeFragment: Fragment() {
      * Reloads the fragment
      */
     private fun refreshFragment() {
-        activity?.recreate()
+        findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +79,7 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
-            card.findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
+            findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
         }
     }
 
