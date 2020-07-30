@@ -9,17 +9,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
-import com.okomilabs.dailychallenges.data.entities.Link
-import com.okomilabs.dailychallenges.data.entities.LoggedDay
+import com.okomilabs.dailychallenges.data.entities.LoginDay
 import com.okomilabs.dailychallenges.data.repos.ChallengeRepo
-import com.okomilabs.dailychallenges.data.repos.LoggedDayRepo
+import com.okomilabs.dailychallenges.data.repos.LoginDayRepo
 import com.okomilabs.dailychallenges.helpers.DateHelper
+import com.okomilabs.dailychallenges.helpers.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ChallengeViewModel(application: Application): AndroidViewModel(application) {
+    // Room database repositories
+    private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
+    private val loginDayRepo: LoginDayRepo = LoginDayRepo(application)
+
+    // Shared preferences references
     private val challengePrefs: SharedPreferences = application.getSharedPreferences(
         application.getString(R.string.challenge_key), Context.MODE_PRIVATE
     )
@@ -28,50 +33,37 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         application.getString(R.string.skips_key), Context.MODE_PRIVATE
     )
 
-    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            when (key) {
-                application.getString(R.string.curr_id) -> updateCurrent()
-            }
-        }
-
-    private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
-    private val loggedDayRepo: LoggedDayRepo = LoggedDayRepo(application)
-
-    private val datePrefs: String = application.getString(R.string.curr_date)
+    // Shared preferences strings
+    private val lastLoginPrefs: String = application.getString(R.string.last_login)
     private val idPrefs: String = application.getString(R.string.curr_id)
+    private val streakPrefs: String = application.getString(R.string.streak_value)
     private val skippedChallengePrefs: String = application.getString(R.string.skipped_challenge)
     private val skipsLeftPrefs: String = application.getString(R.string.skips_remaining)
+    private val freezesLeftPrefs: String = application.getString(R.string.freezes_remaining)
 
+    // Instance variables
     private var date: String = ""
-    private var challengeId: Int = -1
-    private var completed: Boolean = false
-    private var frozen: Boolean = false
-
+    private var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
-    var links: MutableLiveData<List<Link>> = MutableLiveData<List<Link>>()
-
 
     init {
-        // Keeps the challenge id instance variables updated with the value in shared preferences
-        challengePrefs.registerOnSharedPreferenceChangeListener(listener)
-
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
-            refreshChallenge()
+            if (isNewMonth()) {
+                setFreezesRemaining(2)
+            }
+
+            checkStreak()           // Checks if the streak was kept last login
+            refreshChallenge()      // Gets a new challenge
         }
-
-        updateCurrent()
+        // Gets the challenge and login day info from shared preferences
+        else {
+            viewModelScope.launch {
+                updateChallenge()
+                updateLoginDay()
+            }
+        }
     }
-
-
-    /**
-     * Detaches listener when the view model is cleared
-     */
-    override fun onCleared() {
-        challengePrefs.unregisterOnSharedPreferenceChangeListener(listener)
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////// Setting Functions /////////////////////////////////////
@@ -81,34 +73,85 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Function that updates the challenge id with the value in shared preferences and retrieves
      * the challenge info from the database
      */
-    private fun updateCurrent() {
-        challengeId = challengePrefs.getInt(idPrefs, -1)
+    private suspend fun updateChallenge() {
+        val id = challengePrefs.getInt(idPrefs, -1)
 
-        if (challengeId == -1) {
+        if (id == -1) {
             Log.d("Challenge ID", "Challenge could not be found in shared preferences")
         }
 
+        challenge.postValue(challengeRepo.challengeById(id))
+    }
+
+    /**
+     * Function that updates the login day variable with the login info for today in the database
+     */
+    private suspend fun updateLoginDay() {
+        loginDay.postValue(loginDayRepo.getLoginDayByDate(DateHelper().dateToInt(date)))
+    }
+
+    /**
+     * Chooses a challenge for today and sets the details into shared preferences
+     */
+    private fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
-            challenge.postValue(challengeRepo.challengeById(challengeId))
-            links.postValue(challengeRepo.getLinksById(challengeId))
+            val total: Int = challengeRepo.getTotal()
+            val id: Int = chooseRandomChallenge(total)                // Sets challenge ID instance variable
+
+            // Adds all challenge info to shared preferences
+            with (challengePrefs.edit()) {
+                putString(lastLoginPrefs, date)
+                putInt(idPrefs, id)
+                apply()
+            }
+
+            updateChallenge()
+            addLoggedDay(State.INCOMPLETE)
         }
     }
 
     /**
-     * Function that adds today's challenge to the logged day database
+     * Chooses a random challenge from the database excluding those that were skipped today
+     *
+     * @param total The total number of challenges in the database
      */
-    private fun addLoggedDay() {
+    private fun chooseRandomChallenge(total: Int): Int {
+        val challenges: MutableSet<Int> = (1..total).toMutableSet()
+
+        val id: Int = challengePrefs.getInt(idPrefs, -1)
+        val skipped: Int = skipsPrefs.getInt(skippedChallengePrefs, -1)
+
+        // Prevents the user getting the same challenge as last time
+        if (id != -1) {
+            challenges.remove(id)
+        }
+        if (skipped != -1) {
+            challenges.remove(skipped)      // Removes skipped challenge if the user skipped today
+        }
+        else {
+            setSkippedChallenge(id)    // Otherwise sets skipped challenge as current one
+        }
+
+        return challenges.random()
+    }
+
+    /**
+     * Function that adds today's challenge to the logged day database
+     *
+     * @param state The state of the challenge: 0 - Incomplete, 1 - Complete, 2 - Frozen
+     */
+    private fun addLoggedDay(state: Int) {
         viewModelScope.launch {
             val dateInt: Int = DateHelper().dateToInt(date)       // Date to be stored as an int
 
-            loggedDayRepo.addLoggedDay(
-                LoggedDay(
+            loginDayRepo.addLoggedDay(
+                LoginDay(
                     dateInt,
-                    challengeId,
-                    completed,
-                    frozen
+                    challenge.value?.id ?: -1,
+                    state
                 )
             )
+            updateLoginDay()
         }
     }
 
@@ -123,65 +166,37 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if today is a new day and false otherwise
      */
     fun isNewDay(): Boolean {
-        getDateToday()      // Gets the date today first
+        val lastLogin: String? = challengePrefs.getString(lastLoginPrefs, null)
+        getDateToday()      // Sets date instance variable to the date today
 
-        val lastLoggedIn: String? = challengePrefs.getString(
-            datePrefs, null
-        )
+        return lastLogin != date
+    }
 
-        return lastLoggedIn != date
+    /**
+     * Checks if a new month has started since last login
+     *
+     * @return True if today is a new month and false otherwise
+     */
+    private fun isNewMonth(): Boolean {
+        val lastLogin: String = challengePrefs.getString(lastLoginPrefs, null) ?: "01/06/2020"
+
+        return getMonthFromString(date) != getMonthFromString(lastLogin)
     }
 
     /**
      * Sets the date instance variable to today in the form dd/MM/yyyy
      */
     private fun getDateToday() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-        date = dateFormat.format(Date())
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////// Challenge Functions ////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Chooses a challenge for today and sets the details into shared preferences
-     */
-    private fun setChallengeToday() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val total: Int = challengeRepo.getTotal()
-            chooseRandomChallenge(total)                // Sets challenge ID instance variable
-
-            // Adds all challenge info to shared preferences
-            with (challengePrefs.edit()) {
-                putString(datePrefs, date)
-                putInt(idPrefs, challengeId)
-                apply()
-            }
-
-            addLoggedDay()
-        }
+        date = SimpleDateFormat("dd/MM/yyyy").format(Date())
     }
 
     /**
-     * Chooses a random challenge from the database excluding those that were skipped today
+     * Takes a date in the form dd/MM/yyyy and returns the month value
      *
-     * @param total The total number of challenges in the database
+     * @return The month in the form MM
      */
-    private fun chooseRandomChallenge(total: Int) {
-        val challenges: MutableSet<Int> = (1..total).toMutableSet()
-        val skipped: Int = skipsPrefs.getInt(skippedChallengePrefs, -1)
-
-        if (challengeId != -1) {
-            challenges.remove(challengeId)
-        }
-
-        if (skipped != -1) {
-            challenges.remove(skipped)
-        }
-
-        setSkippedChallenge(challengeId)
-        challengeId = challenges.random()
+    private fun getMonthFromString(dateString: String): String {
+        return dateString.substring(3, 4)
     }
 
 
@@ -204,16 +219,20 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as complete in the view model, shared preferences and logged day db
      */
     fun markComplete() {
-        completed = true
-        addLoggedDay()
+        addLoggedDay(State.COMPLETE)
+        setStreak(skipsPrefs.getInt(streakPrefs, -1) + 1)   // Increments the streak
     }
 
     /**
      * Sets today's challenge as frozen in the view model, shared preferences and logged day db
      */
     fun freezeDay() {
-        frozen = true
-        addLoggedDay()
+        val freezesRemaining: Int = skipsPrefs.getInt(freezesLeftPrefs, 0)
+
+        if (freezesRemaining > 0) {
+            setFreezesRemaining(freezesRemaining - 1)
+            addLoggedDay(State.FROZEN)
+        }
     }
 
     /**
@@ -222,7 +241,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     fun skipChallenge() {
         val skipsRemaining: Int = skipsPrefs.getInt(skipsLeftPrefs, 0)
 
-        if (skipsRemaining > -100) {
+        if (skipsRemaining > 0) {
             setSkipsRemaining(skipsRemaining - 1)
             setChallengeToday()
         }
@@ -239,19 +258,33 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Checks if the current challenge is complete
      */
     fun isComplete(): Boolean {
-        return completed
+        return loginDay.value?.state ?: -1 == State.COMPLETE
     }
 
     /**
      * Checks if the current challenge is frozen
      */
     fun isFrozen(): Boolean {
-        return frozen
+        return loginDay.value?.state ?: -1 == State.FROZEN
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////// Skip Helper Functions //////////////////////////////////
+    ///////////////////////////////////// Helper Functions /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Checks if the streak was broken last time they logged in
+     */
+    private fun checkStreak() {
+
+    }
+
+    /**
+     * Sets the current streak to shared preferences
+     */
+    private fun setStreak(streak: Int) {
+        skipsPrefs.edit().putInt(streakPrefs, streak).apply()
+    }
 
     /**
      * Sets the skipped set of challenges to shared preferences
@@ -275,17 +308,24 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Clears the skipped set of challenges
      */
     private fun resetSkippedChallenges() {
-        skipsPrefs.edit().remove(skippedChallengePrefs)
+        skipsPrefs.edit().remove(skippedChallengePrefs).apply()
+    }
+
+    /**
+     * Resets the number of freezes available to 2
+     */
+    private fun setFreezesRemaining(freezes: Int) {
+        skipsPrefs.edit().putInt(freezesLeftPrefs, freezes).apply()
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////// Testing Functions /////////////////////////////////////
+    /////////////////////////////////// Debugging Functions ////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun printDays() {
         viewModelScope.launch {
-            val days = loggedDayRepo.getLoggedDays()
+            val days = loginDayRepo.getAllLoggedDays()
             Log.d("Days", days.toString())
         }
     }
