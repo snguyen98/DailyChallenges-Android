@@ -22,19 +22,16 @@
 
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
-    <string name="curr_date">date</string>
+    <string name="last_login">login</string>
     <string name="curr_id">id</string>
-    <string name="curr_completed">complete</string>
-    <string name="curr_frozen">frozen</string>
-    <string name="curr_title">title</string>
-    <string name="curr_category">category</string>
-    <string name="curr_summary">summary</string>
-    <string name="curr_desc">desc</string>
 
     <string name="skips_key">com.okomilabs.dailychallenges.skips</string>
+    <string name="streak_value">streak</string>
     <string name="skipped_challenge">skipped</string>
     <string name="skips_remaining">skips</string>
+    <string name="freezes_remaining">freezes</string>
 
+    <!--  AdMob Ids  -->
     <string name="admob_id">ca-app-pub-6520975918360419~6174148309</string>
     <string name="banner_ad">ca-app-pub-6520975918360419/4861066639</string>
     <string name="reward_ad">ca-app-pub-6520975918360419/1352942751</string>
