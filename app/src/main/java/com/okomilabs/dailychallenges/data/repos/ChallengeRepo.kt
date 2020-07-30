@@ -9,8 +9,15 @@ import com.okomilabs.dailychallenges.data.entities.Link
 class ChallengeRepo(application: Application) {
     private val dao: ChallengeDao = ChallengeDatabase.getInstance(application).challengeDao()
 
-    suspend fun challengeById(id: Int): Challenge {
-        return dao.challengeById(id)[0]
+    suspend fun challengeById(id: Int): Challenge? {
+        val challenges: List<Challenge> = dao.challengeById(id)
+
+        return if (challenges.isEmpty()) {
+            null
+        }
+        else {
+            challenges[0]
+        }
     }
 
     suspend fun getTotal(): Int {
