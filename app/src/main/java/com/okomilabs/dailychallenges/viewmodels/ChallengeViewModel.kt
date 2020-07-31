@@ -51,12 +51,19 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
 
     init {
+        initialise()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Setting Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Performs checks and sets data when the fragment is created or refreshed
+     */
+    fun initialise() {
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
-            if (isNewMonth()) {
-                setFreezesRemaining(2)
-            }
-
             checkStreak()           // Checks if the streak was kept last login
             refreshChallenge()      // Gets a new challenge
         }
@@ -68,10 +75,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////// Setting Functions /////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Function that updates the challenge id with the value in shared preferences and retrieves
@@ -159,6 +162,17 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         }
     }
 
+    /**
+     * Function to call private function setChallengeToday
+     */
+    fun refreshChallenge() {
+        // Resets skips remaining and skipped challenges
+        setSkipsRemaining(2)
+        resetSkippedChallenges()
+
+        setChallengeToday()     // Gets new challenge for the day
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// Date Functions ///////////////////////////////////////
@@ -174,17 +188,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         getDateToday()      // Sets date instance variable to the date today
 
         return lastLogin != date
-    }
-
-    /**
-     * Checks if a new month has started since last login
-     *
-     * @return True if today is a new month and false otherwise
-     */
-    private fun isNewMonth(): Boolean {
-        val lastLogin: String = challengePrefs.getString(lastLoginPrefs, null) ?: "01/06/2020"
-
-        return getMonthFromString(date) != getMonthFromString(lastLogin)
     }
 
     /**
@@ -205,19 +208,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// Button Functions /////////////////////////////////////
+    //////////////////////////////////// Complete Functions ////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Function to call private function setChallengeToday
-     */
-    fun refreshChallenge() {
-        // Resets skips remaining and skipped challenges
-        setSkipsRemaining(2)
-        resetSkippedChallenges()
-
-        setChallengeToday()     // Gets new challenge for the day
-    }
 
     /**
      * Sets today's challenge as complete in the view model, shared preferences and logged day db
@@ -226,23 +218,81 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         addLoggedDay(State.COMPLETE)
         setStreak(statsPrefs.getInt(streakPrefs, -1) + 1)   // Increments the streak
 
-    /**
-     * Sets today's challenge as frozen in the view model, shared preferences and logged day db
-     */
-    fun freezeDay() {
-        val freezesRemaining: Int = skipsPrefs.getInt(freezesLeftPrefs, 0)
-
-        if (freezesRemaining > 0) {
-            setFreezesRemaining(freezesRemaining - 1)
-            addLoggedDay(State.FROZEN)
+        if (getStreak() % 7 == 0) {
+            setFreezesRemaining(resourcesPrefs.getInt(freezesLeftPrefs, 0) + 1)
         }
     }
+
+    /**
+     * Checks if the current challenge is complete
+     */
+    fun isComplete(): Boolean {
+        return loginDay.value?.state ?: -1 == State.COMPLETE
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// Streak Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Checks if the streak was broken last time they logged in
+     */
+    private fun checkStreak() {
+        val lastLogin: String? = challengePrefs.getString(lastLoginPrefs, null)
+
+        if (lastLogin != null) {
+            val todayInt: Int = DateHelper().dateToInt(date)
+            val lastLoginInt: Int = DateHelper().dateToInt(lastLogin)
+
+            viewModelScope.launch {
+                // Can't be null if the date exists in shared preferences
+                val lastLoginDay: LoginDay? = loginDayRepo.getLoginDayByDate(lastLoginInt)
+
+                // Check if challenge wasn't completed last time or the last login wasn't yesterday
+                if ((lastLoginDay?.state == State.INCOMPLETE) || (todayInt - lastLoginInt != 1)) {
+                    streakBroken()
+                }
+            }
+        }
+        else {
+            setStreak(0)        // Sets streak to zero when user launches app for the first time
+        }
+    }
+
+    /**
+     * To be called when the streak has been broken
+     */
+    private fun streakBroken() {
+        setStreak(0)                // Resets streak to zero
+        setFreezesRemaining(0)      // Resets freezes to zero
+        // Store best streak when stats page is made //
+    }
+
+    /**
+     * Gets the current streak
+     */
+    fun getStreak(): Int {
+        return statsPrefs.getInt(streakPrefs, 0)
+    }
+
+    /**
+     * Sets the current streak to shared preferences
+     */
+    private fun setStreak(streak: Int) {
+        statsPrefs.edit().putInt(streakPrefs, streak).apply()
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////// Skip Functions //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Adds current challenge to the skipped set and sets a new challenge for today
      */
     fun skipChallenge() {
-        val skipsRemaining: Int = skipsPrefs.getInt(skipsLeftPrefs, 0)
+        val skipsRemaining: Int = resourcesPrefs.getInt(skipsLeftPrefs, 0)
 
         if (skipsRemaining > 0) {
             setSkipsRemaining(skipsRemaining - 1)
@@ -254,39 +304,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Gets the remaining skips allowed
      */
     fun getSkips(): Int {
-        return skipsPrefs.getInt(skipsLeftPrefs, 0)
-    }
-
-    /**
-     * Checks if the current challenge is complete
-     */
-    fun isComplete(): Boolean {
-        return loginDay.value?.state ?: -1 == State.COMPLETE
-    }
-
-    /**
-     * Checks if the current challenge is frozen
-     */
-    fun isFrozen(): Boolean {
-        return loginDay.value?.state ?: -1 == State.FROZEN
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// Helper Functions /////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Checks if the streak was broken last time they logged in
-     */
-    private fun checkStreak() {
-
-    }
-
-    /**
-     * Sets the current streak to shared preferences
-     */
-    private fun setStreak(streak: Int) {
-        statsPrefs.edit().putInt(streakPrefs, streak).apply()
+        return resourcesPrefs.getInt(skipsLeftPrefs, 0)
     }
 
     /**
@@ -314,6 +332,37 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         resourcesPrefs.edit().remove(skippedChallengePrefs).apply()
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// Freeze Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Sets today's challenge as frozen in the view model, shared preferences and logged day db
+     */
+    fun freezeDay() {
+        val freezesRemaining: Int = resourcesPrefs.getInt(freezesLeftPrefs, 0)
+
+        if (freezesRemaining > 0) {
+            setFreezesRemaining(freezesRemaining - 1)
+            addLoggedDay(State.FROZEN)
+        }
+    }
+
+    /**
+     * Gets the remaining freezes allowed
+     */
+    fun getFreezes(): Int {
+        return resourcesPrefs.getInt(freezesLeftPrefs, 0)
+    }
+
+    /**
+     * Checks if the current challenge is frozen
+     */
+    fun isFrozen(): Boolean {
+        return loginDay.value?.state ?: -1 == State.FROZEN
+    }
+
     /**
      * Resets the number of freezes available to 2
      */
@@ -331,6 +380,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             val days = loginDayRepo.getAllLoggedDays()
             Log.d("Days", days.toString())
         }
+    }
+
+    private fun printStreak() {
+        val streak: Int = statsPrefs.getInt(streakPrefs, 0)
+        Log.d("Streak", streak.toString())
     }
 
     private fun printSkips() {
