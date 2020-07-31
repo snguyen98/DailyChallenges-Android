@@ -47,7 +47,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     // Instance variables
     private var date: String = ""
-    private var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
+    var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
 
     init {
