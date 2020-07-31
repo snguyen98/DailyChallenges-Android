@@ -31,6 +31,7 @@
             android:id="@+id/freeze_icon"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:contentDescription="@string/freeze_icon_desc"
             app:srcCompat="@drawable/freeze_icon"
             style="@style/FreezeIcon" />
 

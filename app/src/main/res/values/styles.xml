@@ -75,8 +75,6 @@
 
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingEnd">8dp</item>
-
-        <item name="contentDescription">@string/freeze_icon_desc</item>
     </style>
 
     <!--  Style for category icon on read more page  -->
@@ -86,8 +84,6 @@
 
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">30dp</item>
-
-        <item name="contentDescription">@string/category_icon_desc</item>
     </style>
 
     <!--  Style for arrow icon on read more page  -->
