@@ -29,8 +29,12 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         application.getString(R.string.challenge_key), Context.MODE_PRIVATE
     )
 
-    private val skipsPrefs: SharedPreferences = application.getSharedPreferences(
-        application.getString(R.string.skips_key), Context.MODE_PRIVATE
+    private val statsPrefs: SharedPreferences = application.getSharedPreferences(
+        application.getString(R.string.stats_key), Context.MODE_PRIVATE
+    )
+
+    private val resourcesPrefs: SharedPreferences = application.getSharedPreferences(
+        application.getString(R.string.resources_key), Context.MODE_PRIVATE
     )
 
     // Shared preferences strings
@@ -119,7 +123,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
 
         val id: Int = challengePrefs.getInt(idPrefs, -1)
-        val skipped: Int = skipsPrefs.getInt(skippedChallengePrefs, -1)
+        val skipped: Int = resourcesPrefs.getInt(skippedChallengePrefs, -1)
 
         // Prevents the user getting the same challenge as last time
         if (id != -1) {
@@ -220,8 +224,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     fun markComplete() {
         addLoggedDay(State.COMPLETE)
-        setStreak(skipsPrefs.getInt(streakPrefs, -1) + 1)   // Increments the streak
-    }
+        setStreak(statsPrefs.getInt(streakPrefs, -1) + 1)   // Increments the streak
 
     /**
      * Sets today's challenge as frozen in the view model, shared preferences and logged day db
@@ -283,7 +286,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets the current streak to shared preferences
      */
     private fun setStreak(streak: Int) {
-        skipsPrefs.edit().putInt(streakPrefs, streak).apply()
+        statsPrefs.edit().putInt(streakPrefs, streak).apply()
     }
 
     /**
@@ -292,7 +295,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param skipped The set of challenges to be added
      */
     private fun setSkippedChallenge(skipped: Int) {
-        skipsPrefs.edit().putInt(skippedChallengePrefs, skipped).apply()
+        resourcesPrefs.edit().putInt(skippedChallengePrefs, skipped).apply()
     }
 
     /**
@@ -301,21 +304,21 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param skips The number of skips to be set
      */
     private fun setSkipsRemaining(skips: Int) {
-        skipsPrefs.edit().putInt(skipsLeftPrefs, skips).apply()
+        resourcesPrefs.edit().putInt(skipsLeftPrefs, skips).apply()
     }
 
     /**
      * Clears the skipped set of challenges
      */
     private fun resetSkippedChallenges() {
-        skipsPrefs.edit().remove(skippedChallengePrefs).apply()
+        resourcesPrefs.edit().remove(skippedChallengePrefs).apply()
     }
 
     /**
      * Resets the number of freezes available to 2
      */
     private fun setFreezesRemaining(freezes: Int) {
-        skipsPrefs.edit().putInt(freezesLeftPrefs, freezes).apply()
+        resourcesPrefs.edit().putInt(freezesLeftPrefs, freezes).apply()
     }
 
 
@@ -331,7 +334,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     private fun printSkips() {
-        val skipsRemaining: Int = skipsPrefs.getInt(skipsLeftPrefs, 0)
+        val skipsRemaining: Int = resourcesPrefs.getInt(skipsLeftPrefs, 0)
         Log.d("Skips", skipsRemaining.toString())
     }
 

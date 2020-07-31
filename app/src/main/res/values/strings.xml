@@ -25,8 +25,10 @@
     <string name="last_login">login</string>
     <string name="curr_id">id</string>
 
-    <string name="skips_key">com.okomilabs.dailychallenges.skips</string>
+    <string name="stats_key">com.okomilabs.dailychallenges.stats</string>
     <string name="streak_value">streak</string>
+
+    <string name="resources_key">com.okomilabs.dailychallenges.resources</string>
     <string name="skipped_challenge">skipped</string>
     <string name="skips_remaining">skips</string>
     <string name="freezes_remaining">freezes</string>
