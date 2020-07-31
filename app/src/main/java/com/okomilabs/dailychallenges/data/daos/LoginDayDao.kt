@@ -1,10 +1,12 @@
 package com.okomilabs.dailychallenges.data.daos
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.okomilabs.dailychallenges.data.entities.LoginDay
 
+@Dao
 interface LoginDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addLoggedDay(day: LoginDay)
