@@ -133,10 +133,4 @@ class ReadMoreFragment: Fragment() {
 
         readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
     }
-
-//    private fun setLinkStyle(): TextView {
-//        val linkView = TextView(context)
-//
-//
-//    }
 }
