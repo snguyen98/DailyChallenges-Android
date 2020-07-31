@@ -29,7 +29,7 @@ class WelcomeFragment: Fragment() {
     private fun animateWelcome(welcome: TextView) {
         welcome
             .animate()
-            .translationYBy(-100f)
+            .translationYBy(-80f)
             .alpha(1.0f)
             .setDuration(1000L)
             .setStartDelay(500L)
@@ -48,7 +48,7 @@ class WelcomeFragment: Fragment() {
     private fun hideWelcome(welcome: TextView) {
         welcome
             .animate()
-            .translationYBy(-100f)
+            .translationYBy(-80f)
             .alpha(0.0f)
             .setDuration(1000L)
             .setStartDelay(500L)
