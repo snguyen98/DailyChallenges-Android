@@ -24,6 +24,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.LoginDay
+import com.okomilabs.dailychallenges.helpers.State
 import com.okomilabs.dailychallenges.viewmodels.ChallengeViewModel
 
 class ChallengeFragment: Fragment() {
@@ -49,6 +51,7 @@ class ChallengeFragment: Fragment() {
 
         val complete: Button = root.findViewById(R.id.complete_button)
         val skip: Button = root.findViewById(R.id.skip_button)
+        val freeze: ImageView = root.findViewById(R.id.freeze_icon)
 
         setNavigation(card)
         setChallengeInfo(title, category)
@@ -58,6 +61,9 @@ class ChallengeFragment: Fragment() {
 
         completeFunctionality(complete)
         skipFunctionality(skip)
+        freezeFunctionality(freeze)
+
+        observeChallengeState(freeze)
 
         enterTransition = Slide(Gravity.END)
 
@@ -78,7 +84,7 @@ class ChallengeFragment: Fragment() {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////// Challenge Info Functions /////////////////////////////////
+    //////////////////////////////////// Observing Functions ///////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -91,6 +97,23 @@ class ChallengeFragment: Fragment() {
         }
 
         challengeViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
+    }
+
+    /**
+     * Observes the state of the challenge and changes the top right icon accordingly
+     */
+    private fun observeChallengeState(freeze: ImageView) {
+        val stateObserver = Observer<LoginDay> { newLoginDay ->
+            if (newLoginDay.state == State.FROZEN) {
+                freeze.setColorFilter(R.color.freeze_icon)
+            }
+            else if (newLoginDay.state == State.COMPLETE) {
+                freeze.visibility = View.GONE
+                // Show complete icon
+            }
+        }
+
+        challengeViewModel.loginDay.observe(viewLifecycleOwner, stateObserver)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
