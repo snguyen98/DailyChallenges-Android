@@ -68,6 +68,17 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <!--  Style for freeze icon on challenge card  -->
+    <style name="FreezeIcon">
+        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_height">35dp</item>
+
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+
+        <item name="contentDescription">@string/freeze_icon_desc</item>
+    </style>
+
     <!--  Style for category icon on read more page  -->
     <style name="CategoryIcon">
         <item name="android:layout_width">match_parent</item>
