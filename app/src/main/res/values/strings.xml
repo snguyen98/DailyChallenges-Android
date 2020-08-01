@@ -35,6 +35,7 @@
     <string name="skipped_challenge">skipped</string>
     <string name="skips_remaining">skips</string>
     <string name="freezes_remaining">freezes</string>
+    <string name="shown_freeze_msg">shown_freeze</string>
 
     <!--  AdMob Ids  -->
     <string name="admob_id">ca-app-pub-6520975918360419~6174148309</string>
