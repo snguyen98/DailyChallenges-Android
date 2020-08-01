@@ -44,6 +44,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private val skippedChallengePrefs: String = application.getString(R.string.skipped_challenge)
     private val skipsLeftPrefs: String = application.getString(R.string.skips_remaining)
     private val freezesLeftPrefs: String = application.getString(R.string.freezes_remaining)
+    private val shownFreezePrefs: String = application.getString(R.string.shown_freeze_msg)
 
     // Instance variables
     private var date: String = ""
@@ -361,6 +362,32 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     fun isFrozen(): Boolean {
         return loginDay.value?.state ?: -1 == State.FROZEN
+    }
+
+    /**
+     * Checks if the user gained a freeze for completing their last challenge and ensures the freeze
+     * message is only shown once
+     *
+     * @return True if freeze message should be shown and false otherwise
+     */
+    fun showFreezeMsg(): Boolean {
+        return if (!resourcesPrefs.getBoolean(shownFreezePrefs, false)) {
+            val show: Boolean =
+                resourcesPrefs.getInt(freezesLeftPrefs, 0) != 0 &&
+                resourcesPrefs.getInt(streakPrefs, 0) % 7 == 0
+
+            if (show) {
+                resourcesPrefs.edit().putBoolean(shownFreezePrefs, true).apply()
+                true
+            }
+            else {
+                resourcesPrefs.edit().putBoolean(shownFreezePrefs, false).apply()
+                false
+            }
+        }
+        else {
+            false
+        }
     }
 
     /**
