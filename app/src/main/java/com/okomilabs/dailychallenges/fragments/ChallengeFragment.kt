@@ -65,10 +65,10 @@ class ChallengeFragment: Fragment() {
         completeFunctionality(complete)
         skipFunctionality(skip)
         freezeFunctionality(freeze)
-
         observeState(streakIcon, streakVal, freeze)
 
         enterTransition = Slide(Gravity.END)
+        checkGainedFreeze()
 
         return root
     }
@@ -243,7 +243,7 @@ class ChallengeFragment: Fragment() {
                     else {
                         if (rewardedAd.isLoaded) {
                             builder.setMessage(
-                                "You have $skips skips left. Would you like " +
+                                "You have $skips skip(s) left. Would you like " +
                                 "to watch a short ad to skip this challenge?"
                             )
                             builder.setPositiveButton("Yes") { _, _ ->
@@ -279,13 +279,13 @@ class ChallengeFragment: Fragment() {
 
                 if (!built) {
                     if (freezes <= 0) {
-                        builder.setMessage("You have no freezes left")
+                        builder.setMessage("You have no freezes left. ")
                         builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
                     }
 
                     else {
                         builder.setMessage(
-                            "You have $freezes freezes left. Would " +
+                            "You have $freezes freeze(s) left. Would " +
                             "you like to freeze this challenge?"
                         )
                         builder.setPositiveButton("Yes") { _, _ ->
@@ -303,14 +303,39 @@ class ChallengeFragment: Fragment() {
     }
 
     /**
+     * Checks if the user gain a freeze since last login and shows an message if true
+     */
+    private fun checkGainedFreeze() {
+        if (challengeViewModel.showFreezeMsg()) {
+            AlertDialog.Builder(context)
+                .setTitle("Freeze Gained")
+                .setMessage(
+                    "You gained a freeze for keeping up your streak! " +
+                    "You have ${challengeViewModel.getFreezes()} freeze(s)."
+                )
+                .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
+                .create()
+                .show()
+        }
+    }
+
+    /**
      * Checks if a new day has started and refreshes the challenge if true
      *
      * @return True if a new day has started and false otherwise
      */
     private fun checkIsNewDay(): Boolean {
         return if (challengeViewModel.isNewDay()) {
-            challengeViewModel.initialise()
-            findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
+            AlertDialog.Builder(context)
+                .setTitle("Challenge period is over")
+                .setMessage("A new day has started. Refreshing challenge...")
+                .setPositiveButton("Ok") { _, _ ->
+                    challengeViewModel.initialise()
+                    findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
+                }
+                .create()
+                .show()
+
             true
         }
         else {
