@@ -17,6 +17,7 @@
 
     <ImageView
         android:id="@+id/category_image"
+        android:contentDescription="@string/category_icon_desc"
         app:srcCompat="@drawable/personal_wellbeing"
         style="@style/CategoryIcon" />
 

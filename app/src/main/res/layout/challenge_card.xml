@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/challenge_card"
     android:transitionName="card_element"
     style="@style/ChallengeCard">
@@ -18,11 +19,21 @@
 
         <TextView
             android:id="@+id/challenge_title"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:transitionName="title_element"
             android:layout_centerInParent="true"
             android:textAlignment="center"
             android:textSize="22sp"
             style="@style/BoldHeading" />
+
+        <ImageView
+            android:id="@+id/freeze_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/freeze_icon_desc"
+            app:srcCompat="@drawable/freeze_icon"
+            style="@style/FreezeIcon" />
 
     </RelativeLayout>
 
