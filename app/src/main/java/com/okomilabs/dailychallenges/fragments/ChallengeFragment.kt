@@ -51,6 +51,9 @@ class ChallengeFragment: Fragment() {
 
         val complete: Button = root.findViewById(R.id.complete_button)
         val skip: Button = root.findViewById(R.id.skip_button)
+
+        val streakIcon: ImageView = root.findViewById(R.id.streak_icon)
+        val streakVal: TextView = root.findViewById(R.id.streak_val)
         val freeze: ImageView = root.findViewById(R.id.freeze_icon)
 
         setNavigation(card)
@@ -63,7 +66,7 @@ class ChallengeFragment: Fragment() {
         skipFunctionality(skip)
         freezeFunctionality(freeze)
 
-        observeChallengeState(freeze)
+        observeState(streakIcon, streakVal, freeze)
 
         enterTransition = Slide(Gravity.END)
 
@@ -79,7 +82,9 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
-            findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
+            if (!checkIsNewDay()) {
+                findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
+            }
         }
     }
 
@@ -102,8 +107,20 @@ class ChallengeFragment: Fragment() {
     /**
      * Observes the state of the challenge and changes the top right icon accordingly
      */
-    private fun observeChallengeState(freeze: ImageView) {
+    private fun observeState(streakIcon: ImageView, streakVal: TextView, freeze: ImageView) {
         val stateObserver = Observer<LoginDay> { newLoginDay ->
+            val streak: Int = challengeViewModel.getStreak()
+
+            if (streak > 0) {
+                streakIcon.visibility = View.VISIBLE
+                streakVal.visibility = View.VISIBLE
+                streakVal.text = streak.toString()
+            }
+            else {
+                streakIcon.visibility = View.GONE
+                streakVal.visibility = View.GONE
+            }
+
             if (newLoginDay.state == State.FROZEN) {
                 freeze.setColorFilter(R.color.freeze_icon)
             }
@@ -159,14 +176,18 @@ class ChallengeFragment: Fragment() {
 
             override fun onRewardedAdClosed() {
                 loadRewardedAd()
-                if (skip) {
-                    challengeViewModel.skipChallenge()
+
+                if (!checkIsNewDay()) {
+                    if (skip) {
+                        challengeViewModel.skipChallenge()
+                    }
                     skip = false
                 }
             }
 
             override fun onRewardedAdFailedToShow(errorCode: Int) {
                 Log.d("Rewarded Ad", "Failed to show with code: $errorCode")
+                checkIsNewDay()
             }
         }
 
