@@ -65,8 +65,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     fun initialise() {
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
-            checkStreak()           // Checks if the streak was kept last login
-            refreshChallenge()      // Gets a new challenge
+            checkStreak()
+            refreshChallenge()
         }
         // Gets the challenge and login day info from shared preferences
         else {
@@ -166,7 +166,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     /**
      * Function to call private function setChallengeToday
      */
-    fun refreshChallenge() {
+    private fun refreshChallenge() {
         // Resets skips remaining and skipped challenges
         setSkipsRemaining(2)
         resetSkippedChallenges()
