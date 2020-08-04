@@ -6,11 +6,14 @@
     android:gravity="center">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/welcome_message"
         android:alpha="0"
         android:textAlignment="center"
         android:textSize="27sp"
         android:text="@string/welcome_message"
-        style="@style/BoldHeading" />
+        android:color="@android:color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
