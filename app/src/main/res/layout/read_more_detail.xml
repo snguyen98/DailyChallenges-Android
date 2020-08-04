@@ -5,6 +5,7 @@
     style="@style/ReadMoreLayout">
 
     <TextView
+        android:id="@+id/overview_label"
         android:text="@string/overview_label"
         android:textSize="24sp"
         android:color="@android:color/black"

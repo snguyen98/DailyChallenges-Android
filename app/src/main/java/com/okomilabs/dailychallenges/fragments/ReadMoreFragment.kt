@@ -86,13 +86,16 @@ class ReadMoreFragment: Fragment() {
             category.text = newChallenge.category
             summary.text = newChallenge.summary
 
+            val overviewLabel: TextView = detail.findViewById(R.id.overview_label)
+
             if (newChallenge.desc != null) {
+                overviewLabel.visibility = View.VISIBLE
                 desc.text = newChallenge.desc
-                showDetail(pointer, detail)
+                showDetail(pointer, detail, true)
             }
             else {
-                pointer.visibility = View.GONE
-                detail.visibility = View.GONE
+                overviewLabel.visibility = View.GONE
+                showDetail(pointer, detail, false)
             }
 
             showCategoryIcon(icon, newChallenge.category)
@@ -113,12 +116,11 @@ class ReadMoreFragment: Fragment() {
         }
     }
 
-    private fun showDetail(pointer: LinearLayout, detail: LinearLayout) {
-        pointer.visibility = View.VISIBLE
-        detail.visibility = View.VISIBLE
-
+    private fun showDetail(pointer: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
         val linksObserver = Observer<List<Link>> { newLinks ->
             if (newLinks != null) {
+                pointer.visibility = View.VISIBLE
+                detail.visibility = View.VISIBLE
 
                 for (link in newLinks) {
                     val linkView = TextView(context)
@@ -147,6 +149,16 @@ class ReadMoreFragment: Fragment() {
                 }
 
                 detail.findViewById<TextView>(R.id.links_label).visibility = View.VISIBLE
+            }
+            else {
+                if (hasDesc) {
+                    pointer.visibility = View.VISIBLE
+                    detail.visibility = View.VISIBLE
+                }
+                else {
+                    pointer.visibility = View.GONE
+                    detail.visibility = View.GONE
+                }
             }
         }
 
