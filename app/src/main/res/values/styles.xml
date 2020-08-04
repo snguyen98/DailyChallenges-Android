@@ -31,7 +31,7 @@
     <!--  Style for challenge card  -->
     <style name="ChallengeCard">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">220dp</item>
 
         <item name="cardBackgroundColor">@color/lightGray</item>
         <item name="cardCornerRadius">15dp</item>
@@ -68,10 +68,31 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <!--  Style for streak icon on challenge card  -->
+    <style name="StreakIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <!--  Style for streak number on challenge card  -->
+    <style name="StreakVal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:paddingStart">3dp</item>
+
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <!--  Style for freeze icon on challenge card  -->
     <style name="FreezeIcon">
-        <item name="android:layout_width">35dp</item>
-        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
 
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingEnd">8dp</item>
@@ -79,11 +100,13 @@
 
     <!--  Style for category icon on read more page  -->
     <style name="CategoryIcon">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">113dp</item>
         <item name="android:layout_height">113dp</item>
 
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">30dp</item>
+
+        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <!--  Style for arrow icon on read more page  -->

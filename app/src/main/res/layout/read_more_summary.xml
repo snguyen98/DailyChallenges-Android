@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ReadMoreLayout">
 
     <TextView
@@ -16,9 +15,8 @@
         style="@style/BoldHeading" />
 
     <ImageView
-        android:id="@+id/category_image"
+        android:id="@+id/category_icon"
         android:contentDescription="@string/category_icon_desc"
-        app:srcCompat="@drawable/personal_wellbeing"
         style="@style/CategoryIcon" />
 
     <TextView

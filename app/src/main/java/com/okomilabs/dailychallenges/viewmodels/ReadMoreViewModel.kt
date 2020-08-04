@@ -15,8 +15,11 @@ import kotlinx.coroutines.launch
 class ReadMoreViewModel(application: Application): AndroidViewModel(application) {
     private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
 
-    private val challengeId: Int = application
-        .getSharedPreferences(application.getString(R.string.challenge_key), Context.MODE_PRIVATE)
+    private val challengeId: Int = application.applicationContext
+        .getSharedPreferences(
+            application.applicationContext.getString(R.string.challenge_key),
+            Context.MODE_PRIVATE
+        )
         .getInt(application.getString(R.string.curr_id), -1)
 
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()

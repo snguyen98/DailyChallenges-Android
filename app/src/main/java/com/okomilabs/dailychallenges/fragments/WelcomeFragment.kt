@@ -32,7 +32,7 @@ class WelcomeFragment: Fragment() {
             .translationYBy(-80f)
             .alpha(1.0f)
             .setDuration(1000L)
-            .setStartDelay(500L)
+            .setStartDelay(300L)
             .setListener(object: Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator?) {
                     hideWelcome(welcome)
@@ -51,7 +51,7 @@ class WelcomeFragment: Fragment() {
             .translationYBy(-80f)
             .alpha(0.0f)
             .setDuration(1000L)
-            .setStartDelay(500L)
+            .setStartDelay(300L)
             .setListener(object: Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator?) {
                     navigateToChallenge()
