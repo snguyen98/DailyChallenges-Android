@@ -62,6 +62,11 @@ class ReadMoreFragment: Fragment() {
         return root
     }
 
+    override fun onDestroy() {
+        activity?.viewModelStore?.clear()
+        super.onDestroy()
+    }
+
     /**
      * Observes changes in challenge info in view model, updates respective text view values and
      * displays the description and links if available
