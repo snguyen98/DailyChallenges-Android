@@ -100,11 +100,13 @@
 
     <!--  Style for category icon on read more page  -->
     <style name="CategoryIcon">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">113dp</item>
         <item name="android:layout_height">113dp</item>
 
         <item name="android:layout_marginTop">30dp</item>
         <item name="android:layout_marginBottom">30dp</item>
+
+        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
     <!--  Style for arrow icon on read more page  -->
