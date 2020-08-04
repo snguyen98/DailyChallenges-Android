@@ -41,34 +41,24 @@ class ChallengeFragment: Fragment() {
     ): View? {
         challengeViewModel = ViewModelProvider(this).get(ChallengeViewModel::class.java)
 
+        enterTransition = Slide(Gravity.END)
+
         val root = inflater.inflate(R.layout.fragment_challenge, container, false)
 
-        val card: CardView = root.findViewById(R.id.challenge_card)
-        val title: TextView = root.findViewById(R.id.challenge_title)
-        val category: TextView = root.findViewById(R.id.challenge_category)
+        observeState(
+            root.findViewById(R.id.skip_button),
+            root.findViewById(R.id.complete_button),
+            root.findViewById(R.id.streak_icon),
+            root.findViewById(R.id.streak_val),
+            root.findViewById(R.id.freeze_icon)
+        )
 
-        val bannerAd: AdView = root.findViewById(R.id.banner_ad)
-
-        val complete: Button = root.findViewById(R.id.complete_button)
-        val skip: Button = root.findViewById(R.id.skip_button)
-
-        val streakIcon: ImageView = root.findViewById(R.id.streak_icon)
-        val streakVal: TextView = root.findViewById(R.id.streak_val)
-        val freeze: ImageView = root.findViewById(R.id.freeze_icon)
-
-        setNavigation(card)
-        setChallengeInfo(title, category)
-
-        loadBannerAd(bannerAd)
-        loadRewardedAd()
-
-        completeFunctionality(complete)
-        skipFunctionality(skip)
-        freezeFunctionality(freeze)
-        observeState(streakIcon, streakVal, freeze)
-
-        enterTransition = Slide(Gravity.END)
         checkGainedFreeze()
+
+        setChallengeInfo(
+            root.findViewById(R.id.challenge_title),
+            root.findViewById(R.id.challenge_category)
+        )
 
         return root
     }
@@ -119,7 +109,13 @@ class ChallengeFragment: Fragment() {
     /**
      * Observes the state of the challenge and changes the top right icon accordingly
      */
-    private fun observeState(streakIcon: ImageView, streakVal: TextView, freeze: ImageView) {
+    private fun observeState(
+        skip: Button,
+        complete: Button,
+        streakIcon: ImageView,
+        streakVal: TextView,
+        freeze: ImageView
+    ) {
         val stateObserver = Observer<LoginDay> { newLoginDay ->
             val streak: Int = challengeViewModel.getStreak()
 
@@ -133,16 +129,54 @@ class ChallengeFragment: Fragment() {
                 streakVal.visibility = View.GONE
             }
 
-            if (newLoginDay.state == State.FROZEN) {
-                freeze.setColorFilter(R.color.freeze_icon)
-            }
-            else if (newLoginDay.state == State.COMPLETE) {
-                freeze.visibility = View.GONE
-                // Show complete icon
+            when (newLoginDay.state) {
+                State.INCOMPLETE -> {
+                    completeFunctionality(complete)
+                    skipFunctionality(skip)
+                    freezeFunctionality(freeze)
+                }
+                State.COMPLETE -> {
+                    freeze.alpha = 0f
+                    freeze.setImageResource(R.mipmap.complete_icon)
+                    freeze.animate().alpha(1.0f).duration = 100L
+
+                    disableButtons(skip, complete, freeze)
+                }
+                State.FROZEN -> {
+                    freeze.alpha = 0f
+                    freeze.setColorFilter(R.color.freeze_icon)
+                    freeze.animate().alpha(1.0f).duration = 100L
+
+                    disableButtons(skip, complete, freeze)
+                }
             }
         }
 
         challengeViewModel.loginDay.observe(viewLifecycleOwner, stateObserver)
+    }
+
+    /**
+     * Checks if a new day has started and refreshes the challenge if true
+     *
+     * @return True if a new day has started and false otherwise
+     */
+    private fun checkIsNewDay(): Boolean {
+        return if (challengeViewModel.isNewDay()) {
+            AlertDialog.Builder(context)
+                .setTitle("Challenge period is over")
+                .setMessage("A new day has started. Refreshing challenge...")
+                .setPositiveButton("Ok") { _, _ ->
+                    challengeViewModel.initialise()
+                    findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
+                }
+                .create()
+                .show()
+
+            true
+        }
+        else {
+            false
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +206,7 @@ class ChallengeFragment: Fragment() {
                 }
             }
 
-            rewardedAd = RewardedAd(context, getString(R.string.test_reward_ad))
+            rewardedAd = RewardedAd(activity?.applicationContext, getString(R.string.test_reward_ad))
             rewardedAd.loadAd(AdRequest.Builder().build(), adCallback)
         }
     }
@@ -214,23 +248,21 @@ class ChallengeFragment: Fragment() {
      * Sets up the appropriate alert dialogs when the complete button is pressed
      */
     private fun completeFunctionality(complete: Button) {
+        complete.animate().alpha(1.0f).duration = 100L
+
         complete.setOnClickListener {
             if (!checkIsNewDay()) {
-                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
-                builder.setTitle("Mark as Complete")
-
-                if (!built) {
-                    builder.setMessage("Would you like to mark this challenge as complete?")
-
-                    builder.setPositiveButton("Yes") { _, _ ->
+                AlertDialog.Builder(context)
+                    .setTitle("Mark as Complete")
+                    .setMessage("Would you like to mark this challenge as complete?")
+                    .setPositiveButton("Yes") { _, _ ->
                         if (!checkIsNewDay()) {
                             challengeViewModel.markComplete()
                         }
                     }
-                    builder.setNeutralButton("No") { _, _ -> checkIsNewDay() }
-                }
-
-                builder.create().show()
+                    .setNeutralButton("No") { _, _ -> checkIsNewDay() }
+                    .create()
+                    .show()
             }
         }
     }
@@ -239,37 +271,40 @@ class ChallengeFragment: Fragment() {
      * Sets up the appropriate alert dialogs when the skip button is pressed
      */
     private fun skipFunctionality(skip: Button) {
+        skip.animate().alpha(1.0f).duration = 100L
+
         skip.setOnClickListener {
             if (!checkIsNewDay()) {
                 val skips: Int = challengeViewModel.getSkips()
 
-                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("Skip Challenge")
 
-                if (!built) {
-                    if (skips <= 0) {
-                        builder.setMessage("You have no skips left")
-                        builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                    }
+                if (skips <= 0) {
+                    builder
+                        .setMessage("You have no skips left")
+                        .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
+                }
 
-                    else {
-                        if (rewardedAd.isLoaded) {
-                            builder.setMessage(
+                else {
+                    if (rewardedAd.isLoaded) {
+                        builder
+                            .setMessage(
                                 "You have $skips skip(s) left. Would you like " +
                                 "to watch a short ad to skip this challenge?"
                             )
-                            builder.setPositiveButton("Yes") { _, _ ->
+                            .setPositiveButton("Yes") { _, _ ->
                                 if (!checkIsNewDay()) {
                                     showRewardedAd()
                                 }
                             }
-                            builder.setNeutralButton("No") { _, _ -> checkIsNewDay() }
-                        }
+                            .setNeutralButton("No") { _, _ -> checkIsNewDay() }
+                    }
 
-                        else {
-                            builder.setMessage("Sorry, there are no ads available right now")
-                            builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                        }
+                    else {
+                        builder
+                            .setMessage("Sorry, there are no ads available right now")
+                            .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
                     }
                 }
 
@@ -286,27 +321,27 @@ class ChallengeFragment: Fragment() {
             if (!checkIsNewDay()) {
                 val freezes: Int = challengeViewModel.getFreezes()
 
-                val (builder: AlertDialog.Builder, built: Boolean) = initialBuilder()
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("Freeze Challenge")
 
-                if (!built) {
-                    if (freezes <= 0) {
-                        builder.setMessage("You have no freezes left. ")
-                        builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                    }
+                if (freezes <= 0) {
+                    builder
+                        .setMessage("You have no freezes left. ")
+                        .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
+                }
 
-                    else {
-                        builder.setMessage(
+                else {
+                    builder
+                        .setMessage(
                             "You have $freezes freeze(s) left. Would " +
                             "you like to freeze this challenge?"
                         )
-                        builder.setPositiveButton("Yes") { _, _ ->
+                        .setPositiveButton("Yes") { _, _ ->
                             if (!checkIsNewDay()) {
                                 challengeViewModel.freezeDay()
                             }
                         }
-                        builder.setNeutralButton("No") { _, _ -> checkIsNewDay() }
-                    }
+                        .setNeutralButton("No") { _, _ -> checkIsNewDay() }
                 }
 
                 builder.create().show()
@@ -332,51 +367,15 @@ class ChallengeFragment: Fragment() {
     }
 
     /**
-     * Checks if a new day has started and refreshes the challenge if true
-     *
-     * @return True if a new day has started and false otherwise
+     * Disables complete, skip and freeze buttons
      */
-    private fun checkIsNewDay(): Boolean {
-        return if (challengeViewModel.isNewDay()) {
-            AlertDialog.Builder(context)
-                .setTitle("Challenge period is over")
-                .setMessage("A new day has started. Refreshing challenge...")
-                .setPositiveButton("Ok") { _, _ ->
-                    challengeViewModel.initialise()
-                    findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
-                }
-                .create()
-                .show()
+    private fun disableButtons(skip: Button, complete: Button, freeze: ImageView) {
+        skip.animate().alpha(0.7f).duration = 100L
+        complete.animate().alpha(0.7f).duration = 100L
 
-            true
-        }
-        else {
-            false
-        }
-    }
-
-    /**
-     * Initialises alert dialog builder and adds the completed or frozen messages if applicable
-     *
-     * @return A pair containing the alert dialog and a boolean declaring if the builder is finished
-     */
-    private fun initialBuilder(): Pair<AlertDialog.Builder, Boolean> {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        var built = false
-
-        if (challengeViewModel.isComplete()) {
-            builder.setMessage("Challenge is already complete")
-            builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-            built = true
-        }
-
-        else if (challengeViewModel.isFrozen()) {
-            builder.setMessage("Challenge is currently frozen")
-            builder.setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-            built = true
-        }
-
-        return Pair(builder, built)
+        skip.setOnClickListener(null)
+        complete.setOnClickListener(null)
+        freeze.setOnClickListener(null)
     }
 
 }
