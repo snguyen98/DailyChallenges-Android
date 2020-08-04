@@ -31,7 +31,7 @@
     <!--  Style for challenge card  -->
     <style name="ChallengeCard">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">220dp</item>
 
         <item name="cardBackgroundColor">@color/lightGray</item>
         <item name="cardCornerRadius">15dp</item>
