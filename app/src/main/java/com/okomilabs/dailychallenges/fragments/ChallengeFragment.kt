@@ -73,6 +73,18 @@ class ChallengeFragment: Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setNavigation(view.findViewById(R.id.challenge_card))
+
+        loadBannerAd(view.findViewById(R.id.banner_ad))
+        loadRewardedAd()
+    }
+
+    override fun onDestroy() {
+        activity?.viewModelStore?.clear()
+        super.onDestroy()
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////// Navigation Functions ///////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
