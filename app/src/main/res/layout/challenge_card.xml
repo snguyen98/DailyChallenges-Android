@@ -32,7 +32,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:contentDescription="@string/streak_icon_desc"
-            app:srcCompat="@drawable/streak_icon"
+            app:srcCompat="@mipmap/streak_icon"
             style="@style/StreakIcon" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/freeze_icon_desc"
-            app:srcCompat="@drawable/freeze_icon"
+            app:srcCompat="@mipmap/freeze_icon"
             style="@style/FreezeIcon" />
 
     </RelativeLayout>
