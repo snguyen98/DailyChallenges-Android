@@ -11,7 +11,9 @@
 
         <action
             android:id="@+id/welcome_to_challenge"
-            app:destination="@id/challenge_fragment" />
+            app:destination="@id/challenge_fragment"
+            app:popUpTo="@id/welcome_fragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
