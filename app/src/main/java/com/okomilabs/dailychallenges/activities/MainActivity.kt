@@ -3,10 +3,13 @@ package com.okomilabs.dailychallenges.activities
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.navigation.NavigationView
@@ -29,6 +32,7 @@ class MainActivity: AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         val drawer: DrawerLayout = findViewById(R.id.drawer)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -42,20 +46,12 @@ class MainActivity: AppCompatActivity() {
         )
 
         findViewById<NavigationView>(R.id.nav_view).setupWithNavController(navController)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) ||
                 super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * Back button functionality in app bar
-     */
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_host_fragment)
-            .navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     /**
