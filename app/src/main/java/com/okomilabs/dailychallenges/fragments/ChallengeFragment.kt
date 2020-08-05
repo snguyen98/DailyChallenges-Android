@@ -322,7 +322,7 @@ class ChallengeFragment: Fragment() {
                 val freezes: Int = challengeViewModel.getFreezes()
 
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder.setTitle("Freeze Challenge")
+                builder.setTitle("Freeze Streak")
 
                 if (freezes <= 0) {
                     builder
@@ -334,7 +334,7 @@ class ChallengeFragment: Fragment() {
                     builder
                         .setMessage(
                             "You have $freezes freeze(s) left. Would " +
-                            "you like to freeze this challenge?"
+                            "you like to freeze your streak?"
                         )
                         .setPositiveButton("Yes") { _, _ ->
                             if (!checkIsNewDay()) {
