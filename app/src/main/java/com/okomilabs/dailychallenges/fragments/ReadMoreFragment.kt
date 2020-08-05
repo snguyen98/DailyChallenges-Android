@@ -118,7 +118,7 @@ class ReadMoreFragment: Fragment() {
 
     private fun showDetail(pointer: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
         val linksObserver = Observer<List<Link>> { newLinks ->
-            if (newLinks != null) {
+            if (!newLinks.isNullOrEmpty()) {
                 pointer.visibility = View.VISIBLE
                 detail.visibility = View.VISIBLE
 
