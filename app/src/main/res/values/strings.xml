@@ -31,14 +31,20 @@
 
     <!--  Text View Labels  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
+
     <string name="streak_label">Streaks: </string>
     <string name="skips_label">Skips: </string>
-    <string name="complete_label">Complete</string>
-    <string name="skip_label">Skip</string>
+
     <string name="overview_label">Challenge Overview</string>
     <string name="read_more_label">Read More</string>
     <string name="links_label">Useful Links</string>
     <string name="action_settings">Settings</string>
+
+    <!--  Button Labels  -->
+    <string name="complete_label">Complete</string>
+    <string name="skip_label">Skip</string>
+    <string name="next_label">Next</string>
+    <string name="finish_label">Finish</string>
 
     <string name="tutorial_text_1">
         You get a new randomly generated challenge everyday. Tap the challenge card for interesting
@@ -50,12 +56,11 @@
     </string>
     <string name="tutorial_text_3">
         Tap the complete button to set today\'s challenge as complete. Keep completing challenges to
-        build up a streak.
+        build up your streak.
     </string>
     <string name="tutorial_text_4">
-        For every 7 challenges you complete in a row, you earn a freeze. The freeze can be used to
-        preserve your streak on any day which you would like a break from challenges. Remember you
-        have a limited number so use them wisely.
+        Every 7 challenges you complete in a row, you earn a freeze which preserves your streak for
+        a day if you would like a break.
     </string>
 
     <string name="streak_icon_desc">Streak Icon</string>
