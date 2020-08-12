@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.okomilabs.dailychallenges.R
@@ -30,7 +32,11 @@ class HelpFragment: Fragment() {
 
         viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                setDots(position, root.findViewById(R.id.pager_dots))
+                setDots(
+                    position,
+                    root.findViewById(R.id.pager_dots)
+                )
+                setButtons(position, root.findViewById(R.id.tutorial_button))
             }
         })
 
@@ -60,6 +66,33 @@ class HelpFragment: Fragment() {
                     3 -> dots.findViewById<View>(R.id.pager_dot_4).background = dot
                 }
             }
+        }
+    }
+
+    private fun setButtons(active: Int, button: Button) {
+        val appContext = activity?.applicationContext
+
+        if (appContext != null) {
+            if (active == 3) {
+                button.text = appContext.getString(R.string.finish_label)
+                finishButtonFunctionality(button)
+            }
+            else {
+                button.text = appContext.getString(R.string.next_label)
+                nextButtonFunctionality(active, button)
+            }
+        }
+    }
+
+    private fun nextButtonFunctionality(position: Int, button: Button) {
+        button.setOnClickListener {
+            viewPager.currentItem = position + 1
+        }
+    }
+
+    private fun finishButtonFunctionality(button: Button) {
+        button.setOnClickListener {
+            findNavController().navigate(HelpFragmentDirections.helpToWelcome())
         }
     }
 
