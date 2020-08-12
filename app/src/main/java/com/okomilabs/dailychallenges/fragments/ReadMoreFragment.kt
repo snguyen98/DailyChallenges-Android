@@ -107,12 +107,25 @@ class ReadMoreFragment: Fragment() {
 
 
     private fun showCategoryIcon(icon: ImageView, category: String) {
-        when (category) {
-            "Physical Wellbeing" -> icon.setImageResource(R.mipmap.physical_wellbeing)
-            "Mental Wellbeing" -> icon.setImageResource(R.mipmap.mental_wellbeing)
-            "Socialising" -> icon.setImageResource(R.mipmap.socialising)
-            "Education and Learning" -> icon.setImageResource(R.mipmap.education_learning)
-            "Skills and Hobbies" -> icon.setImageResource(R.mipmap.skills_hobbies)
+        val context = activity?.applicationContext
+
+        if (context != null) {
+            when (category) {
+                context.getString(R.string.physical_wellbeing) ->
+                    icon.setImageResource(R.mipmap.physical_wellbeing)
+
+                context.getString(R.string.mental_wellbeing) ->
+                    icon.setImageResource(R.mipmap.mental_wellbeing)
+
+                context.getString(R.string.socialising) ->
+                    icon.setImageResource(R.mipmap.socialising)
+
+                context.getString(R.string.education_learning) ->
+                    icon.setImageResource(R.mipmap.education_learning)
+
+                context.getString(R.string.skills_hobbies) ->
+                    icon.setImageResource(R.mipmap.skills_hobbies)
+            }
         }
     }
 
