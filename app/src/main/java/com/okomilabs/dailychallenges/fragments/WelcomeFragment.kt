@@ -9,6 +9,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.okomilabs.dailychallenges.R
 
@@ -64,6 +65,10 @@ class WelcomeFragment: Fragment() {
     }
 
     private fun navigateToChallenge() {
-        findNavController().navigate(WelcomeFragmentDirections.welcomeToChallenge())
+        val navController: NavController = findNavController()
+
+        if (navController.currentDestination?.id == R.id.welcome_fragment) {
+            navController.navigate(WelcomeFragmentDirections.welcomeToChallenge())
+        }
     }
 }

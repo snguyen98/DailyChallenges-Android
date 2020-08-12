@@ -1,27 +1,80 @@
 <resources>
     <string name="app_name">Venture - Daily Challenges</string>
 
+    <!--  Category Names  -->
+    <string name="physical_wellbeing">Physical Wellbeing</string>
+    <string name="mental_wellbeing">Mental Wellbeing</string>
+    <string name="socialising">Socialising</string>
+    <string name="education_learning">Education and Learning</string>
+    <string name="skills_hobbies">Skills and Hobbies</string>
+
+
+    <!--  Dialog Titles and Messages  -->
+    <string name="refresh_title">Challenge period is over</string>
+    <string name="refresh_message">A new day has started. Refreshing challenge…</string>
+    <string name="complete_title">Mark as Complete</string>
+    <string name="complete_message">Would you like to mark this challenge as complete?</string>
+    <string name="skip_title">Skip Challenge</string>
+    <string name="skip_unavailable_message">You have no skips. Please wait until tomorrow.</string>
+    <string name="skip_no_ads_message">Sorry, no ads are available right now.</string>
+    <string name="skip_available_message">
+        Would you like to watch a short ad to skip this challenge?
+    </string>
+    <string name="freeze_title">Freeze Streak</string>
+    <string name="freeze_unavailable_message">
+        You have no freezes left. Gain more by building up a streak.
+    </string>
+    <string name="freeze_available_message">Would you like to freeze your streak?</string>
+    <string name="freeze_gained_title">Freeze Gained</string>
+    <string name="freeze_gained_message">You gained a freeze for keeping up your streak! </string>
+
+
     <!--  Text View Labels  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
+
     <string name="streak_label">Streaks: </string>
     <string name="skips_label">Skips: </string>
-    <string name="complete_label">Complete</string>
-    <string name="skip_label">Skip</string>
+
     <string name="overview_label">Challenge Overview</string>
     <string name="read_more_label">Read More</string>
     <string name="links_label">Useful Links</string>
     <string name="action_settings">Settings</string>
 
+    <!--  Button Labels  -->
+    <string name="complete_label">Complete</string>
+    <string name="skip_label">Skip</string>
+    <string name="next_label">Next</string>
+    <string name="finish_label">Finish</string>
+
+    <string name="tutorial_text_1">
+        You get a new randomly generated challenge everyday. Tap the challenge card for interesting
+        trivia and useful links.
+    </string>
+    <string name="tutorial_text_2">
+        If, for any reason, you are unable to complete a challenge, such as weather, you skip the
+        challenge up to 2 times a day.
+    </string>
+    <string name="tutorial_text_3">
+        Tap the complete button to set today\'s challenge as complete. Keep completing challenges to
+        build up your streak.
+    </string>
+    <string name="tutorial_text_4">
+        Every 7 challenges you complete in a row, you earn a freeze which preserves your streak for
+        a day if you would like a break.
+    </string>
+
     <string name="streak_icon_desc">Streak Icon</string>
     <string name="freeze_icon_desc">Freeze Icon</string>
     <string name="category_icon_desc">Category Icon</string>
     <string name="arrow_icon_desc">Arrow Icon</string>
+    <string name="tutorial_desc">Tutorial</string>
 
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
     <string name="help_label">Help</string>
     <string name="about_label">About</string>
     <string name="credits_label">Credits</string>
+
 
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
@@ -37,7 +90,14 @@
     <string name="freezes_remaining">freezes</string>
     <string name="shown_freeze_msg">shown_freeze</string>
 
-    <!--  AdMob Ids  -->
+    <string name="settings_key">com.okomilabs.dailychallenges.settings</string>
+    <string name="first_launch">firstLaunch</string>
+
+
+    <!--  AdMob Test Device IDs  -->
+    <string name="sang_oppo">1805DBC7E2E5F4F767CC5BBD50879F8B</string>
+
+    <!--  AdMob IDs  -->
     <string name="admob_id">ca-app-pub-6520975918360419~6174148309</string>
     <string name="banner_ad">ca-app-pub-6520975918360419/4861066639</string>
     <string name="reward_ad">ca-app-pub-6520975918360419/1352942751</string>

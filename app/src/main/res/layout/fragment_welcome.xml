@@ -13,7 +13,7 @@
         android:textAlignment="center"
         android:textSize="27sp"
         android:text="@string/welcome_message"
-        android:color="@android:color/white"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
 </LinearLayout>
