@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:paddingTop="75dp"
         android:contentDescription="@string/tutorial_desc" />
 
     <TextView
@@ -21,6 +20,7 @@
         android:layout_centerHorizontal="true"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:paddingTop="5dp"
         style="@style/SubText" />
 
 </RelativeLayout>

@@ -7,16 +7,16 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true" />
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pager_dots" />
 
     <LinearLayout
         android:id="@+id/pager_dots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
+        android:layout_above="@id/tutorial_button"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <View
@@ -36,5 +36,13 @@
             style="@style/PagerDot" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/tutorial_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="35dp"
+        android:background="@drawable/rounded_button" />
 
 </RelativeLayout>
