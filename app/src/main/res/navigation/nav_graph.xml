@@ -7,7 +7,8 @@
 
     <fragment
         android:id="@+id/welcome_fragment"
-        android:name="com.okomilabs.dailychallenges.fragments.WelcomeFragment">
+        android:name="com.okomilabs.dailychallenges.fragments.WelcomeFragment"
+        android:label="@string/app_name">
 
         <action
             android:id="@+id/welcome_to_challenge"
