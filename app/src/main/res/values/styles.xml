@@ -119,6 +119,14 @@
         <item name="contentDescription">@string/arrow_icon_desc</item>
     </style>
 
+    <style name="PagerDot">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+    </style>
+
     <!--  Layout style for vertical linear layouts  -->
     <style name="VerticalLayout">
         <item name="android:layout_width">match_parent</item>
