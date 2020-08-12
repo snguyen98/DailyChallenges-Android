@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_dark">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/pager_dots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/pager_dot_1"
+            style="@style/PagerDot" />
+
+        <View
+            android:id="@+id/pager_dot_2"
+            style="@style/PagerDot" />
+
+        <View
+            android:id="@+id/pager_dot_3"
+            style="@style/PagerDot" />
+
+        <View
+            android:id="@+id/pager_dot_4"
+            style="@style/PagerDot" />
+
+    </LinearLayout>
+
+</RelativeLayout>
