@@ -1,6 +1,34 @@
 <resources>
     <string name="app_name">Venture - Daily Challenges</string>
 
+    <!--  Category Names  -->
+    <string name="physical_wellbeing">Physical Wellbeing</string>
+    <string name="mental_wellbeing">Mental Wellbeing</string>
+    <string name="socialising">Socialising</string>
+    <string name="education_learning">Education and Learning</string>
+    <string name="skills_hobbies">Skills and Hobbies</string>
+
+
+    <!--  Dialog Titles and Messages  -->
+    <string name="refresh_title">Challenge period is over</string>
+    <string name="refresh_message">A new day has started. Refreshing challenge…</string>
+    <string name="complete_title">Mark as Complete</string>
+    <string name="complete_message">Would you like to mark this challenge as complete?</string>
+    <string name="skip_title">Skip Challenge</string>
+    <string name="skip_unavailable_message">You have no skips. Please wait until tomorrow.</string>
+    <string name="skip_no_ads_message">Sorry, no ads are available right now.</string>
+    <string name="skip_available_message">
+        Would you like to watch a short ad to skip this challenge?
+    </string>
+    <string name="freeze_title">Freeze Streak</string>
+    <string name="freeze_unavailable_message">
+        You have no freezes left. Gain more by building up a streak.
+    </string>
+    <string name="freeze_available_message">Would you like to freeze your streak?</string>
+    <string name="freeze_gained_title">Freeze Gained</string>
+    <string name="freeze_gained_message">You gained a freeze for keeping up your streak! </string>
+
+
     <!--  Text View Labels  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
     <string name="streak_label">Streaks: </string>
@@ -23,6 +51,7 @@
     <string name="about_label">About</string>
     <string name="credits_label">Credits</string>
 
+
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
     <string name="last_login">login</string>
@@ -37,7 +66,14 @@
     <string name="freezes_remaining">freezes</string>
     <string name="shown_freeze_msg">shown_freeze</string>
 
-    <!--  AdMob Ids  -->
+    <string name="settings_key">com.okomilabs.dailychallenges.settings</string>
+    <string name="first_launch">firstLaunch</string>
+
+
+    <!--  AdMob Test Device IDs  -->
+    <string name="sang_oppo">1805DBC7E2E5F4F767CC5BBD50879F8B</string>
+
+    <!--  AdMob IDs  -->
     <string name="admob_id">ca-app-pub-6520975918360419~6174148309</string>
     <string name="banner_ad">ca-app-pub-6520975918360419/4861066639</string>
     <string name="reward_ad">ca-app-pub-6520975918360419/1352942751</string>
