@@ -34,14 +34,18 @@ class ChallengeListFragment: Fragment() {
             false
         )
 
-        observeList(listView)
+        observeList(listView, root.findViewById(R.id.completed_list_message))
 
         return root
     }
 
-    private fun observeList(listView: RecyclerView) {
+    private fun observeList(listView: RecyclerView, message: TextView) {
         val listObserver = Observer<List<ChallengeListItem>> { newList ->
-            listView.adapter = ChallengeListAdapter(newList)
+            if (!newList.isNullOrEmpty()) {
+                listView.adapter = ChallengeListAdapter(newList)
+                listView.visibility = View.VISIBLE
+                message.visibility = View.GONE
+            }
         }
 
         cListViewModel.cList.observe(viewLifecycleOwner, listObserver)
