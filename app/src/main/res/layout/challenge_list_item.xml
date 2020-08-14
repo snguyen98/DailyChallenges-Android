@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:contentPadding="17dp"
+    app:cardBackgroundColor="@color/lightGray"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_alignParentTop="true"
+            android:textSize="20sp"
+            style="@style/BoldHeading" />
+
+        <TextView
+            android:id="@+id/item_category"
+            android:layout_above="@id/item_last_completed"
+            android:textSize="12sp"
+            style="@style/SubText" />
+
+        <TextView
+            android:id="@+id/last_completed_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:paddingEnd="8dp"
+            android:text="@string/last_completed_label"
+            android:textSize="12sp"
+            tools:ignore="RtlSymmetry"
+            style="@style/SubText" />
+
+        <TextView
+            android:id="@+id/item_last_completed"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/last_completed_label"
+            android:textSize="12sp"
+            style="@style/SubText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@id/item_total_completed"
+            android:text="@string/total_completed_label"
+            android:textSize="12sp"
+            tools:ignore="RelativeOverlap"
+            style="@style/SubText" />
+
+        <TextView
+            android:id="@+id/item_total_completed"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:paddingStart="8dp"
+            android:textSize="12sp"
+            tools:ignore="RtlSymmetry"
+            style="@style/SubText" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
