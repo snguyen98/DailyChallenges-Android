@@ -45,6 +45,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/challenge_list_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.ChallengeListFragment"
+        android:label="@string/app_name" />
+
+    <fragment
         android:id="@+id/help_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.HelpFragment"
         android:label="Help">
