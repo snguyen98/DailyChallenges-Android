@@ -8,6 +8,31 @@
     <string name="education_learning">Education and Learning</string>
     <string name="skills_hobbies">Skills and Hobbies</string>
 
+    <!--  Text View Labels  -->
+    <string name="welcome_message">Welcome, your\nchallenge today is…</string>
+    <string name="completed_list_message">Your completed challenges will appear here</string>
+
+    <string name="streak_label">Streaks: </string>
+    <string name="skips_label">Skips: </string>
+
+    <string name="overview_label">Challenge Overview</string>
+    <string name="read_more_label">Read More</string>
+    <string name="links_label">Useful Links</string>
+    <string name="last_completed_label">Last Completed: </string>
+    <string name="total_completed_label">Total Completed: </string>
+
+    <!--  Button Labels  -->
+    <string name="complete_label">Complete</string>
+    <string name="skip_label">Skip</string>
+    <string name="next_label">Next</string>
+    <string name="finish_label">Finish</string>
+
+    <!--  Drawer Layout Labels  -->
+    <string name="home_label">Home</string>
+    <string name="list_label">Completed Challenges</string>
+    <string name="help_label">Help</string>
+    <string name="about_label">About</string>
+    <string name="credits_label">Credits</string>
 
     <!--  Dialog Titles and Messages  -->
     <string name="refresh_title">Challenge period is over</string>
@@ -27,24 +52,6 @@
     <string name="freeze_available_message">Would you like to freeze your streak?</string>
     <string name="freeze_gained_title">Freeze Gained</string>
     <string name="freeze_gained_message">You gained a freeze for keeping up your streak! </string>
-
-
-    <!--  Text View Labels  -->
-    <string name="welcome_message">Welcome, your\nchallenge today is…</string>
-
-    <string name="streak_label">Streaks: </string>
-    <string name="skips_label">Skips: </string>
-
-    <string name="overview_label">Challenge Overview</string>
-    <string name="read_more_label">Read More</string>
-    <string name="links_label">Useful Links</string>
-    <string name="action_settings">Settings</string>
-
-    <!--  Button Labels  -->
-    <string name="complete_label">Complete</string>
-    <string name="skip_label">Skip</string>
-    <string name="next_label">Next</string>
-    <string name="finish_label">Finish</string>
 
     <string name="tutorial_text_1">
         You get a new randomly generated challenge everyday. Tap the challenge card for interesting
@@ -68,13 +75,6 @@
     <string name="category_icon_desc">Category Icon</string>
     <string name="arrow_icon_desc">Arrow Icon</string>
     <string name="tutorial_desc">Tutorial</string>
-
-    <!--  Drawer Layout Labels  -->
-    <string name="home_label">Home</string>
-    <string name="help_label">Help</string>
-    <string name="about_label">About</string>
-    <string name="credits_label">Credits</string>
-
 
     <!--  SHARED PREFERENCES KEYS  -->
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>

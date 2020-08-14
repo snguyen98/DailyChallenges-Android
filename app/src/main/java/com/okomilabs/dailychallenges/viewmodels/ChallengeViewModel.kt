@@ -19,25 +19,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ChallengeViewModel(application: Application): AndroidViewModel(application) {
-    private val context = application.applicationContext
+    private val appContext = application.applicationContext
 
     // Room database repositories
     private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
     private val loginDayRepo: LoginDayRepo = LoginDayRepo(application)
 
     // Shared preferences keys
-    private val challengeKey: String = context.getString(R.string.challenge_key)
-    private val statsKey: String = context.getString(R.string.stats_key)
-    private val resourcesKey: String = context.getString(R.string.resources_key)
+    private val challengeKey: String = appContext.getString(R.string.challenge_key)
+    private val statsKey: String = appContext.getString(R.string.stats_key)
+    private val resourcesKey: String = appContext.getString(R.string.resources_key)
 
     // Shared preferences strings
-    private val lastLoginPrefs: String = context.getString(R.string.last_login)
-    private val idPrefs: String = context.getString(R.string.curr_id)
-    private val streakPrefs: String = context.getString(R.string.streak_value)
-    private val skippedChallengePrefs: String = context.getString(R.string.skipped_challenge)
-    private val skipsLeftPrefs: String = context.getString(R.string.skips_remaining)
-    private val freezesLeftPrefs: String = context.getString(R.string.freezes_remaining)
-    private val shownFreezePrefs: String = context.getString(R.string.shown_freeze_msg)
+    private val lastLoginPrefs: String = appContext.getString(R.string.last_login)
+    private val idPrefs: String = appContext.getString(R.string.curr_id)
+    private val streakPrefs: String = appContext.getString(R.string.streak_value)
+    private val skippedChallengePrefs: String = appContext.getString(R.string.skipped_challenge)
+    private val skipsLeftPrefs: String = appContext.getString(R.string.skips_remaining)
+    private val freezesLeftPrefs: String = appContext.getString(R.string.freezes_remaining)
+    private val shownFreezePrefs: String = appContext.getString(R.string.shown_freeze_msg)
 
     // Instance variables
     private var date: String = ""
@@ -75,7 +75,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * the challenge info from the database
      */
     private suspend fun updateChallenge() {
-        val id = context
+        val id = appContext
             .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
             .getInt(idPrefs, -1)
 
@@ -102,7 +102,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             val id: Int = chooseRandomChallenge(total)                // Sets challenge ID instance variable
 
             // Adds all challenge info to shared preferences
-            with (context.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {
+            with (appContext.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {
                 putString(lastLoginPrefs, date)
                 putInt(idPrefs, id)
                 apply()
@@ -121,11 +121,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun chooseRandomChallenge(total: Int): Int {
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
 
-        val id: Int = context
+        val id: Int = appContext
             .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
             .getInt(idPrefs, -1)
 
-        val skipped: Int = context
+        val skipped: Int = appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(skippedChallengePrefs, -1)
 
@@ -185,7 +185,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if today is a new day and false otherwise
      */
     fun isNewDay(): Boolean {
-        val lastLogin: String? = context
+        val lastLogin: String? = appContext
             .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
             .getString(lastLoginPrefs, null)
 
@@ -211,13 +211,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     fun markComplete() {
         addLoggedDay(State.COMPLETE)
-        setStreak(context
+        setStreak(appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
 
         if (getStreak() % 7 == 0) {
             setFreezesRemaining(
-                context
+                appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .getInt(freezesLeftPrefs, 0) + 1
             )
@@ -233,7 +233,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Checks if the streak was broken last time they logged in
      */
     private fun checkStreak() {
-        val lastLogin: String? = context
+        val lastLogin: String? = appContext
             .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
             .getString(lastLoginPrefs, null)
 
@@ -269,7 +269,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Gets the current streak
      */
     fun getStreak(): Int {
-        return context
+        return appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, 0)
     }
@@ -278,7 +278,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets the current streak to shared preferences
      */
     private fun setStreak(streak: Int) {
-        context
+        appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .edit()
             .putInt(streakPrefs, streak)
@@ -294,7 +294,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Adds current challenge to the skipped set and sets a new challenge for today
      */
     fun skipChallenge() {
-        val skipsRemaining: Int = context
+        val skipsRemaining: Int = appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(skipsLeftPrefs, 0)
 
@@ -308,7 +308,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Gets the remaining skips allowed
      */
     fun getSkips(): Int {
-        return context
+        return appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(skipsLeftPrefs, 0)
     }
@@ -319,7 +319,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param skipped The set of challenges to be added
      */
     private fun setSkippedChallenge(skipped: Int) {
-        context
+        appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .edit()
             .putInt(skippedChallengePrefs, skipped)
@@ -332,7 +332,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param skips The number of skips to be set
      */
     private fun setSkipsRemaining(skips: Int) {
-        context
+        appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .edit()
             .putInt(skipsLeftPrefs, skips)
@@ -343,7 +343,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Clears the skipped set of challenges
      */
     private fun resetSkippedChallenges() {
-        context
+        appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .edit()
             .remove(skippedChallengePrefs)
@@ -359,7 +359,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as frozen in the view model, shared preferences and logged day db
      */
     fun freezeDay() {
-        val freezesRemaining: Int = context
+        val freezesRemaining: Int = appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(freezesLeftPrefs, 0)
 
@@ -373,7 +373,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Gets the remaining freezes allowed
      */
     fun getFreezes(): Int {
-        return context
+        return appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(freezesLeftPrefs, 0)
     }
@@ -385,29 +385,21 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if freeze message should be shown and false otherwise
      */
     fun showFreezeMsg(): Boolean {
-        val c = context
-            .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
-            .getInt(freezesLeftPrefs, 0) != 0
-
-        val d = context
-            .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
-            .getInt(streakPrefs, 0)
-
         val show: Boolean =
-            context
+            appContext
                 .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                 .getInt(freezesLeftPrefs, 0) != 0 &&
-            context
+            appContext
                 .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
                 .getInt(streakPrefs, 0) % 7 == 0
 
         return if (show) {
             if (
-                !context
+                !appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .getBoolean(shownFreezePrefs, false)
             ) {
-                context
+                appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .edit()
                     .putBoolean(shownFreezePrefs, true)
@@ -419,7 +411,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             }
         }
         else {
-            context
+            appContext
                 .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                 .edit()
                 .putBoolean(shownFreezePrefs, false)
@@ -432,7 +424,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Resets the number of freezes available to 2
      */
     private fun setFreezesRemaining(freezes: Int) {
-        context
+        appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .edit()
             .putInt(freezesLeftPrefs, freezes)
@@ -452,7 +444,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     private fun printStreak() {
-        val streak: Int = context
+        val streak: Int = appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, 0)
 
@@ -460,7 +452,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     private fun printSkips() {
-        val skipsRemaining: Int = context
+        val skipsRemaining: Int = appContext
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(skipsLeftPrefs, 0)
 
