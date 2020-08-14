@@ -10,6 +10,7 @@
 
     <!--  Text View Labels  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
+    <string name="completed_list_message">Your completed challenges will appear here</string>
 
     <string name="streak_label">Streaks: </string>
     <string name="skips_label">Skips: </string>
