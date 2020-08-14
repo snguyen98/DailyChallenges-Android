@@ -43,11 +43,6 @@ class HelpFragment: Fragment() {
         return root
     }
 
-    private inner class SlideAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int = PAGES
-        override fun createFragment(position: Int): Fragment = TutorialPageFragment(position)
-    }
-
     private fun setDots(active: Int, dots: LinearLayout) {
         val appContext = activity?.applicationContext
 
@@ -94,6 +89,11 @@ class HelpFragment: Fragment() {
         button.setOnClickListener {
             findNavController().navigate(HelpFragmentDirections.helpToWelcome())
         }
+    }
+
+    private inner class SlideAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+        override fun getItemCount(): Int = PAGES
+        override fun createFragment(position: Int): Fragment = TutorialPageFragment(position)
     }
 
 }
