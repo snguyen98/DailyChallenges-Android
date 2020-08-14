@@ -8,27 +8,6 @@
     <string name="education_learning">Education and Learning</string>
     <string name="skills_hobbies">Skills and Hobbies</string>
 
-
-    <!--  Dialog Titles and Messages  -->
-    <string name="refresh_title">Challenge period is over</string>
-    <string name="refresh_message">A new day has started. Refreshing challenge…</string>
-    <string name="complete_title">Mark as Complete</string>
-    <string name="complete_message">Would you like to mark this challenge as complete?</string>
-    <string name="skip_title">Skip Challenge</string>
-    <string name="skip_unavailable_message">You have no skips. Please wait until tomorrow.</string>
-    <string name="skip_no_ads_message">Sorry, no ads are available right now.</string>
-    <string name="skip_available_message">
-        Would you like to watch a short ad to skip this challenge?
-    </string>
-    <string name="freeze_title">Freeze Streak</string>
-    <string name="freeze_unavailable_message">
-        You have no freezes left. Gain more by building up a streak.
-    </string>
-    <string name="freeze_available_message">Would you like to freeze your streak?</string>
-    <string name="freeze_gained_title">Freeze Gained</string>
-    <string name="freeze_gained_message">You gained a freeze for keeping up your streak! </string>
-
-
     <!--  Text View Labels  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
 
@@ -49,10 +28,29 @@
 
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
-    <string name="list_label">Challenge List</string>
+    <string name="list_label">Completed Challenges</string>
     <string name="help_label">Help</string>
     <string name="about_label">About</string>
     <string name="credits_label">Credits</string>
+
+    <!--  Dialog Titles and Messages  -->
+    <string name="refresh_title">Challenge period is over</string>
+    <string name="refresh_message">A new day has started. Refreshing challenge…</string>
+    <string name="complete_title">Mark as Complete</string>
+    <string name="complete_message">Would you like to mark this challenge as complete?</string>
+    <string name="skip_title">Skip Challenge</string>
+    <string name="skip_unavailable_message">You have no skips. Please wait until tomorrow.</string>
+    <string name="skip_no_ads_message">Sorry, no ads are available right now.</string>
+    <string name="skip_available_message">
+        Would you like to watch a short ad to skip this challenge?
+    </string>
+    <string name="freeze_title">Freeze Streak</string>
+    <string name="freeze_unavailable_message">
+        You have no freezes left. Gain more by building up a streak.
+    </string>
+    <string name="freeze_available_message">Would you like to freeze your streak?</string>
+    <string name="freeze_gained_title">Freeze Gained</string>
+    <string name="freeze_gained_message">You gained a freeze for keeping up your streak! </string>
 
     <string name="tutorial_text_1">
         You get a new randomly generated challenge everyday. Tap the challenge card for interesting
