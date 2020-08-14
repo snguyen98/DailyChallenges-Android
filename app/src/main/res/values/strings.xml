@@ -71,6 +71,7 @@
 
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
+    <string name="list_label">Challenge List</string>
     <string name="help_label">Help</string>
     <string name="about_label">About</string>
     <string name="credits_label">Credits</string>
