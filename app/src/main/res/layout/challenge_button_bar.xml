@@ -8,6 +8,7 @@
         android:id="@+id/skip_button"
         android:layout_alignParentStart="true"
         android:background="@drawable/rounded_button"
+        android:fontFamily="@font/asap"
         android:text="@string/skip_label"
         style="@style/WrapAll" />
 
@@ -17,6 +18,7 @@
         android:layout_toEndOf="@+id/skip_button"
         android:layout_marginStart="25dp"
         android:background="@drawable/rounded_button"
+        android:fontFamily="@font/asap"
         android:text="@string/complete_label"
         style="@style/WrapAll" />
 

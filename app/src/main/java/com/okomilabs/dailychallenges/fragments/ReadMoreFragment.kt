@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -146,6 +147,9 @@ class ReadMoreFragment: Fragment() {
                     }
 
                     linkView.setPadding(0, 0, 0, 15)
+                    linkView.typeface = activity?.applicationContext?.let {
+                        ResourcesCompat.getFont(it, R.font.timeless)
+                    }
                     linkView.text = link.title
 
                     val transform = Linkify.TransformFilter { _, _ -> link.link }

@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="35dp"
+        android:fontFamily="@font/asap"
         android:background="@drawable/rounded_button" />
 
 </RelativeLayout>
