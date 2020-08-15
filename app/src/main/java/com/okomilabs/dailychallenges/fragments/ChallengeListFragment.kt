@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.okomilabs.dailychallenges.R
@@ -69,6 +71,7 @@ class ChallengeListFragment: Fragment() {
         }
 
         private inner class ChallengeHolder(view: View): RecyclerView.ViewHolder(view) {
+            val challengeItem: CardView = view.findViewById(R.id.challenge_item)
             val title: TextView = view.findViewById(R.id.item_title)
             val category: TextView = view.findViewById(R.id.item_category)
             val lastCompleted: TextView = view.findViewById(R.id.item_last_completed)
@@ -79,6 +82,12 @@ class ChallengeListFragment: Fragment() {
                 category.text = item.category
                 lastCompleted.text = item.lastCompleted
                 totalCompleted.text = item.totalCompleted.toString()
+
+                challengeItem.setOnClickListener {
+                    findNavController().navigate(
+                        ChallengeListFragmentDirections.challengeListToReadMore(item.id)
+                    )
+                }
             }
         }
     }

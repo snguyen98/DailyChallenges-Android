@@ -86,8 +86,12 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
-            if (!checkIsNewDay()) {
-                findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
+            val id: Int? = challengeViewModel.challenge.value?.id
+
+            if (!checkIsNewDay() && id != null) {
+                findNavController().navigate(
+                    ChallengeFragmentDirections.challengeToReadMore(id)
+                )
             }
         }
     }

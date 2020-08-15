@@ -1,5 +1,6 @@
 package com.okomilabs.dailychallenges.fragments
 
+import android.app.Application
 import android.os.Build
 import android.os.Bundle
 import android.text.util.Linkify
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
@@ -28,38 +30,46 @@ class ReadMoreFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        readMoreViewModel = ViewModelProvider(this).get(ReadMoreViewModel::class.java)
-
-        // Simple slide enter transition
-        enterTransition = Slide()
-
         val root = inflater.inflate(R.layout.fragment_read_more, container, false)
+        val app = activity?.application
+        val id: Int? = arguments?.getInt("challengeId")
 
-        setReadMoreLayout(
-            root.findViewById(R.id.challenge_title),
-            root.findViewById(R.id.challenge_category),
-            root.findViewById(R.id.challenge_summary),
-            root.findViewById(R.id.challenge_desc),
-            root.findViewById(R.id.read_more_pointer),
-            root.findViewById(R.id.read_more_detail),
-            root.findViewById(R.id.category_icon)
-        )
+        if (app != null && id != null) {
 
-        /* Shared element transition
-        val callback: SharedElementCallback = object: SharedElementCallback() {
-            override fun onSharedElementEnd(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+            readMoreViewModel = ViewModelProvider(
+                this,
+                ReadMoreFactory(app, id)
+            ).get(ReadMoreViewModel::class.java)
+
+            // Simple slide enter transition
+            enterTransition = Slide()
+
+            setReadMoreLayout(
+                root.findViewById(R.id.challenge_title),
+                root.findViewById(R.id.challenge_category),
+                root.findViewById(R.id.challenge_summary),
+                root.findViewById(R.id.challenge_desc),
+                root.findViewById(R.id.read_more_pointer),
+                root.findViewById(R.id.read_more_detail),
+                root.findViewById(R.id.category_icon)
+            )
+
+            /* Shared element transition
+            val callback: SharedElementCallback = object: SharedElementCallback() {
+                override fun onSharedElementEnd(
+                    sharedElementNames: MutableList<String>?,
+                    sharedElements: MutableList<View>?,
+                    sharedElementSnapshots: MutableList<View>?
+                ) {
+                    super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+                }
             }
+
+            sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(R.transition.read_more_transition)
+
+            setEnterSharedElementCallback(callback) */
         }
-
-        sharedElementEnterTransition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.read_more_transition)
-
-        setEnterSharedElementCallback(callback) */
 
         return root
     }
@@ -180,5 +190,16 @@ class ReadMoreFragment: Fragment() {
         }
 
         readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
+    }
+
+    private inner class ReadMoreFactory(
+        app: Application, challengeId: Int
+    ): ViewModelProvider.NewInstanceFactory() {
+        private val application: Application = app
+        private val id: Int = challengeId
+
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return ReadMoreViewModel(application, id) as T
+        }
     }
 }
