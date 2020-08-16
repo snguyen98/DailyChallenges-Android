@@ -198,7 +198,7 @@ class ReadMoreFragment: Fragment() {
         private val application: Application = app
         private val id: Int = challengeId
 
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
             return ReadMoreViewModel(application, id) as T
         }
     }
