@@ -454,8 +454,9 @@ class ChallengeFragment: Fragment() {
     private fun createDialogTitle(text: String): TextView {
         val appContext = activity?.applicationContext
 
+        val paddingVal: Int = (resources.displayMetrics.density * 22f).toInt()
         val title = TextView(appContext)
-        title.setPadding(45, 45, 45, 0)
+        title.setPadding(paddingVal, paddingVal, paddingVal, 0)
 
         title.text = text
         title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
