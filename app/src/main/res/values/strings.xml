@@ -27,6 +27,11 @@
     <string name="next_label">Next</string>
     <string name="finish_label">Finish</string>
 
+    <string name="yes_label">YES</string>
+    <string name="no_label">NO</string>
+    <string name="ok_label">OK</string>
+
+
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
     <string name="list_label">Completed Challenges</string>
