@@ -178,7 +178,7 @@ class ChallengeFragment: Fragment() {
                         createDialogTitle(appContext.getString(R.string.refresh_title))
                     )
                     .setMessage(appContext.getString(R.string.refresh_message))
-                    .setPositiveButton(appContext.getString(android.R.string.ok)) { _, _ ->
+                    .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
                         challengeViewModel.initialise()
                         findNavController()
                             .navigate(ChallengeFragmentDirections.challengeToWelcome())
@@ -281,12 +281,12 @@ class ChallengeFragment: Fragment() {
                             createDialogTitle(appContext.getString(R.string.complete_title))
                         )
                         .setMessage(appContext.getString(R.string.complete_message))
-                        .setPositiveButton(appContext.getString(android.R.string.yes)) { _, _ ->
+                        .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
                             if (!checkIsNewDay()) {
                                 challengeViewModel.markComplete()
                             }
                         }
-                        .setNeutralButton(appContext.getString(android.R.string.no)) { _, _ ->
+                        .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ ->
                             checkIsNewDay()
                         }
 
@@ -319,7 +319,7 @@ class ChallengeFragment: Fragment() {
                     if (skips <= 0) {
                         builder
                             .setMessage(appContext.getString(R.string.skip_unavailable_message))
-                            .setPositiveButton(appContext.getString(android.R.string.ok)) { _, _ ->
+                            .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
                                 checkIsNewDay()
                             }
                     }
@@ -332,13 +332,13 @@ class ChallengeFragment: Fragment() {
                                             appContext.getString(R.string.skip_available_message)
                                 )
                                 .setPositiveButton(
-                                    appContext.getString(android.R.string.yes)) { _, _ ->
+                                    appContext.getString(R.string.yes_label)) { _, _ ->
                                     if (!checkIsNewDay()) {
                                         showRewardedAd()
                                     }
                                 }
                                 .setNeutralButton(
-                                    appContext.getString(android.R.string.no)) { _, _ ->
+                                    appContext.getString(R.string.no_label)) { _, _ ->
                                     checkIsNewDay()
                                 }
                         }
@@ -347,7 +347,7 @@ class ChallengeFragment: Fragment() {
                             builder
                                 .setMessage(appContext.getString(R.string.skip_no_ads_message))
                                 .setPositiveButton(
-                                    appContext.getString(android.R.string.ok)) { _, _ ->
+                                    appContext.getString(R.string.ok_label)) { _, _ ->
                                     checkIsNewDay()
                                 }
                         }
@@ -380,7 +380,7 @@ class ChallengeFragment: Fragment() {
                     if (freezes <= 0) {
                         builder
                             .setMessage(appContext.getString(R.string.freeze_unavailable_message))
-                            .setPositiveButton(appContext.getString(android.R.string.ok)) { _, _ ->
+                            .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
                                 checkIsNewDay()
                             }
                     }
@@ -391,12 +391,12 @@ class ChallengeFragment: Fragment() {
                                 "You have $freezes freeze(s) left. " +
                                         appContext.getString(R.string.freeze_available_message)
                             )
-                            .setPositiveButton(appContext.getString(android.R.string.yes)) { _, _ ->
+                            .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
                                 if (!checkIsNewDay()) {
                                     challengeViewModel.freezeDay()
                                 }
                             }
-                            .setNeutralButton(appContext.getString(android.R.string.no)) { _, _ ->
+                            .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ ->
                                 checkIsNewDay()
                             }
                     }
@@ -428,7 +428,7 @@ class ChallengeFragment: Fragment() {
                             R.string.freeze_gained_message) +
                                 "You have ${challengeViewModel.getFreezes()} freeze(s)."
                     )
-                    .setPositiveButton(appContext.getString(android.R.string.ok)) { _, _ ->
+                    .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
                         checkIsNewDay()
                     }
 
