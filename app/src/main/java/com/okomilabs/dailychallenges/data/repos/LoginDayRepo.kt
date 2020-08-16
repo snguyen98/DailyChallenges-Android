@@ -29,4 +29,8 @@ class LoginDayRepo(application: Application) {
             loginDays[0]
         }
     }
+
+    suspend fun deleteAll() {
+        dao.deleteAll()
+    }
 }

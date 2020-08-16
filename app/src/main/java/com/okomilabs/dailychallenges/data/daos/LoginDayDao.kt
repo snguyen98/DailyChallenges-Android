@@ -19,4 +19,8 @@ interface LoginDayDao {
 
     @Query("SELECT * FROM LoginDay WHERE date IN (:dateVal)")
     suspend fun getLoginDayByDate(dateVal: Int): List<LoginDay>
+
+    @Query("DELETE FROM LoginDay")
+    suspend fun deleteAll()
+
 }

@@ -1,6 +1,7 @@
 package com.okomilabs.dailychallenges.viewmodels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -88,6 +89,33 @@ class ChallengeListViewModel(application: Application): AndroidViewModel(applica
         }
 
         return -1
+    }
+
+    /**
+     * Deletes all user data in room and shared preferences
+     */
+    fun resetData() {
+        // Deletes all stored login days
+        viewModelScope.launch {
+            loginDayRepo.deleteAll()
+        }
+
+        // Clears shared preferences
+        appContext.getSharedPreferences(
+            appContext.getString(R.string.challenge_key), Context.MODE_PRIVATE
+        ).edit().clear().apply()
+
+        appContext.getSharedPreferences(
+            appContext.getString(R.string.stats_key), Context.MODE_PRIVATE
+        ).edit().clear().apply()
+
+        appContext.getSharedPreferences(
+            appContext.getString(R.string.resources_key), Context.MODE_PRIVATE
+        ).edit().clear().apply()
+
+        appContext.getSharedPreferences(
+            appContext.getString(R.string.settings_key), Context.MODE_PRIVATE
+        ).edit().clear().apply()
     }
 
 }
