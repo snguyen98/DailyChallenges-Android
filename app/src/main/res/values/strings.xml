@@ -15,7 +15,7 @@
 
     <string name="overview_label">Challenge Overview</string>
     <string name="read_more_label">Read More</string>
-    <string name="links_label">Useful Links</string>
+    <string name="links_label">Useful Links:</string>
     <string name="last_completed_label">Last Completed: </string>
     <string name="total_completed_label">Total Completed: </string>
 

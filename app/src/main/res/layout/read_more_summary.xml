@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ReadMoreLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ReadMoreLayout"
+    android:paddingTop="12dp"
+    android:paddingBottom="30dp">
 
     <TextView
         android:id="@+id/challenge_category"
-        android:transitionName="category_element"
-        style="@style/SubText" />
+        style="@style/SubText"
+        android:textColor="@android:color/primary_text_light"
+        android:transitionName="category_element" />
 
     <TextView
         android:id="@+id/challenge_title"
+        style="@style/BoldHeading"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="34sp"
         android:transitionName="title_element"
-        android:textSize="27sp"
-        style="@style/BoldHeading" />
+        android:layout_marginTop="3dp"/>
 
     <ImageView
         android:id="@+id/category_icon"
-        android:contentDescription="@string/category_icon_desc"
-        style="@style/CategoryIcon" />
+        style="@style/CategoryIcon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="25dp"
+        android:contentDescription="@string/category_icon_desc" />
 
     <TextView
         android:id="@+id/challenge_summary"
+        style="@style/BodyText"
         android:color="@android:color/secondary_text_dark"
-        style="@style/SubText" />
+        android:textColor="@android:color/primary_text_light" />
 
 </LinearLayout>

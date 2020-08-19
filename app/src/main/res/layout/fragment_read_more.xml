@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:transitionName="card_element"
-    style="@style/MatchHeight">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchHeight"
+    android:transitionName="card_element">
 
     <ScrollView
-        style="@style/VerticalLayout">
-      
+        style="@style/VerticalLayout"
+        android:background="#FBFBFB">
+
         <LinearLayout style="@style/VerticalLayout">
 
             <include layout="@layout/read_more_summary" />
 
             <include
                 android:id="@+id/read_more_pointer"
-                android:visibility="gone"
-                layout="@layout/read_more_pointer" />
+                layout="@layout/read_more_pointer"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/read_more_gradient"
+                layout="@layout/read_more_gradient"
+                android:visibility="gone"/>
 
             <include
                 android:id="@+id/read_more_detail"
-                android:visibility="gone"
-                layout="@layout/read_more_detail" />
+                layout="@layout/read_more_detail"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/screenBackground"
-    style="@style/ReadMoreLayout">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ReadMoreLayout"
+    android:paddingBottom="30dp"
+    android:background="#FBFBF2">
+
 
     <TextView
         android:id="@+id/overview_label"
+        style="@style/DetailHeading"
         android:text="@string/overview_label"
-        android:textSize="24sp"
-        android:color="@android:color/black"
-        style="@style/DetailHeading" />
+        android:textColor="#303030"
+        android:textSize="29sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="55dp"
+        android:background="@android:color/darker_gray"/>
 
     <TextView
         android:id="@+id/challenge_desc"
-        style="@style/SubText" />
+        style="@style/BodyText"
+        android:layout_marginTop="25dp"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/links_label"
-        android:visibility="gone"
+        style="@style/DetailHeading"
+        android:layout_marginTop="40dp"
+        android:textColor="#606060"
         android:text="@string/links_label"
-        android:textSize="18sp"
-        android:color="@android:color/black"
-        style="@style/DetailHeading" />
+        android:textSize="24sp"
+        android:visibility="gone"/>
 
 </LinearLayout>

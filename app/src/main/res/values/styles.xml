@@ -51,21 +51,32 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:layout_marginTop">15dp</item>
         <item name="android:layout_marginBottom">10dp</item>
 
         <item name="android:color">@android:color/black</item>
         <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
-    <!--  Style for any smaller text  -->
+    <!--  Style for Sub Heading text  -->
     <style name="SubText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:paddingBottom">2dp</item>
         <item name="android:fontFamily">@font/timeless</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!--  Style for descriptions  -->
+    <style name="BodyText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">2dp</item>
+      
+        <item name="android:fontFamily">@font/timeless</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
     <!--  Style for category icon on read more page  -->
@@ -109,8 +120,6 @@
     <style name="ReadMoreLayout" parent="VerticalLayout">
         <item name="android:paddingLeft">18dp</item>
         <item name="android:paddingRight">18dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">20dp</item>
     </style>
 
     <!--  Style for views to fill the whole screen  -->
