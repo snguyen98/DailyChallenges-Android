@@ -80,7 +80,13 @@
     <fragment
         android:id="@+id/about_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.AboutFragment"
-        android:label="About" />
+        android:label="About">
+
+        <action
+            android:id="@+id/about_to_credits"
+            app:destination="@id/credits_fragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/credits_fragment"
