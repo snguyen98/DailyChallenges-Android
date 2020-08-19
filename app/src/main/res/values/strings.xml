@@ -63,9 +63,13 @@
     <string name="saif_link">https://www.linkedin.com/in/saif-widyatmoko/</string>
     <string name="ross_link">https://www.linkedin.com/in/ross-pendleton-7501b6197/</string>
     <string name="kenny_link">https://www.linkedin.com/in/ekenemchukwu-ekwonna/</string>
-    <string name="rijal_link">https://google.com</string>
-    <string name="terms_link">https://google.com</string>
-    <string name="privacy_link">https://google.com</string>
+    <string name="rijal_link">https://www.instagram.com/jalmoko/</string>
+    <string name="terms_link">
+        https://docs.google.com/document/d/1u_qSkUXHlgEWFjsVs-l6xzRN7mlqxgTLQd1OJA0YHtQ/
+    </string>
+    <string name="privacy_link">
+        https://docs.google.com/document/d/1J-DrZg_nB02CPE1slhzfF45tdwmMnx1Tw2vjeKCAmWE/
+    </string>
 
     <!--  Links  -->
     <string name="twitter_link">https://twitter.com/Vdailychallenge</string>
