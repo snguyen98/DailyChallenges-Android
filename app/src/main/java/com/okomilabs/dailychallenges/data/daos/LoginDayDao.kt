@@ -9,11 +9,18 @@ import com.okomilabs.dailychallenges.data.entities.LoginDay
 @Dao
 interface LoginDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addLoggedDay(day: LoginDay)
+    suspend fun addLoginDay(day: LoginDay)
 
     @Query("SELECT * FROM LoginDay")
-    suspend fun getAllLoggedDays(): List<LoginDay>
+    suspend fun getAllLoginDays(): List<LoginDay>
+
+    @Query("SELECT * FROM LoginDay WHERE state IN (:state)")
+    suspend fun getLoginDaysByState(state: Int): List<LoginDay>
 
     @Query("SELECT * FROM LoginDay WHERE date IN (:dateVal)")
-    suspend fun getLoggedDayByDate(dateVal: Int): List<LoginDay>
+    suspend fun getLoginDayByDate(dateVal: Int): List<LoginDay>
+
+    @Query("DELETE FROM LoginDay")
+    suspend fun deleteAll()
+
 }

@@ -31,17 +31,15 @@ class DateHelper {
      * Converts an integer to a date by using it to calculate the date by days from the reference
      *
      * @param days The number of days to be added to the reference
-     * @return The date as a triple in the form (dd,MM,yyyy)
+     * @return The date as a string
      */
-    fun intToDate(days: Int): Triple<Int,Int,Int> {
+    fun intToDate(days: Int): String {
         val calendar: Calendar = Calendar.getInstance()
         calendar.time = reference
         calendar.add(Calendar.DATE, days)
 
-        return Triple(
-            calendar.get(Calendar.DAY_OF_MONTH),
-            calendar.get(Calendar.MONTH) + 1,
-            calendar.get(Calendar.YEAR)
-        )
+        return "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
+               "${calendar.get(Calendar.MONTH) + 1}/" +
+               "${calendar.get(Calendar.YEAR)}"
     }
 }

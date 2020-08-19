@@ -1,17 +1,19 @@
 package com.okomilabs.dailychallenges.fragments
 
 import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.TypedValue
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -84,8 +86,12 @@ class ChallengeFragment: Fragment() {
      */
     private fun setNavigation(card: CardView) {
         card.setOnClickListener {
-            if (!checkIsNewDay()) {
-                findNavController().navigate(ChallengeFragmentDirections.challengeToReadMore())
+            val id: Int? = challengeViewModel.challenge.value?.id
+
+            if (!checkIsNewDay() && id != null) {
+                findNavController().navigate(
+                    ChallengeFragmentDirections.challengeToReadMore(id)
+                )
             }
         }
     }
@@ -161,16 +167,27 @@ class ChallengeFragment: Fragment() {
      * @return True if a new day has started and false otherwise
      */
     private fun checkIsNewDay(): Boolean {
+        val appContext: Context? = activity?.applicationContext
+
         return if (challengeViewModel.isNewDay()) {
-            AlertDialog.Builder(context)
-                .setTitle("Challenge period is over")
-                .setMessage("A new day has started. Refreshing challenge...")
-                .setPositiveButton("Ok") { _, _ ->
-                    challengeViewModel.initialise()
-                    findNavController().navigate(ChallengeFragmentDirections.challengeToWelcome())
-                }
-                .create()
-                .show()
+            if (appContext != null) {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+                builder
+                    .setCustomTitle(
+                        createDialogTitle(appContext.getString(R.string.refresh_title))
+                    )
+                    .setMessage(appContext.getString(R.string.refresh_message))
+                    .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
+                        challengeViewModel.initialise()
+                        findNavController()
+                            .navigate(ChallengeFragmentDirections.challengeToWelcome())
+                    }
+
+                val alert = builder.create()
+                alert.show()
+                setDialogFont(alert)
+            }
 
             true
         }
@@ -206,7 +223,9 @@ class ChallengeFragment: Fragment() {
                 }
             }
 
-            rewardedAd = RewardedAd(activity?.applicationContext, getString(R.string.test_reward_ad))
+            rewardedAd = RewardedAd(
+                activity?.applicationContext, getString(R.string.test_reward_ad)
+            )
             rewardedAd.loadAd(AdRequest.Builder().build(), adCallback)
         }
     }
@@ -251,18 +270,30 @@ class ChallengeFragment: Fragment() {
         complete.animate().alpha(1.0f).duration = 100L
 
         complete.setOnClickListener {
+            val appContext: Context? = activity?.applicationContext
+
             if (!checkIsNewDay()) {
-                AlertDialog.Builder(context)
-                    .setTitle("Mark as Complete")
-                    .setMessage("Would you like to mark this challenge as complete?")
-                    .setPositiveButton("Yes") { _, _ ->
-                        if (!checkIsNewDay()) {
-                            challengeViewModel.markComplete()
+                if (appContext != null) {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+                    builder
+                        .setCustomTitle(
+                            createDialogTitle(appContext.getString(R.string.complete_title))
+                        )
+                        .setMessage(appContext.getString(R.string.complete_message))
+                        .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
+                            if (!checkIsNewDay()) {
+                                challengeViewModel.markComplete()
+                            }
                         }
-                    }
-                    .setNeutralButton("No") { _, _ -> checkIsNewDay() }
-                    .create()
-                    .show()
+                        .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ ->
+                            checkIsNewDay()
+                        }
+
+                    val alert = builder.create()
+                    alert.show()
+                    setDialogFont(alert)
+                }
             }
         }
     }
@@ -274,41 +305,58 @@ class ChallengeFragment: Fragment() {
         skip.animate().alpha(1.0f).duration = 100L
 
         skip.setOnClickListener {
+            val appContext: Context? = activity?.applicationContext
+
             if (!checkIsNewDay()) {
                 val skips: Int = challengeViewModel.getSkips()
-
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder.setTitle("Skip Challenge")
 
-                if (skips <= 0) {
-                    builder
-                        .setMessage("You have no skips left")
-                        .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                }
+                if (appContext != null) {
+                    builder.setCustomTitle(
+                        createDialogTitle(appContext.getString(R.string.skip_title))
+                    )
 
-                else {
-                    if (rewardedAd.isLoaded) {
+                    if (skips <= 0) {
                         builder
-                            .setMessage(
-                                "You have $skips skip(s) left. Would you like " +
-                                "to watch a short ad to skip this challenge?"
-                            )
-                            .setPositiveButton("Yes") { _, _ ->
-                                if (!checkIsNewDay()) {
-                                    showRewardedAd()
-                                }
+                            .setMessage(appContext.getString(R.string.skip_unavailable_message))
+                            .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
+                                checkIsNewDay()
                             }
-                            .setNeutralButton("No") { _, _ -> checkIsNewDay() }
                     }
 
                     else {
-                        builder
-                            .setMessage("Sorry, there are no ads available right now")
-                            .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                    }
-                }
+                        if (rewardedAd.isLoaded) {
+                            builder
+                                .setMessage(
+                                    "You have $skips skip(s) left." +
+                                            appContext.getString(R.string.skip_available_message)
+                                )
+                                .setPositiveButton(
+                                    appContext.getString(R.string.yes_label)) { _, _ ->
+                                    if (!checkIsNewDay()) {
+                                        showRewardedAd()
+                                    }
+                                }
+                                .setNeutralButton(
+                                    appContext.getString(R.string.no_label)) { _, _ ->
+                                    checkIsNewDay()
+                                }
+                        }
 
-                builder.create().show()
+                        else {
+                            builder
+                                .setMessage(appContext.getString(R.string.skip_no_ads_message))
+                                .setPositiveButton(
+                                    appContext.getString(R.string.ok_label)) { _, _ ->
+                                    checkIsNewDay()
+                                }
+                        }
+                    }
+
+                    val alert = builder.create()
+                    alert.show()
+                    setDialogFont(alert)
+                }
             }
         }
     }
@@ -318,33 +366,45 @@ class ChallengeFragment: Fragment() {
      */
     private fun freezeFunctionality(freeze: ImageView) {
         freeze.setOnClickListener {
+            val appContext: Context? = activity?.applicationContext
+
             if (!checkIsNewDay()) {
                 val freezes: Int = challengeViewModel.getFreezes()
-
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder.setTitle("Freeze Streak")
 
-                if (freezes <= 0) {
-                    builder
-                        .setMessage("You have no freezes left. ")
-                        .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                }
+                if (appContext != null) {
+                    builder.setCustomTitle(
+                        createDialogTitle(appContext.getString(R.string.freeze_title))
+                    )
 
-                else {
-                    builder
-                        .setMessage(
-                            "You have $freezes freeze(s) left. Would " +
-                            "you like to freeze your streak?"
-                        )
-                        .setPositiveButton("Yes") { _, _ ->
-                            if (!checkIsNewDay()) {
-                                challengeViewModel.freezeDay()
+                    if (freezes <= 0) {
+                        builder
+                            .setMessage(appContext.getString(R.string.freeze_unavailable_message))
+                            .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
+                                checkIsNewDay()
                             }
-                        }
-                        .setNeutralButton("No") { _, _ -> checkIsNewDay() }
-                }
+                    }
 
-                builder.create().show()
+                    else {
+                        builder
+                            .setMessage(
+                                "You have $freezes freeze(s) left. " +
+                                        appContext.getString(R.string.freeze_available_message)
+                            )
+                            .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
+                                if (!checkIsNewDay()) {
+                                    challengeViewModel.freezeDay()
+                                }
+                            }
+                            .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ ->
+                                checkIsNewDay()
+                            }
+                    }
+
+                    val alert = builder.create()
+                    alert.show()
+                    setDialogFont(alert)
+                }
             }
         }
     }
@@ -354,15 +414,28 @@ class ChallengeFragment: Fragment() {
      */
     private fun checkGainedFreeze() {
         if (challengeViewModel.showFreezeMsg()) {
-            AlertDialog.Builder(context)
-                .setTitle("Freeze Gained")
-                .setMessage(
-                    "You gained a freeze for keeping up your streak! " +
-                    "You have ${challengeViewModel.getFreezes()} freeze(s)."
-                )
-                .setPositiveButton("Ok") { _, _ -> checkIsNewDay() }
-                .create()
-                .show()
+            val appContext: Context? = activity?.applicationContext
+
+            if (appContext != null) {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+                builder
+                    .setCustomTitle(
+                        createDialogTitle(appContext.getString(R.string.freeze_gained_title))
+                    )
+                    .setMessage(
+                        appContext.getString(
+                            R.string.freeze_gained_message) +
+                                "You have ${challengeViewModel.getFreezes()} freeze(s)."
+                    )
+                    .setPositiveButton(appContext.getString(R.string.ok_label)) { _, _ ->
+                        checkIsNewDay()
+                    }
+
+                val alert = builder.create()
+                alert.show()
+                setDialogFont(alert)
+            }
         }
     }
 
@@ -376,6 +449,43 @@ class ChallengeFragment: Fragment() {
         skip.setOnClickListener(null)
         complete.setOnClickListener(null)
         freeze.setOnClickListener(null)
+    }
+
+    private fun createDialogTitle(text: String): TextView {
+        val appContext = activity?.applicationContext
+
+        val paddingVal: Int = (resources.displayMetrics.density * 22f).toInt()
+        val title = TextView(appContext)
+        title.setPadding(paddingVal, paddingVal, paddingVal, 0)
+
+        title.text = text
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
+
+        if (appContext != null) {
+            title.setTextColor(ContextCompat.getColor(appContext, android.R.color.black))
+            title.typeface = ResourcesCompat.getFont(appContext, R.font.asap)
+        }
+
+        return title
+    }
+
+    private fun setDialogFont(alert: AlertDialog) {
+        val window: Window? = alert.window
+        val appContext = activity?.applicationContext
+
+        var messageFont: Typeface? = null
+        var buttonFont: Typeface? = null
+
+        appContext?.let {
+            messageFont = ResourcesCompat.getFont(it, R.font.timeless)
+            buttonFont = ResourcesCompat.getFont(it, R.font.asap_bold)
+        }
+
+        if (window != null) {
+            window.findViewById<TextView>(android.R.id.message).typeface = messageFont
+            window.findViewById<TextView>(android.R.id.button1).typeface = buttonFont
+            window.findViewById<TextView>(android.R.id.button3).typeface = buttonFont
+        }
     }
 
 }

@@ -43,7 +43,7 @@
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:color">@android:color/black</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
     <!--  Style for text views in the detail section of read more page  -->
@@ -54,7 +54,7 @@
         <item name="android:layout_marginBottom">10dp</item>
 
         <item name="android:color">@android:color/black</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
     <!--  Style for Sub Heading text  -->
@@ -63,6 +63,7 @@
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:paddingBottom">2dp</item>
+        <item name="android:fontFamily">@font/timeless</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -70,43 +71,12 @@
     <style name="BodyText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-
         <item name="android:paddingBottom">2dp</item>
+      
+        <item name="android:fontFamily">@font/timeless</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">3sp</item>
-
-    </style>
-
-
-    <!--  Style for streak icon on challenge card  -->
-    <style name="StreakIcon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingStart">8dp</item>
-    </style>
-
-    <!--  Style for streak number on challenge card  -->
-    <style name="StreakVal">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-
-        <item name="android:paddingTop">13dp</item>
-        <item name="android:paddingStart">3dp</item>
-
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">15sp</item>
-    </style>
-
-    <!--  Style for freeze icon on challenge card  -->
-    <style name="FreezeIcon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
     </style>
 
     <!--  Style for category icon on read more page  -->
@@ -129,6 +99,14 @@
         <item name="android:layout_marginBottom">10dp</item>
 
         <item name="contentDescription">@string/arrow_icon_desc</item>
+    </style>
+
+    <style name="PagerDot">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
     </style>
 
     <!--  Layout style for vertical linear layouts  -->
@@ -154,6 +132,25 @@
     <style name="WrapAll">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:fontFamily">@font/asap_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AsapTextAppearance">
+        <item name="android:fontFamily">@font/asap</item>
+    </style>
+
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textAppearance">@font/asap</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
 </resources>

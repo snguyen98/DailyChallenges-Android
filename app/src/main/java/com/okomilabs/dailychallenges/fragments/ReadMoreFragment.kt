@@ -1,5 +1,6 @@
 package com.okomilabs.dailychallenges.fragments
 
+import android.app.Application
 import android.os.Build
 import android.os.Bundle
 import android.text.util.Linkify
@@ -10,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
@@ -27,39 +30,48 @@ class ReadMoreFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        readMoreViewModel = ViewModelProvider(this).get(ReadMoreViewModel::class.java)
-
-        // Simple slide enter transition
-        enterTransition = Slide()
-
         val root = inflater.inflate(R.layout.fragment_read_more, container, false)
 
-        setReadMoreLayout(
-            root.findViewById(R.id.challenge_title),
-            root.findViewById(R.id.challenge_category),
-            root.findViewById(R.id.challenge_summary),
-            root.findViewById(R.id.challenge_desc),
-            root.findViewById(R.id.read_more_pointer),
-            root.findViewById(R.id.read_more_gradient),
-            root.findViewById(R.id.read_more_detail),
-            root.findViewById(R.id.category_icon)
-        )
+        val app = activity?.application
+        val id: Int? = arguments?.getInt("challengeId")
 
-        /* Shared element transition
-        val callback: SharedElementCallback = object: SharedElementCallback() {
-            override fun onSharedElementEnd(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+        if (app != null && id != null) {
+
+            readMoreViewModel = ViewModelProvider(
+                this,
+                ReadMoreFactory(app, id)
+            ).get(ReadMoreViewModel::class.java)
+
+            // Simple slide enter transition
+            enterTransition = Slide()
+
+            setReadMoreLayout(
+                root.findViewById(R.id.challenge_title),
+                root.findViewById(R.id.challenge_category),
+                root.findViewById(R.id.challenge_summary),
+                root.findViewById(R.id.challenge_desc),
+                root.findViewById(R.id.read_more_pointer),
+                root.findViewById(R.id.read_more_gradient),
+                root.findViewById(R.id.read_more_detail),
+                root.findViewById(R.id.category_icon)
+            )
+
+            /* Shared element transition
+            val callback: SharedElementCallback = object: SharedElementCallback() {
+                override fun onSharedElementEnd(
+                    sharedElementNames: MutableList<String>?,
+                    sharedElements: MutableList<View>?,
+                    sharedElementSnapshots: MutableList<View>?
+                ) {
+                    super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+                }
             }
+
+            sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(R.transition.read_more_transition)
+
+            setEnterSharedElementCallback(callback) */
         }
-
-        sharedElementEnterTransition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.read_more_transition)
-
-        setEnterSharedElementCallback(callback) */
 
         return root
     }
@@ -84,12 +96,11 @@ class ReadMoreFragment: Fragment() {
         icon: ImageView
     ) {
         val challengeObserver = Observer<Challenge> { newChallenge ->
+            val readMoreToggle: TextView = pointer.findViewById(R.id.read_more_toggle)
+                                                     
             title.text = newChallenge.title
             category.text = newChallenge.category
             summary.text = newChallenge.summary
-
-            val readMoreToggle: TextView = pointer.findViewById(R.id.read_more_toggle)
-
 
             if (newChallenge.desc != null) {
                 desc.text = newChallenge.desc
@@ -120,12 +131,25 @@ class ReadMoreFragment: Fragment() {
     }
 
     private fun showCategoryIcon(icon: ImageView, category: String) {
-        when (category) {
-            "Physical Wellbeing" -> icon.setImageResource(R.mipmap.physical_wellbeing)
-            "Mental Wellbeing" -> icon.setImageResource(R.mipmap.mental_wellbeing)
-            "Socialising" -> icon.setImageResource(R.mipmap.socialising)
-            "Education and Learning" -> icon.setImageResource(R.mipmap.education_learning)
-            "Skills and Hobbies" -> icon.setImageResource(R.mipmap.skills_hobbies)
+        val context = activity?.applicationContext
+
+        if (context != null) {
+            when (category) {
+                context.getString(R.string.physical_wellbeing) ->
+                    icon.setImageResource(R.mipmap.physical_wellbeing)
+
+                context.getString(R.string.mental_wellbeing) ->
+                    icon.setImageResource(R.mipmap.mental_wellbeing)
+
+                context.getString(R.string.socialising) ->
+                    icon.setImageResource(R.mipmap.socialising)
+
+                context.getString(R.string.education_learning) ->
+                    icon.setImageResource(R.mipmap.education_learning)
+
+                context.getString(R.string.skills_hobbies) ->
+                    icon.setImageResource(R.mipmap.skills_hobbies)
+            }
         }
     }
 
@@ -147,6 +171,10 @@ class ReadMoreFragment: Fragment() {
                     }
 
                     linkView.setPadding(0, 15, 0, 15)
+                    linkView.typeface = activity?.applicationContext?.let {
+                        ResourcesCompat.getFont(it, R.font.timeless)
+                    }
+                  
                     linkView.text = link.title
 
                     val transform = Linkify.TransformFilter { _, _ -> link.link }
@@ -179,5 +207,16 @@ class ReadMoreFragment: Fragment() {
         }
 
         readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
+    }
+
+    private inner class ReadMoreFactory(
+        app: Application, challengeId: Int
+    ): ViewModelProvider.NewInstanceFactory() {
+        private val application: Application = app
+        private val id: Int = challengeId
+
+        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
+            return ReadMoreViewModel(application, id) as T
+        }
     }
 }

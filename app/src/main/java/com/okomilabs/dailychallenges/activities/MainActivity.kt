@@ -26,7 +26,7 @@ class MainActivity: AppCompatActivity() {
 
         MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
-                .setTestDeviceIds(listOf("1805DBC7E2E5F4F767CC5BBD50879F8B"))
+                .setTestDeviceIds(listOf(applicationContext.getString(R.string.sang_oppo)))
                 .build()
         )
 
@@ -38,9 +38,9 @@ class MainActivity: AppCompatActivity() {
             setOf(
                 R.id.welcome_fragment,
                 R.id.challenge_fragment,
+                R.id.challenge_list_fragment,
                 R.id.help_fragment,
-                R.id.about_fragment,
-                R.id.credits_fragment
+                R.id.about_fragment
             ),
             drawer
         )

@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/challenge_fragment"
-            android:title="@string/home_label" />
+            android:title="@string/home_label"
+            android:icon="@mipmap/home_icon" />
 
         <item
-            android:id="@+id/help_fragment"
-            android:title="@string/help_label" />
+            android:id="@+id/challenge_list_fragment"
+            android:title="@string/list_label"
+            android:icon="@mipmap/list_icon" />
 
         <item
             android:id="@+id/about_fragment"
-            android:title="@string/about_label" />
+            android:title="@string/about_label"
+            android:icon="@mipmap/info_icon" />
 
         <item
-            android:id="@+id/credits_fragment"
-            android:title="@string/credits_label" />
+            android:id="@+id/help_fragment"
+            android:title="@string/help_label"
+            android:icon="@mipmap/help_icon" />
 
     </group>
-
 </menu>

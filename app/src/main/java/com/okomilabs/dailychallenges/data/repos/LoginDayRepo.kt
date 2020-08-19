@@ -9,20 +9,28 @@ class LoginDayRepo(application: Application) {
     private val dao: LoginDayDao = LoginDayDatabase.getInstance(application).loginDayDao()
 
     suspend fun addLoggedDay(day: LoginDay) {
-        dao.addLoggedDay(day)
+        dao.addLoginDay(day)
     }
 
     suspend fun getAllLoggedDays(): List<LoginDay> {
-        return dao.getAllLoggedDays()
+        return dao.getAllLoginDays()
+    }
+
+    suspend fun getLoginDaysByState(state: Int): List<LoginDay> {
+        return dao.getLoginDaysByState(state)
     }
 
     suspend fun getLoginDayByDate(dateVal: Int): LoginDay? {
-        val loggedDays: List<LoginDay> = dao.getLoggedDayByDate(dateVal)
+        val loginDays: List<LoginDay> = dao.getLoginDayByDate(dateVal)
 
-        return if (loggedDays.isEmpty()) {
+        return if (loginDays.isEmpty()) {
             null
         } else {
-            loggedDays[0]
+            loginDays[0]
         }
+    }
+
+    suspend fun deleteAll() {
+        dao.deleteAll()
     }
 }
