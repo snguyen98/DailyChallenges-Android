@@ -80,7 +80,7 @@
 
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
-    <string name="list_label">Completed Challenges</string>
+    <string name="list_label">Challenges</string>
     <string name="help_label">Help</string>
     <string name="about_label">About</string>
 
@@ -135,6 +135,7 @@
 
 
     <!--  Image Content Descriptions  -->
+    <string name="venture_logo_desc">Venture Logo</string>
     <string name="streak_icon_desc">Streak Icon</string>
     <string name="freeze_icon_desc">Freeze Icon</string>
     <string name="category_icon_desc">Category Icon</string>
