@@ -18,9 +18,5 @@
             android:id="@+id/about_fragment"
             android:title="@string/about_label" />
 
-        <item
-            android:id="@+id/credits_fragment"
-            android:title="@string/credits_label" />
-
     </group>
 </menu>
