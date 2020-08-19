@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/challenge_card"
     android:transitionName="card_element"
     style="@style/ChallengeCard">
@@ -29,24 +30,36 @@
 
         <ImageView
             android:id="@+id/streak_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
             android:contentDescription="@string/streak_icon_desc"
-            app:srcCompat="@mipmap/streak_icon"
-            style="@style/StreakIcon" />
+            app:srcCompat="@mipmap/streak_icon" />
 
         <TextView
             android:id="@+id/streak_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_toEndOf="@id/streak_icon"
-            style="@style/StreakVal" />
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/asap_bold"
+            android:textSize="15sp"
+            tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/freeze_icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/freeze_icon_desc"
-            app:srcCompat="@mipmap/freeze_icon"
-            style="@style/FreezeIcon" />
+            app:srcCompat="@mipmap/freeze_icon" />
 
     </RelativeLayout>
 

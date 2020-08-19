@@ -38,6 +38,7 @@
         android:fitsSystemWindows="true"
         app:itemTextAppearance="@style/AsapTextAppearance"
         app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/nav_header"
         style="@style/DrawerTheme" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
