@@ -19,6 +19,17 @@
     <string name="last_completed_label">Last Completed: </string>
     <string name="total_completed_label">Total Completed: </string>
 
+    <string name="about_us_label">About Us</string>
+    <string name="legal_label">Legal</string>
+    <string name="team_label">Our Team</string>
+    <string name="thanks_label">Special Thanks</string>
+    <string name="twitter_label">Twitter</string>
+    <string name="instagram_label">Instagram</string>
+    <string name="facebook_label">Facebook</string>
+    <string name="linkedin_label">LinkedIn</string>
+    <string name="terms_label">Terms and Conditions</string>
+    <string name="privacy_label">Privacy Policy</string>
+
 
     <!--  Button Labels  -->
     <string name="complete_label">Complete</string>
@@ -32,12 +43,42 @@
     <string name="ok_label">OK</string>
 
 
+    <!--  Credits Names  -->
+    <string name="sang_name">Sang Nguyen</string>
+    <string name="ned_name">Nedeesha Weerasuriya</string>
+    <string name="saif_name">Saif Widyatmoko</string>
+    <string name="ross_name">Ross Pendleton</string>
+    <string name="kenny_name">Kenny Ekwonna</string>
+    <string name="rijal_name">Rijal Widyatmoko</string>
+
+    <string name="sang_role">Project Leader, Lead Programmer</string>
+    <string name="ned_role">UI Designer, Content Writer</string>
+    <string name="saif_role">Business Director, Content Writer</string>
+    <string name="ross_role">Content Manager, Administrator</string>
+    <string name="kenny_role">For supporting us</string>
+    <string name="rijal_role">For designing our logo</string>
+
+    <string name="sang_link">https://www.linkedin.com/in/sang-nguyen-a42712a7/</string>
+    <string name="ned_link">https://www.linkedin.com/in/nedeesha-w-089983a6/</string>
+    <string name="saif_link">https://www.linkedin.com/in/saif-widyatmoko/</string>
+    <string name="ross_link">https://www.linkedin.com/in/ross-pendleton-7501b6197/</string>
+    <string name="kenny_link">https://www.linkedin.com/in/ekenemchukwu-ekwonna/</string>
+    <string name="rijal_link">https://google.com</string>
+    <string name="terms_link">https://google.com</string>
+    <string name="privacy_link">https://google.com</string>
+
+    <!--  Links  -->
+    <string name="twitter_link">https://twitter.com/Vdailychallenge</string>
+    <string name="instagram_link">https://www.instagram.com/vdailychallenge/</string>
+    <string name="facebook_link">https://www.facebook.com/Venture-108053924345819</string>
+    <string name="linkedin_link">https://www.linkedin.com/company/okomi-labs</string>
+
+
     <!--  Drawer Layout Labels  -->
     <string name="home_label">Home</string>
     <string name="list_label">Completed Challenges</string>
     <string name="help_label">Help</string>
     <string name="about_label">About</string>
-    <string name="credits_label">Credits</string>
 
 
     <!--  Dialog Titles and Messages  -->
@@ -95,6 +136,8 @@
     <string name="category_icon_desc">Category Icon</string>
     <string name="arrow_icon_desc">Arrow Icon</string>
     <string name="tutorial_desc">Tutorial</string>
+    <string name="about_icon_desc">About Icon</string>
+    <string name="credited_link_desc">Link to Credited</string>
 
 
     <!--  SHARED PREFERENCES KEYS  -->
