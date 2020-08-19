@@ -40,6 +40,7 @@ class ReadMoreFragment: Fragment() {
             root.findViewById(R.id.challenge_summary),
             root.findViewById(R.id.challenge_desc),
             root.findViewById(R.id.read_more_pointer),
+            root.findViewById(R.id.read_more_gradient),
             root.findViewById(R.id.read_more_detail),
             root.findViewById(R.id.category_icon)
         )
@@ -78,6 +79,7 @@ class ReadMoreFragment: Fragment() {
         summary: TextView,
         desc: TextView,
         pointer: LinearLayout,
+        gradient: LinearLayout,
         detail: LinearLayout,
         icon: ImageView
     ) {
@@ -86,25 +88,36 @@ class ReadMoreFragment: Fragment() {
             category.text = newChallenge.category
             summary.text = newChallenge.summary
 
-            val overviewLabel: TextView = detail.findViewById(R.id.overview_label)
+            val readMoreToggle: TextView = pointer.findViewById(R.id.read_more_toggle)
+
 
             if (newChallenge.desc != null) {
-                overviewLabel.visibility = View.VISIBLE
                 desc.text = newChallenge.desc
-                showDetail(pointer, detail, true)
+                showDetail(pointer, gradient, detail, true)
             }
             else {
-                overviewLabel.visibility = View.GONE
-                showDetail(pointer, detail, false)
+                showDetail(pointer, gradient, detail, false)
             }
-
             showCategoryIcon(icon, newChallenge.category)
-        }
+
+            readMoreToggle.setOnClickListener {
+                showHide(pointer)
+                showHide(gradient)
+                showHide(detail)
+            }
+    }
 
         readMoreViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
     }
 
 
+
+    private fun showHide(view:View){
+        view.visibility = if (view.visibility == View.GONE) {
+            View.VISIBLE }
+        else{
+            View.GONE}
+    }
 
     private fun showCategoryIcon(icon: ImageView, category: String) {
         when (category) {
@@ -116,11 +129,12 @@ class ReadMoreFragment: Fragment() {
         }
     }
 
-    private fun showDetail(pointer: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
+    private fun showDetail(pointer: LinearLayout, gradient: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
         val linksObserver = Observer<List<Link>> { newLinks ->
             if (!newLinks.isNullOrEmpty()) {
                 pointer.visibility = View.VISIBLE
-                detail.visibility = View.VISIBLE
+                gradient.visibility=View.GONE
+                detail.visibility = View.GONE
 
                 for (link in newLinks) {
                     val linkView = TextView(context)
@@ -132,7 +146,7 @@ class ReadMoreFragment: Fragment() {
                         linkView.setTextAppearance(context, R.style.SubText)
                     }
 
-                    linkView.setPadding(0, 0, 0, 15)
+                    linkView.setPadding(0, 15, 0, 15)
                     linkView.text = link.title
 
                     val transform = Linkify.TransformFilter { _, _ -> link.link }
@@ -153,10 +167,12 @@ class ReadMoreFragment: Fragment() {
             else {
                 if (hasDesc) {
                     pointer.visibility = View.VISIBLE
+                    gradient.visibility = View.VISIBLE
                     detail.visibility = View.VISIBLE
                 }
                 else {
                     pointer.visibility = View.GONE
+                    gradient.visibility = View.GONE
                     detail.visibility = View.GONE
                 }
             }
