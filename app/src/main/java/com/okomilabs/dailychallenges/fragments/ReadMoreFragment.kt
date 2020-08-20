@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,9 @@ import java.util.regex.Pattern
 
 class ReadMoreFragment: Fragment() {
     private lateinit var readMoreViewModel: ReadMoreViewModel
+
+    private var hasDesc: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var hasLinks: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,10 +49,11 @@ class ReadMoreFragment: Fragment() {
             // Simple slide enter transition
             enterTransition = Slide()
 
-            setReadMoreLayout(
-                root.findViewById(R.id.read_more_summary),
-                root.findViewById(R.id.read_more_detail)
-            )
+            val detail: LinearLayout = root.findViewById(R.id.read_more_detail)
+
+            setTextViews(root.findViewById(R.id.read_more_summary), detail)
+            addLinks(detail)
+            observeState(root.findViewById(R.id.read_more_pointer), detail)
 
             /* Shared element transition
             val callback: SharedElementCallback = object: SharedElementCallback() {
@@ -81,10 +86,8 @@ class ReadMoreFragment: Fragment() {
      * @param summary The linear layout containing the title, category, image and read more button
      * @param detail The linear layout containing the challenge description and links
      */
-    private fun setReadMoreLayout(summary: LinearLayout, detail: LinearLayout) {
+    private fun setTextViews(summary: LinearLayout, detail: LinearLayout) {
         val challengeObserver = Observer<Challenge> { newChallenge ->
-            val pointer: LinearLayout = summary.findViewById(R.id.read_more_pointer)
-                                                     
             summary.findViewById<TextView>(R.id.challenge_title).text = newChallenge.title
             summary.findViewById<TextView>(R.id.challenge_category).text = newChallenge.category
             summary.findViewById<TextView>(R.id.challenge_summary).text = newChallenge.summary
@@ -93,40 +96,28 @@ class ReadMoreFragment: Fragment() {
 
             if (newChallenge.desc != null) {
                 detail.findViewById<TextView>(R.id.challenge_desc).text = newChallenge.desc
-                showDetail(pointer, detail, true)
+                hasDesc.value = true
             }
 
             else {
-                showDetail(pointer, detail, false)
+                hasDesc.value = false
             }
         }
 
         readMoreViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
     }
 
-    private fun showDetail(pointer: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
+    /**
+     * Checks if there are links in the view model, if so, adds them to the detail layout and sets
+     * hasDesc instance variable to true, otherwise sets to false.
+     *
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun addLinks(detail: LinearLayout) {
         val linksObserver = Observer<List<Link>> { newLinks ->
             if (!newLinks.isNullOrEmpty()) {
-                pointerFunctionality(pointer, detail)
-                detail.findViewById<TextView>(R.id.links_label).visibility = View.VISIBLE
-
                 for (link in newLinks) {
-                    val linkView = TextView(context)
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        linkView.setTextAppearance(R.style.SubText)
-                    }
-                    else {
-                        linkView.setTextAppearance(context, R.style.SubText)
-                    }
-
-                    linkView.setPadding(0, 15, 0, 15)
-                    linkView.typeface = activity?.applicationContext?.let {
-                        ResourcesCompat.getFont(it, R.font.timeless)
-                    }
-                  
-                    linkView.text = link.title
-
+                    val linkView: TextView = generateLinkView(link.title)
                     val transform = Linkify.TransformFilter { _, _ -> link.link }
 
                     Linkify.addLinks(
@@ -139,24 +130,65 @@ class ReadMoreFragment: Fragment() {
 
                     detail.addView(linkView)
                 }
+
+                hasLinks.value = true
             }
 
             else {
-                if (hasDesc) {
-                    pointerFunctionality(pointer, detail)
-                    detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
-                }
-                else {
-                    pointer.visibility = View.GONE
-                }
-
-                detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
+                hasLinks.value = false
             }
-
-            detail.visibility = View.GONE
         }
 
         readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
+    }
+
+    /**
+     * Observes when the hasDesc and hasLinks variables change and fix the layout accordingly
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun observeState(pointer: LinearLayout, detail: LinearLayout) {
+        val stateObserver = Observer<Boolean> { _ ->
+            hasDesc.value?.let { hasDescVal ->
+                hasLinks.value?.let { hasLinksVal ->
+
+                    if (hasDescVal) {
+                        pointer.visibility = View.VISIBLE
+                        detail.visibility = View.GONE
+                        pointerFunctionality(pointer, detail)
+
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.VISIBLE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.VISIBLE
+
+                        if (hasLinksVal) {
+                            detail.findViewById<TextView>(R.id.links_label).visibility =
+                                View.VISIBLE
+                        }
+                        else {
+                            detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
+                        }
+                    }
+
+                    else {
+                        pointer.visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.GONE
+
+                        if (hasLinksVal) {
+                            detail.visibility = View.VISIBLE
+                        }
+                        else {
+                            detail.visibility = View.GONE
+                        }
+                    }
+
+                }
+            }
+        }
+
+        hasDesc.observe(viewLifecycleOwner, stateObserver)
+        hasLinks.observe(viewLifecycleOwner, stateObserver)
     }
 
     /**
@@ -201,6 +233,32 @@ class ReadMoreFragment: Fragment() {
                     icon.setImageResource(R.mipmap.skills_hobbies)
             }
         }
+    }
+
+    /**
+     * Generates the layout attributes for each text view holding the links
+     *
+     * @param text The text to be displayed on the text view
+     * @return The text view holding the link
+     */
+    private fun generateLinkView(text: String): TextView {
+        val linkView = TextView(context)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            linkView.setTextAppearance(R.style.SubText)
+        }
+        else {
+            linkView.setTextAppearance(context, R.style.SubText)
+        }
+
+        linkView.setPadding(0, 15, 0, 15)
+        linkView.typeface = activity?.applicationContext?.let {
+            ResourcesCompat.getFont(it, R.font.timeless)
+        }
+
+        linkView.text = text
+
+        return linkView
     }
 
     /**
