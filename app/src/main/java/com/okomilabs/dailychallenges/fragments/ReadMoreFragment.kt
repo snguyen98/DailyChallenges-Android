@@ -46,14 +46,8 @@ class ReadMoreFragment: Fragment() {
             enterTransition = Slide()
 
             setReadMoreLayout(
-                root.findViewById(R.id.challenge_title),
-                root.findViewById(R.id.challenge_category),
-                root.findViewById(R.id.challenge_summary),
-                root.findViewById(R.id.challenge_desc),
-                root.findViewById(R.id.read_more_pointer),
-                root.findViewById(R.id.read_more_gradient),
-                root.findViewById(R.id.read_more_detail),
-                root.findViewById(R.id.category_icon)
+                root.findViewById(R.id.read_more_summary),
+                root.findViewById(R.id.read_more_detail)
             )
 
             /* Shared element transition
@@ -82,83 +76,39 @@ class ReadMoreFragment: Fragment() {
     }
 
     /**
-     * Observes changes in challenge info in view model, updates respective text view values and
-     * displays the description and links if available
+     * Observes changes in challenge info in view model, updates respective text views
+     *
+     * @param summary The linear layout containing the title, category, image and read more button
+     * @param detail The linear layout containing the challenge description and links
      */
-    private fun setReadMoreLayout(
-        title: TextView,
-        category: TextView,
-        summary: TextView,
-        desc: TextView,
-        pointer: LinearLayout,
-        gradient: LinearLayout,
-        detail: LinearLayout,
-        icon: ImageView
-    ) {
+    private fun setReadMoreLayout(summary: LinearLayout, detail: LinearLayout) {
         val challengeObserver = Observer<Challenge> { newChallenge ->
-            val readMoreToggle: TextView = pointer.findViewById(R.id.read_more_toggle)
+            val pointer: LinearLayout = summary.findViewById(R.id.read_more_pointer)
                                                      
-            title.text = newChallenge.title
-            category.text = newChallenge.category
-            summary.text = newChallenge.summary
+            summary.findViewById<TextView>(R.id.challenge_title).text = newChallenge.title
+            summary.findViewById<TextView>(R.id.challenge_category).text = newChallenge.category
+            summary.findViewById<TextView>(R.id.challenge_summary).text = newChallenge.summary
+
+            showCategoryIcon(summary.findViewById(R.id.category_icon), newChallenge.category)
 
             if (newChallenge.desc != null) {
-                desc.text = newChallenge.desc
-                showDetail(pointer, gradient, detail, true)
+                detail.findViewById<TextView>(R.id.challenge_desc).text = newChallenge.desc
+                showDetail(pointer, detail, true)
             }
-            else {
-                showDetail(pointer, gradient, detail, false)
-            }
-            showCategoryIcon(icon, newChallenge.category)
 
-            readMoreToggle.setOnClickListener {
-                showHide(pointer)
-                showHide(gradient)
-                showHide(detail)
+            else {
+                showDetail(pointer, detail, false)
             }
-    }
+        }
 
         readMoreViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
     }
 
-
-
-    private fun showHide(view:View){
-        view.visibility = if (view.visibility == View.GONE) {
-            View.VISIBLE }
-        else{
-            View.GONE}
-    }
-
-    private fun showCategoryIcon(icon: ImageView, category: String) {
-        val context = activity?.applicationContext
-
-        if (context != null) {
-            when (category) {
-                context.getString(R.string.physical_wellbeing) ->
-                    icon.setImageResource(R.mipmap.physical_wellbeing)
-
-                context.getString(R.string.mental_wellbeing) ->
-                    icon.setImageResource(R.mipmap.mental_wellbeing)
-
-                context.getString(R.string.socialising) ->
-                    icon.setImageResource(R.mipmap.socialising)
-
-                context.getString(R.string.education_learning) ->
-                    icon.setImageResource(R.mipmap.education_learning)
-
-                context.getString(R.string.skills_hobbies) ->
-                    icon.setImageResource(R.mipmap.skills_hobbies)
-            }
-        }
-    }
-
-    private fun showDetail(pointer: LinearLayout, gradient: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
+    private fun showDetail(pointer: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
         val linksObserver = Observer<List<Link>> { newLinks ->
             if (!newLinks.isNullOrEmpty()) {
-                pointer.visibility = View.VISIBLE
-                gradient.visibility=View.GONE
-                detail.visibility = View.GONE
+                pointerFunctionality(pointer, detail)
+                detail.findViewById<TextView>(R.id.links_label).visibility = View.VISIBLE
 
                 for (link in newLinks) {
                     val linkView = TextView(context)
@@ -189,26 +139,73 @@ class ReadMoreFragment: Fragment() {
 
                     detail.addView(linkView)
                 }
-
-                detail.findViewById<TextView>(R.id.links_label).visibility = View.VISIBLE
             }
+
             else {
                 if (hasDesc) {
-                    pointer.visibility = View.VISIBLE
-                    gradient.visibility = View.VISIBLE
-                    detail.visibility = View.VISIBLE
+                    pointerFunctionality(pointer, detail)
+                    detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
                 }
                 else {
                     pointer.visibility = View.GONE
-                    gradient.visibility = View.GONE
-                    detail.visibility = View.GONE
                 }
+
+                detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
             }
+
+            detail.visibility = View.GONE
         }
 
         readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
     }
 
+    /**
+     * Shows the read more button and set tap functionality
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun pointerFunctionality(pointer: LinearLayout, detail: LinearLayout) {
+        pointer.visibility = View.VISIBLE
+
+        pointer.setOnClickListener {
+            pointer.visibility = View.GONE
+            detail.visibility = View.VISIBLE
+        }
+    }
+
+    /**
+     * Sets the appropriate category image for the current challenge category
+     *
+     * @param icon The category image view
+     * @param category The current challenge category
+     */
+    private fun showCategoryIcon(icon: ImageView, category: String) {
+        val context = activity?.applicationContext
+
+        if (context != null) {
+            when (category) {
+                context.getString(R.string.physical_wellbeing) ->
+                    icon.setImageResource(R.mipmap.physical_wellbeing)
+
+                context.getString(R.string.mental_wellbeing) ->
+                    icon.setImageResource(R.mipmap.mental_wellbeing)
+
+                context.getString(R.string.socialising) ->
+                    icon.setImageResource(R.mipmap.socialising)
+
+                context.getString(R.string.education_learning) ->
+                    icon.setImageResource(R.mipmap.education_learning)
+
+                context.getString(R.string.skills_hobbies) ->
+                    icon.setImageResource(R.mipmap.skills_hobbies)
+            }
+        }
+    }
+
+    /**
+     * Factory to allow a challenge ID to be passed to the read more view model
+     */
     private inner class ReadMoreFactory(
         app: Application, challengeId: Int
     ): ViewModelProvider.NewInstanceFactory() {

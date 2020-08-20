@@ -1,35 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ReadMoreLayout"
-    android:paddingTop="12dp"
-    android:paddingBottom="30dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/challenge_category"
-        style="@style/SubText"
-        android:textColor="@android:color/primary_text_light"
-        android:transitionName="category_element" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="30dp"
+        android:orientation="vertical"
+        android:background="@color/rm_summary_background"
+        style="@style/ReadMorePadding">
 
-    <TextView
-        android:id="@+id/challenge_title"
-        style="@style/BoldHeading"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="34sp"
-        android:transitionName="title_element"
-        android:layout_marginTop="3dp"/>
+        <TextView
+            android:id="@+id/challenge_category"
+            android:textColor="@color/summary_text_color"
+            android:transitionName="category_element"
+            style="@style/SubText" />
 
-    <ImageView
-        android:id="@+id/category_icon"
-        style="@style/CategoryIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="25dp"
-        android:contentDescription="@string/category_icon_desc" />
+        <TextView
+            android:id="@+id/challenge_title"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/summary_text_color"
+            android:textSize="34sp"
+            android:transitionName="title_element"
+            style="@style/BoldHeading" />
 
-    <TextView
-        android:id="@+id/challenge_summary"
-        style="@style/BodyText"
-        android:color="@android:color/secondary_text_dark"
-        android:textColor="@android:color/primary_text_light" />
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/category_icon_desc" />
+
+        <TextView
+            android:id="@+id/challenge_summary"
+            android:textColor="@color/summary_text_color"
+            style="@style/BodyText" />
+
+        <include
+            android:id="@+id/read_more_pointer"
+            layout="@layout/read_more_pointer" />
+
+    </LinearLayout>
+
+    <include layout="@layout/read_more_gradient" />
 
 </LinearLayout>
