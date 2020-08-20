@@ -4,8 +4,17 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="screenBackground">#50C864</color>
     <color name="freeze_icon">#3CC0F2</color>
+
+    <color name="rm_summary_background">#FBFBFB</color>
+    <color name="rm_detail_background">#FBFBF2</color>
+
     <color name="button_color">#E6C53C</color>
     <color name="button_grad_end">#F7D651</color>
+
+    <color name="summary_text_color">@android:color/primary_text_light</color>
+    <color name="info_label_color">#303030</color>
+    <color name="link_label_color">#606060</color>
+
     <color name="actionBarPrimary">#00A86B</color>
     <color name="actionBarSecondary">@android:color/black</color>
 </resources>
