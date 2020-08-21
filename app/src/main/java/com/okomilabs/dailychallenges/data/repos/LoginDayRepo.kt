@@ -23,10 +23,11 @@ class LoginDayRepo(application: Application) {
     suspend fun getLoginDayByDate(dateVal: Int): LoginDay? {
         val loginDays: List<LoginDay> = dao.getLoginDayByDate(dateVal)
 
-        return if (loginDays.isEmpty()) {
-            null
-        } else {
+        return if (loginDays.isNotEmpty()) {
             loginDays[0]
+        }
+        else {
+            null
         }
     }
 
