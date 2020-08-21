@@ -62,5 +62,4 @@
             app:srcCompat="@mipmap/freeze_icon" />
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>
