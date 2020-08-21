@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/launch_message_1"
+        android:layout_above="@id/launch_message_2"
+        style="@style/first_launch_message_box">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/first_launch_message_1"
+            style="@style/BodyText" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/launch_message_2"
+        android:layout_centerInParent="true"
+        style="@style/first_launch_message_box">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/first_launch_message_2"
+            style="@style/BodyText" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/launch_no_button"
+        android:layout_below="@id/launch_message_2"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/rounded_button"
+        android:text="@string/first_launch_no_button"
+        style="@style/first_launch_button" />
+
+    <Button
+        android:id="@+id/launch_yes_button"
+        android:layout_below="@id/launch_message_2"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/rounded_button"
+        android:text="@string/first_launch_yes_button"
+        style="@style/first_launch_button" />
+
+</RelativeLayout>
