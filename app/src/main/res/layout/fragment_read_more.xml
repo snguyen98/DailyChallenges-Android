@@ -23,6 +23,14 @@
                 android:id="@+id/read_more_detail"
                 layout="@layout/read_more_detail" />
 
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/test_banner_ad" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.cardview.widget.CardView>

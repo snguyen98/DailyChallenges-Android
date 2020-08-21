@@ -17,6 +17,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
 import com.okomilabs.dailychallenges.data.entities.Link
@@ -75,10 +77,86 @@ class ReadMoreFragment: Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadBannerAd(view.findViewById(R.id.banner_ad))
+    }
+
     override fun onDestroy() {
         activity?.viewModelStore?.clear()
         super.onDestroy()
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// AdMob Functions //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Loads the banner ad on the challenge page
+     */
+    private fun loadBannerAd(bannerAd: AdView) {
+        val adRequest = AdRequest.Builder().build()
+        bannerAd.loadAd(adRequest)
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// Observing Functions ////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Observes when the hasDesc and hasLinks variables change and fix the layout accordingly
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun observeState(pointer: TextView, detail: LinearLayout) {
+        val stateObserver = Observer<Boolean> { _ ->
+            hasDesc.value?.let { hasDescVal ->
+                hasLinks.value?.let { hasLinksVal ->
+
+                    if (hasDescVal) {
+                        pointer.visibility = View.VISIBLE
+                        detail.visibility = View.GONE
+                        pointerFunctionality(pointer, detail)
+
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.VISIBLE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.VISIBLE
+
+                        if (hasLinksVal) {
+                            detail.findViewById<TextView>(R.id.links_label).visibility =
+                                View.VISIBLE
+                        }
+                        else {
+                            detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
+                        }
+                    }
+
+                    else {
+                        pointer.visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.GONE
+
+                        if (hasLinksVal) {
+                            detail.visibility = View.VISIBLE
+                        }
+                        else {
+                            detail.visibility = View.GONE
+                        }
+                    }
+
+                }
+            }
+        }
+
+        hasDesc.observe(viewLifecycleOwner, stateObserver)
+        hasLinks.observe(viewLifecycleOwner, stateObserver)
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Setting Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Observes changes in challenge info in view model, updates respective text views
@@ -143,70 +221,6 @@ class ReadMoreFragment: Fragment() {
     }
 
     /**
-     * Observes when the hasDesc and hasLinks variables change and fix the layout accordingly
-     *
-     * @param pointer The linear layout containing the read more button
-     * @param detail The linear layout containing the challenge description and links
-     */
-    private fun observeState(pointer: TextView, detail: LinearLayout) {
-        val stateObserver = Observer<Boolean> { _ ->
-            hasDesc.value?.let { hasDescVal ->
-                hasLinks.value?.let { hasLinksVal ->
-
-                    if (hasDescVal) {
-                        pointer.visibility = View.VISIBLE
-                        detail.visibility = View.GONE
-                        pointerFunctionality(pointer, detail)
-
-                        detail.findViewById<TextView>(R.id.info_label).visibility = View.VISIBLE
-                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.VISIBLE
-
-                        if (hasLinksVal) {
-                            detail.findViewById<TextView>(R.id.links_label).visibility =
-                                View.VISIBLE
-                        }
-                        else {
-                            detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
-                        }
-                    }
-
-                    else {
-                        pointer.visibility = View.GONE
-                        detail.findViewById<TextView>(R.id.info_label).visibility = View.GONE
-                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.GONE
-
-                        if (hasLinksVal) {
-                            detail.visibility = View.VISIBLE
-                        }
-                        else {
-                            detail.visibility = View.GONE
-                        }
-                    }
-
-                }
-            }
-        }
-
-        hasDesc.observe(viewLifecycleOwner, stateObserver)
-        hasLinks.observe(viewLifecycleOwner, stateObserver)
-    }
-
-    /**
-     * Shows the read more button and set tap functionality
-     *
-     * @param pointer The linear layout containing the read more button
-     * @param detail The linear layout containing the challenge description and links
-     */
-    private fun pointerFunctionality(pointer: TextView, detail: LinearLayout) {
-        pointer.visibility = View.VISIBLE
-
-        pointer.setOnClickListener {
-            pointer.visibility = View.GONE
-            detail.visibility = View.VISIBLE
-        }
-    }
-
-    /**
      * Sets the appropriate category image for the current challenge category
      *
      * @param icon The category image view
@@ -235,6 +249,26 @@ class ReadMoreFragment: Fragment() {
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// Layout Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Shows the read more button and set tap functionality
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun pointerFunctionality(pointer: TextView, detail: LinearLayout) {
+        pointer.visibility = View.VISIBLE
+
+        pointer.setOnClickListener {
+            pointer.visibility = View.GONE
+            detail.visibility = View.VISIBLE
+        }
+    }
+
     /**
      * Generates the layout attributes for each text view holding the links
      *
@@ -260,6 +294,11 @@ class ReadMoreFragment: Fragment() {
 
         return linkView
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////// Inner Classes ///////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Factory to allow a challenge ID to be passed to the read more view model
