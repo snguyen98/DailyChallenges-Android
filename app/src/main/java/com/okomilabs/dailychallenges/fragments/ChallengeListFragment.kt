@@ -3,17 +3,16 @@ package com.okomilabs.dailychallenges.fragments
 import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.transition.Slide
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -45,6 +44,9 @@ class ChallengeListFragment: Fragment() {
 
         observeList(listView, root.findViewById(R.id.completed_list_message))
         resetButtonFunctionality(root.findViewById(R.id.reset_button))
+
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
 
         return root
     }

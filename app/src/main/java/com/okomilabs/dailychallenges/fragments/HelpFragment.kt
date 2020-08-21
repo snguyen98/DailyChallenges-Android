@@ -2,6 +2,8 @@ package com.okomilabs.dailychallenges.fragments
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -37,8 +40,13 @@ class HelpFragment: Fragment() {
                     root.findViewById(R.id.pager_dots)
                 )
                 setButtons(position, root.findViewById(R.id.tutorial_button))
+                startPostponedEnterTransition()
             }
         })
+
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        postponeEnterTransition()
 
         return root
     }

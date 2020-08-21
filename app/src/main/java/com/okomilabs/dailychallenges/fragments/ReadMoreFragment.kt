@@ -36,6 +36,9 @@ class ReadMoreFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Simple slide enter transition
+        enterTransition = Slide()
+
         val root = inflater.inflate(R.layout.fragment_read_more, container, false)
 
         val app = activity?.application
@@ -48,8 +51,7 @@ class ReadMoreFragment: Fragment() {
                 ReadMoreFactory(app, id)
             ).get(ReadMoreViewModel::class.java)
 
-            // Simple slide enter transition
-            enterTransition = Slide()
+
 
             val detail: LinearLayout = root.findViewById(R.id.read_more_detail)
 
