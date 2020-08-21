@@ -20,19 +20,12 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        MobileAds.initialize(this)
-
-        MobileAds.setRequestConfiguration(
-            RequestConfiguration.Builder()
-                .setTestDeviceIds(listOf(applicationContext.getString(R.string.sang_oppo)))
-                .build()
-        )
-
         val navController = findNavController(R.id.nav_host_fragment)
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         val drawer: NavigationView = findViewById(R.id.nav_view)
 
+        // Sets up drawer and home fragments with app bar
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.welcome_fragment,
@@ -44,9 +37,10 @@ class MainActivity: AppCompatActivity() {
             drawerLayout
         )
 
-        drawer.setupWithNavController(navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+        drawer.setupWithNavController(navController)
 
+        // Sets up drawer functionality
         drawer.setNavigationItemSelectedListener {
             drawerLayout.closeDrawer(GravityCompat.START)
 
@@ -58,6 +52,15 @@ class MainActivity: AppCompatActivity() {
                 false
             }
         }
+
+        // AdMob setup
+        MobileAds.initialize(this)
+
+        MobileAds.setRequestConfiguration(
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf(applicationContext.getString(R.string.sang_oppo)))
+                .build()
+        )
     }
 
     /**
