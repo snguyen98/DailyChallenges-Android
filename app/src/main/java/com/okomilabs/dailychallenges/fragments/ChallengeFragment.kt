@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
@@ -67,8 +66,6 @@ class ChallengeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setNavigation(view.findViewById(R.id.challenge_card))
-
-        loadBannerAd(view.findViewById(R.id.banner_ad))
         loadRewardedAd()
     }
 
@@ -199,14 +196,6 @@ class ChallengeFragment: Fragment() {
     ////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// AdMob Functions //////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Loads the banner ad on the challenge page
-     */
-    private fun loadBannerAd(bannerAd: AdView) {
-        val adRequest = AdRequest.Builder().build()
-        bannerAd.loadAd(adRequest)
-    }
 
     /**
      * Loads the rewarded ad to be shown when the user skips the challenge

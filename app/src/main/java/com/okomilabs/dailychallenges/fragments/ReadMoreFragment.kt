@@ -13,9 +13,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
 import com.okomilabs.dailychallenges.data.entities.Link
@@ -24,6 +27,9 @@ import java.util.regex.Pattern
 
 class ReadMoreFragment: Fragment() {
     private lateinit var readMoreViewModel: ReadMoreViewModel
+
+    private var hasDesc: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var hasLinks: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,16 +51,11 @@ class ReadMoreFragment: Fragment() {
             // Simple slide enter transition
             enterTransition = Slide()
 
-            setReadMoreLayout(
-                root.findViewById(R.id.challenge_title),
-                root.findViewById(R.id.challenge_category),
-                root.findViewById(R.id.challenge_summary),
-                root.findViewById(R.id.challenge_desc),
-                root.findViewById(R.id.read_more_pointer),
-                root.findViewById(R.id.read_more_gradient),
-                root.findViewById(R.id.read_more_detail),
-                root.findViewById(R.id.category_icon)
-            )
+            val detail: LinearLayout = root.findViewById(R.id.read_more_detail)
+
+            setTextViews(root.findViewById(R.id.read_more_summary), detail)
+            addLinks(detail)
+            observeState(root.findViewById(R.id.read_more_pointer), detail)
 
             /* Shared element transition
             val callback: SharedElementCallback = object: SharedElementCallback() {
@@ -76,60 +77,155 @@ class ReadMoreFragment: Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadBannerAd(view.findViewById(R.id.banner_ad))
+    }
+
     override fun onDestroy() {
         activity?.viewModelStore?.clear()
         super.onDestroy()
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// AdMob Functions //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * Observes changes in challenge info in view model, updates respective text view values and
-     * displays the description and links if available
+     * Loads the banner ad on the challenge page
      */
-    private fun setReadMoreLayout(
-        title: TextView,
-        category: TextView,
-        summary: TextView,
-        desc: TextView,
-        pointer: LinearLayout,
-        gradient: LinearLayout,
-        detail: LinearLayout,
-        icon: ImageView
-    ) {
+    private fun loadBannerAd(bannerAd: AdView) {
+        val adRequest = AdRequest.Builder().build()
+        bannerAd.loadAd(adRequest)
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// Observing Functions ////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Observes when the hasDesc and hasLinks variables change and fix the layout accordingly
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun observeState(pointer: TextView, detail: LinearLayout) {
+        val stateObserver = Observer<Boolean> { _ ->
+            hasDesc.value?.let { hasDescVal ->
+                hasLinks.value?.let { hasLinksVal ->
+
+                    if (hasDescVal) {
+                        pointer.visibility = View.VISIBLE
+                        detail.visibility = View.GONE
+                        pointerFunctionality(pointer, detail)
+
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.VISIBLE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.VISIBLE
+
+                        if (hasLinksVal) {
+                            detail.findViewById<TextView>(R.id.links_label).visibility =
+                                View.VISIBLE
+                        }
+                        else {
+                            detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
+                        }
+                    }
+
+                    else {
+                        pointer.visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.info_label).visibility = View.GONE
+                        detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.GONE
+
+                        if (hasLinksVal) {
+                            detail.visibility = View.VISIBLE
+                        }
+                        else {
+                            detail.visibility = View.GONE
+                        }
+                    }
+
+                }
+            }
+        }
+
+        hasDesc.observe(viewLifecycleOwner, stateObserver)
+        hasLinks.observe(viewLifecycleOwner, stateObserver)
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Setting Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Observes changes in challenge info in view model, updates respective text views
+     *
+     * @param summary The linear layout containing the title, category, image and read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun setTextViews(summary: LinearLayout, detail: LinearLayout) {
         val challengeObserver = Observer<Challenge> { newChallenge ->
-            val readMoreToggle: TextView = pointer.findViewById(R.id.read_more_toggle)
-                                                     
-            title.text = newChallenge.title
-            category.text = newChallenge.category
-            summary.text = newChallenge.summary
+            summary.findViewById<TextView>(R.id.challenge_title).text = newChallenge.title
+            summary.findViewById<TextView>(R.id.challenge_category).text = newChallenge.category
+            summary.findViewById<TextView>(R.id.challenge_summary).text = newChallenge.summary
+
+            showCategoryIcon(summary.findViewById(R.id.category_icon), newChallenge.category)
 
             if (newChallenge.desc != null) {
-                desc.text = newChallenge.desc
-                showDetail(pointer, gradient, detail, true)
+                detail.findViewById<TextView>(R.id.challenge_desc).text = newChallenge.desc
+                hasDesc.value = true
             }
-            else {
-                showDetail(pointer, gradient, detail, false)
-            }
-            showCategoryIcon(icon, newChallenge.category)
 
-            readMoreToggle.setOnClickListener {
-                showHide(pointer)
-                showHide(gradient)
-                showHide(detail)
+            else {
+                hasDesc.value = false
             }
-    }
+        }
 
         readMoreViewModel.challenge.observe(viewLifecycleOwner, challengeObserver)
     }
 
+    /**
+     * Checks if there are links in the view model, if so, adds them to the detail layout and sets
+     * hasDesc instance variable to true, otherwise sets to false.
+     *
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun addLinks(detail: LinearLayout) {
+        val linksObserver = Observer<List<Link>> { newLinks ->
+            if (!newLinks.isNullOrEmpty()) {
+                for (link in newLinks) {
+                    val linkView: TextView = generateLinkView(link.title)
+                    val transform = Linkify.TransformFilter { _, _ -> link.link }
 
+                    Linkify.addLinks(
+                        linkView,
+                        Pattern.compile(link.title),
+                        null,
+                        null,
+                        transform
+                    )
 
-    private fun showHide(view:View){
-        view.visibility = if (view.visibility == View.GONE) {
-            View.VISIBLE }
-        else{
-            View.GONE}
+                    detail.addView(linkView)
+                }
+
+                hasLinks.value = true
+            }
+
+            else {
+                hasLinks.value = false
+            }
+        }
+
+        readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
     }
 
+    /**
+     * Sets the appropriate category image for the current challenge category
+     *
+     * @param icon The category image view
+     * @param category The current challenge category
+     */
     private fun showCategoryIcon(icon: ImageView, category: String) {
         val context = activity?.applicationContext
 
@@ -153,62 +249,60 @@ class ReadMoreFragment: Fragment() {
         }
     }
 
-    private fun showDetail(pointer: LinearLayout, gradient: LinearLayout, detail: LinearLayout, hasDesc: Boolean) {
-        val linksObserver = Observer<List<Link>> { newLinks ->
-            if (!newLinks.isNullOrEmpty()) {
-                pointer.visibility = View.VISIBLE
-                gradient.visibility=View.GONE
-                detail.visibility = View.GONE
 
-                for (link in newLinks) {
-                    val linkView = TextView(context)
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////// Layout Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        linkView.setTextAppearance(R.style.SubText)
-                    }
-                    else {
-                        linkView.setTextAppearance(context, R.style.SubText)
-                    }
+    /**
+     * Shows the read more button and set tap functionality
+     *
+     * @param pointer The linear layout containing the read more button
+     * @param detail The linear layout containing the challenge description and links
+     */
+    private fun pointerFunctionality(pointer: TextView, detail: LinearLayout) {
+        pointer.visibility = View.VISIBLE
 
-                    linkView.setPadding(0, 15, 0, 15)
-                    linkView.typeface = activity?.applicationContext?.let {
-                        ResourcesCompat.getFont(it, R.font.timeless)
-                    }
-                  
-                    linkView.text = link.title
-
-                    val transform = Linkify.TransformFilter { _, _ -> link.link }
-
-                    Linkify.addLinks(
-                        linkView,
-                        Pattern.compile(link.title),
-                        null,
-                        null,
-                        transform
-                    )
-
-                    detail.addView(linkView)
-                }
-
-                detail.findViewById<TextView>(R.id.links_label).visibility = View.VISIBLE
-            }
-            else {
-                if (hasDesc) {
-                    pointer.visibility = View.VISIBLE
-                    gradient.visibility = View.VISIBLE
-                    detail.visibility = View.VISIBLE
-                }
-                else {
-                    pointer.visibility = View.GONE
-                    gradient.visibility = View.GONE
-                    detail.visibility = View.GONE
-                }
-            }
+        pointer.setOnClickListener {
+            pointer.visibility = View.GONE
+            detail.visibility = View.VISIBLE
         }
-
-        readMoreViewModel.links.observe(viewLifecycleOwner, linksObserver)
     }
 
+    /**
+     * Generates the layout attributes for each text view holding the links
+     *
+     * @param text The text to be displayed on the text view
+     * @return The text view holding the link
+     */
+    private fun generateLinkView(text: String): TextView {
+        val linkView = TextView(context)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            linkView.setTextAppearance(R.style.SubText)
+        }
+        else {
+            linkView.setTextAppearance(context, R.style.SubText)
+        }
+
+        linkView.setPadding(0, 15, 0, 15)
+        linkView.typeface = activity?.applicationContext?.let {
+            ResourcesCompat.getFont(it, R.font.timeless)
+        }
+
+        linkView.text = text
+
+        return linkView
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////// Inner Classes ///////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Factory to allow a challenge ID to be passed to the read more view model
+     */
     private inner class ReadMoreFactory(
         app: Application, challengeId: Int
     ): ViewModelProvider.NewInstanceFactory() {

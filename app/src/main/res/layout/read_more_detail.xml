@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ReadMoreLayout"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="30dp"
-    android:background="#FBFBF2">
-
+    android:orientation="vertical"
+    style="@style/ReadMorePadding">
 
     <TextView
-        android:id="@+id/overview_label"
-        style="@style/DetailHeading"
-        android:text="@string/overview_label"
-        android:textColor="#303030"
-        android:textSize="29sp" />
+        android:id="@+id/info_label"
+        android:text="@string/info_label"
+        android:textColor="@color/info_label_color"
+        android:textSize="29sp"
+        style="@style/DetailHeading" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="55dp"
-        android:background="@android:color/darker_gray"/>
+    <View style="@style/Divider" />
 
     <TextView
         android:id="@+id/challenge_desc"
-        style="@style/BodyText"
         android:layout_marginTop="25dp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        style="@style/BodyText" />
 
     <TextView
         android:id="@+id/links_label"
-        style="@style/DetailHeading"
         android:layout_marginTop="40dp"
-        android:textColor="#606060"
         android:text="@string/links_label"
+        android:textColor="@color/link_label_color"
         android:textSize="24sp"
-        android:visibility="gone"/>
+        style="@style/DetailHeading" />
 
 </LinearLayout>

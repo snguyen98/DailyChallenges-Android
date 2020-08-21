@@ -13,7 +13,7 @@
     <string name="streak_label">Streaks: </string>
     <string name="skips_label">Skips: </string>
 
-    <string name="overview_label">Challenge Overview</string>
+    <string name="info_label">Challenge Info</string>
     <string name="read_more_label">Read More</string>
     <string name="links_label">Useful Links:</string>
     <string name="last_completed_label">Last Completed: </string>

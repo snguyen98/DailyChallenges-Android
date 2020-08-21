@@ -6,13 +6,6 @@
         <item name="android:windowBackground">@color/screenBackground</item>
     </style>
 
-    <!--  Unused Theme for Read More page  -->
-    <style name="ReadMoreTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorPrimaryDark">@color/actionBarSecondary</item>
-        <item name="titleTextColor">@android:color/black</item>
-    </style>
-
     <!--  Splash screen theme  -->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
@@ -79,28 +72,6 @@
         <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
-    <!--  Style for category icon on read more page  -->
-    <style name="CategoryIcon">
-        <item name="android:layout_width">113dp</item>
-        <item name="android:layout_height">113dp</item>
-
-        <item name="android:layout_marginTop">30dp</item>
-        <item name="android:layout_marginBottom">30dp</item>
-
-        <item name="android:layout_gravity">center_horizontal</item>
-    </style>
-
-    <!--  Style for arrow icon on read more page  -->
-    <style name="ArrowIcon">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">20dp</item>
-
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-
-        <item name="contentDescription">@string/arrow_icon_desc</item>
-    </style>
-
     <style name="PagerDot">
         <item name="android:layout_width">10dp</item>
         <item name="android:layout_height">10dp</item>
@@ -117,9 +88,9 @@
     </style>
 
     <!--  Layout style for read more page  -->
-    <style name="ReadMoreLayout" parent="VerticalLayout">
-        <item name="android:paddingLeft">18dp</item>
-        <item name="android:paddingRight">18dp</item>
+    <style name="ReadMorePadding">
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
     </style>
 
     <!--  Style for views to fill the whole screen  -->

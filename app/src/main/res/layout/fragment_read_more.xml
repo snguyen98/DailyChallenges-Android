@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/MatchHeight"
+    app:cardBackgroundColor="@color/rm_detail_background"
     android:transitionName="card_element">
 
     <ScrollView
-        style="@style/VerticalLayout"
-        android:background="#FBFBFB">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout style="@style/VerticalLayout">
-
-            <include layout="@layout/read_more_summary" />
-
-            <include
-                android:id="@+id/read_more_pointer"
-                layout="@layout/read_more_pointer"
-                android:visibility="gone" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include
-                android:id="@+id/read_more_gradient"
-                layout="@layout/read_more_gradient"
-                android:visibility="gone"/>
+                android:id="@+id/read_more_summary"
+                layout="@layout/read_more_summary" />
 
             <include
                 android:id="@+id/read_more_detail"
-                layout="@layout/read_more_detail"
-                android:visibility="gone" />
+                layout="@layout/read_more_detail" />
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/test_banner_ad" />
 
         </LinearLayout>
-
     </ScrollView>
-
 </androidx.cardview.widget.CardView>
