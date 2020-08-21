@@ -133,6 +133,15 @@
         a day if you would like a break.
     </string>
 
+    <string name="first_launch_message_1">
+        Thank you for downloading Venture. We greatly appreciate your support.
+    </string>
+    <string name="first_launch_message_2">
+        Would you like our quick guide on how to use the interface?
+    </string>
+    <string name="first_launch_yes_button">Yes, please</string>
+    <string name="first_launch_no_button">No, thanks</string>
+
 
     <!--  Image Content Descriptions  -->
     <string name="venture_logo_desc">Venture Logo</string>
@@ -160,7 +169,7 @@
     <string name="shown_freeze_msg">shown_freeze</string>
 
     <string name="settings_key">com.okomilabs.dailychallenges.settings</string>
-    <string name="first_launch">firstLaunch</string>
+    <string name="first_launch">first_launch</string>
 
 
     <!--  AdMob Test Device IDs  -->

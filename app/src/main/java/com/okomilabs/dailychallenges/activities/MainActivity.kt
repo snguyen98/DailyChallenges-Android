@@ -1,5 +1,7 @@
 package com.okomilabs.dailychallenges.activities
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,7 +34,8 @@ class MainActivity: AppCompatActivity() {
                 R.id.challenge_fragment,
                 R.id.challenge_list_fragment,
                 R.id.help_fragment,
-                R.id.about_fragment
+                R.id.about_fragment,
+                R.id.first_launch_fragment
             ),
             drawerLayout
         )
@@ -42,15 +45,26 @@ class MainActivity: AppCompatActivity() {
 
         // Sets up drawer functionality
         drawer.setNavigationItemSelectedListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
-
             if (it.itemId != navController.currentDestination?.id) {
                 navController.navigate(it.itemId)
+                drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             else {
+                drawerLayout.closeDrawer(GravityCompat.START)
                 false
             }
+        }
+
+        // Checks if this is the user's first time launching the app and redirects if true
+        val settingsPrefs: SharedPreferences = getSharedPreferences(
+            getString(R.string.settings_key), Context.MODE_PRIVATE
+        )
+        val firstLaunchStr: String = getString(R.string.first_launch)
+
+        if (!settingsPrefs.getBoolean(firstLaunchStr, false)) {
+            settingsPrefs.edit().putBoolean(firstLaunchStr, true).apply()
+            findNavController(R.id.nav_host_fragment).navigate(R.id.first_launch_fragment)
         }
 
         // AdMob setup

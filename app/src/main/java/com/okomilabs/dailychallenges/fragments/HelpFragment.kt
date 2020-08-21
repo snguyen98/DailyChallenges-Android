@@ -20,7 +20,6 @@ import com.okomilabs.dailychallenges.R
 private const val PAGES = 4
 
 class HelpFragment: Fragment() {
-
     private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
@@ -55,19 +54,26 @@ class HelpFragment: Fragment() {
         val appContext = activity?.applicationContext
 
         if (appContext != null) {
+            val dotsArray: Array<View> = arrayOf(
+                dots.findViewById(R.id.pager_dot_1),
+                dots.findViewById(R.id.pager_dot_2),
+                dots.findViewById(R.id.pager_dot_3),
+                dots.findViewById(R.id.pager_dot_4)
+            )
+
             for (num in 0..3) {
                 var dot: Drawable? = ContextCompat.getDrawable(appContext, R.drawable.inactive_dot)
 
                 if (num == active) {
                     dot = ContextCompat.getDrawable(appContext, R.drawable.active_dot)
                 }
-
-                when (num) {
-                    0 -> dots.findViewById<View>(R.id.pager_dot_1).background = dot
-                    1 -> dots.findViewById<View>(R.id.pager_dot_2).background = dot
-                    2 -> dots.findViewById<View>(R.id.pager_dot_3).background = dot
-                    3 -> dots.findViewById<View>(R.id.pager_dot_4).background = dot
+                else {
+                    dotsArray[num].setOnClickListener {
+                        viewPager.currentItem = num
+                    }
                 }
+
+                dotsArray[num].background = dot
             }
         }
     }

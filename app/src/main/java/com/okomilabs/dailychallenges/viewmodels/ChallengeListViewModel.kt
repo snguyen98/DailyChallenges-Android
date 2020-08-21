@@ -112,10 +112,6 @@ class ChallengeListViewModel(application: Application): AndroidViewModel(applica
         appContext.getSharedPreferences(
             appContext.getString(R.string.resources_key), Context.MODE_PRIVATE
         ).edit().clear().apply()
-
-        appContext.getSharedPreferences(
-            appContext.getString(R.string.settings_key), Context.MODE_PRIVATE
-        ).edit().clear().apply()
     }
 
 }
