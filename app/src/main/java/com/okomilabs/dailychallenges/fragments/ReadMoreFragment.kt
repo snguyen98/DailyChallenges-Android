@@ -148,7 +148,7 @@ class ReadMoreFragment: Fragment() {
      * @param pointer The linear layout containing the read more button
      * @param detail The linear layout containing the challenge description and links
      */
-    private fun observeState(pointer: LinearLayout, detail: LinearLayout) {
+    private fun observeState(pointer: TextView, detail: LinearLayout) {
         val stateObserver = Observer<Boolean> { _ ->
             hasDesc.value?.let { hasDescVal ->
                 hasLinks.value?.let { hasLinksVal ->
@@ -197,7 +197,7 @@ class ReadMoreFragment: Fragment() {
      * @param pointer The linear layout containing the read more button
      * @param detail The linear layout containing the challenge description and links
      */
-    private fun pointerFunctionality(pointer: LinearLayout, detail: LinearLayout) {
+    private fun pointerFunctionality(pointer: TextView, detail: LinearLayout) {
         pointer.visibility = View.VISIBLE
 
         pointer.setOnClickListener {

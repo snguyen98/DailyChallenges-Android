@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -42,9 +43,20 @@
             android:textColor="@color/summary_text_color"
             style="@style/BodyText" />
 
-        <include
+        <TextView
             android:id="@+id/read_more_pointer"
-            layout="@layout/read_more_pointer" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/read_more_label"
+            android:textColor="@color/pointer_color"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:drawablePadding="6dp"
+            app:drawableBottomCompat="@mipmap/read_more_arrow"
+            app:drawableTint="@color/pointer_color"
+            style="@style/BoldHeading" />
 
     </LinearLayout>
 
