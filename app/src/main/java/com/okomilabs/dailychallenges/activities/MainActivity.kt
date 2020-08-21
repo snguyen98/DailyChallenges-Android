@@ -42,13 +42,13 @@ class MainActivity: AppCompatActivity() {
 
         // Sets up drawer functionality
         drawer.setNavigationItemSelectedListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
-
             if (it.itemId != navController.currentDestination?.id) {
                 navController.navigate(it.itemId)
+                drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
             else {
+                drawerLayout.closeDrawer(GravityCompat.START)
                 false
             }
         }
