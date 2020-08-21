@@ -28,4 +28,8 @@ class ChallengeListItemRepo(application: Application) {
             null
         }
     }
+
+    suspend fun deleteAll() {
+        dao.deleteAll()
+    }
 }

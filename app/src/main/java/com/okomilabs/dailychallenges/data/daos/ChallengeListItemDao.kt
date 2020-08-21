@@ -16,4 +16,7 @@ interface ChallengeListItemDao {
 
     @Query("SELECT * FROM ChallengeListItem WHERE id IN (:challengeId)")
     suspend fun getListItemById(challengeId: Int): List<ChallengeListItem>
+
+    @Query("DELETE FROM ChallengeListItem")
+    suspend fun deleteAll()
 }
