@@ -42,8 +42,6 @@ class ChallengeFragment: Fragment() {
     ): View? {
         challengeViewModel = ViewModelProvider(this).get(ChallengeViewModel::class.java)
 
-        enterTransition = Slide(Gravity.END)
-
         val root = inflater.inflate(R.layout.fragment_challenge, container, false)
 
         observeState(
@@ -60,6 +58,8 @@ class ChallengeFragment: Fragment() {
             root.findViewById(R.id.challenge_title),
             root.findViewById(R.id.challenge_category)
         )
+
+        enterTransition = Slide(Gravity.END)
 
         return root
     }

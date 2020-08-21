@@ -3,6 +3,8 @@ package com.okomilabs.dailychallenges.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,8 @@ class AboutFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        enterTransition = Slide(Gravity.END)
+
         val root = inflater.inflate(R.layout.fragment_about, container, false)
 
         activity?.applicationContext?.let { appContext ->
