@@ -1,14 +1,12 @@
 package com.okomilabs.dailychallenges.activities
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
@@ -31,8 +29,9 @@ class MainActivity: AppCompatActivity() {
         )
 
         val navController = findNavController(R.id.nav_host_fragment)
-        val drawer: DrawerLayout = findViewById(R.id.drawer)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val drawer: NavigationView = findViewById(R.id.nav_view)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -42,16 +41,23 @@ class MainActivity: AppCompatActivity() {
                 R.id.help_fragment,
                 R.id.about_fragment
             ),
-            drawer
+            drawerLayout
         )
 
-        findViewById<NavigationView>(R.id.nav_view).setupWithNavController(navController)
+        drawer.setupWithNavController(navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) ||
-                super.onOptionsItemSelected(item)
+        drawer.setNavigationItemSelectedListener {
+            drawerLayout.closeDrawer(GravityCompat.START)
+
+            if (it.itemId != navController.currentDestination?.id) {
+                navController.navigate(it.itemId)
+                true
+            }
+            else {
+                false
+            }
+        }
     }
 
     /**
