@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -59,7 +60,8 @@ class ChallengeFragment: Fragment() {
             root.findViewById(R.id.challenge_category)
         )
 
-        enterTransition = Slide(Gravity.END)
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
 
         return root
     }

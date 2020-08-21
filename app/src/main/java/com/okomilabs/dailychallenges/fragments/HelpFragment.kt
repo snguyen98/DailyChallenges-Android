@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -43,7 +44,8 @@ class HelpFragment: Fragment() {
             }
         })
 
-        enterTransition = Slide(Gravity.END)
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
         postponeEnterTransition()
 
         return root

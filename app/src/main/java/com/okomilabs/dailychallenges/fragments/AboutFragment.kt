@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +25,6 @@ class AboutFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        enterTransition = Slide(Gravity.END)
-
         val root = inflater.inflate(R.layout.fragment_about, container, false)
 
         activity?.applicationContext?.let { appContext ->
@@ -70,6 +69,9 @@ class AboutFragment: Fragment() {
                 )
             )
         }
+
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
 
         return root
     }

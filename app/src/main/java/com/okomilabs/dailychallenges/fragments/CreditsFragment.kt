@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.okomilabs.dailychallenges.R
@@ -93,7 +94,7 @@ class CreditsFragment: Fragment() {
             )
         }
 
-        enterTransition = Slide(Gravity.END)
+        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
 
         return root
     }
