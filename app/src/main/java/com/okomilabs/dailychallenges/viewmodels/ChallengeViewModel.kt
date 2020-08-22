@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.okomilabs.dailychallenges.R
 import com.okomilabs.dailychallenges.data.entities.Challenge
+import com.okomilabs.dailychallenges.data.entities.ChallengeListItem
 import com.okomilabs.dailychallenges.data.entities.LoginDay
+import com.okomilabs.dailychallenges.data.repos.ChallengeListItemRepo
 import com.okomilabs.dailychallenges.data.repos.ChallengeRepo
 import com.okomilabs.dailychallenges.data.repos.LoginDayRepo
 import com.okomilabs.dailychallenges.helpers.DateHelper
@@ -24,6 +26,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     // Room database repositories
     private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
     private val loginDayRepo: LoginDayRepo = LoginDayRepo(application)
+    private val challengeListItemRepo: ChallengeListItemRepo = ChallengeListItemRepo(application)
 
     // Shared preferences keys
     private val challengeKey: String = appContext.getString(R.string.challenge_key)
@@ -117,6 +120,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Chooses a random challenge from the database excluding those that were skipped today
      *
      * @param total The total number of challenges in the database
+     * @return The chosen challenge
      */
     private fun chooseRandomChallenge(total: Int): Int {
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
@@ -211,6 +215,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     fun markComplete() {
         addLoggedDay(State.COMPLETE)
+        updateListItem()
+
         setStreak(appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
@@ -220,6 +226,32 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .getInt(freezesLeftPrefs, 0) + 1
+            )
+        }
+    }
+
+    /**
+     * Adds or updates the challenge list item data for the completed challenge
+     */
+    private fun updateListItem() {
+        val id: Int = challenge.value?.id ?: -1
+
+        viewModelScope.launch {
+            val item: ChallengeListItem? = challengeListItemRepo.getListItemById(id)
+            var total = 1
+
+            if (item != null) {
+                total = item.totalCompleted + 1
+            }
+
+            challengeListItemRepo.addListItem(
+                ChallengeListItem(
+                    id,
+                    challenge.value?.title ?: "",
+                    challenge.value?.category ?: "",
+                    date,
+                    total
+                )
             )
         }
     }
@@ -267,6 +299,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     /**
      * Gets the current streak
+     *
+     * @return The streak value
      */
     fun getStreak(): Int {
         return appContext
@@ -276,6 +310,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     /**
      * Sets the current streak to shared preferences
+     *
+     * @param streak The current streak value
      */
     private fun setStreak(streak: Int) {
         appContext
@@ -306,6 +342,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     /**
      * Gets the remaining skips allowed
+     *
+     * @return The skips remaining
      */
     fun getSkips(): Int {
         return appContext
@@ -371,6 +409,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
 
     /**
      * Gets the remaining freezes allowed
+     *
+     * @return The freezes remaining
      */
     fun getFreezes(): Int {
         return appContext
@@ -421,7 +461,9 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     /**
-     * Resets the number of freezes available to 2
+     * Sets the number of freezes available
+     *
+     * @param freezes The number of freezes to be set
      */
     private fun setFreezesRemaining(freezes: Int) {
         appContext

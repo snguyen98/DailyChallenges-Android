@@ -51,51 +51,23 @@ class ChallengeListFragment: Fragment() {
         return root
     }
 
-    private fun resetButtonFunctionality(reset: Button) {
-        reset.setOnClickListener {
-            showResetDialog1()
-        }
+    override fun onDestroy() {
+        activity?.viewModelStore?.clear()
+        super.onDestroy()
     }
 
-    private fun showResetDialog1() {
-        val appContext = activity?.applicationContext
 
-        if (appContext != null) {
-            val builder: AlertDialog.Builder = buildDialog(
-                appContext.getString(R.string.reset_title_1),
-                appContext.getString(R.string.reset_message_1)
-            )
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Observing Functions ///////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-            builder
-                .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
-                    showResetDialog2()
-                }
-
-            showAlert(builder)
-        }
-    }
-
-    private fun showResetDialog2() {
-        val appContext = activity?.applicationContext
-
-        if (appContext != null) {
-            val builder: AlertDialog.Builder = buildDialog(
-                appContext.getString(R.string.reset_title_2),
-                appContext.getString(R.string.reset_message_2)
-            )
-
-            builder
-                .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
-                    cListViewModel.resetData()
-                    findNavController().navigate(
-                        ChallengeListFragmentDirections.challengeListToWelcome()
-                    )
-                }
-
-            showAlert(builder)
-        }
-    }
-
+    /**
+     * Observes changes to the challenge list in the view model and if so, shows and updates the
+     * recycler view, otherwise shows the message instead
+     *
+     * @param listView The recycler view to contain the list of challenges
+     * @param message The text view notifying the user that they have no completed challenges
+     */
     private fun observeList(listView: RecyclerView, message: TextView) {
         val listObserver = Observer<List<ChallengeListItem>> { newList ->
             if (!newList.isNullOrEmpty()) {
@@ -112,28 +84,113 @@ class ChallengeListFragment: Fragment() {
         cListViewModel.cList.observe(viewLifecycleOwner, listObserver)
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////// Reset Button Functionality ////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Sets the listener for the reset data button
+     *
+     * @param reset The reset data button
+     */
+    private fun resetButtonFunctionality(reset: Button) {
+        reset.setOnClickListener {
+            showResetDialog1()
+        }
+    }
+
+    /**
+     * Displays the first dialog asking if the user wants to reset their data
+     */
+    private fun showResetDialog1() {
+        val appContext = activity?.applicationContext
+
+        if (appContext != null) {
+            val builder: AlertDialog.Builder = buildDialog(
+                appContext.getString(R.string.reset_title_1),
+                appContext.getString(R.string.reset_message_1)
+            )
+
+            builder
+                .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
+                    showResetDialog2()
+                }
+                .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ -> }
+
+            showAlert(builder, false)
+        }
+    }
+
+    /**
+     * Displays the second dialog confirming that the user wants to reset all their data
+     */
+    private fun showResetDialog2() {
+        val appContext = activity?.applicationContext
+
+        if (appContext != null) {
+            val builder: AlertDialog.Builder = buildDialog(
+                appContext.getString(R.string.reset_title_2),
+                appContext.getString(R.string.reset_message_2)
+            )
+
+            builder
+                .setPositiveButton(appContext.getString(R.string.no_label)) { _, _ -> }
+                .setNeutralButton(appContext.getString(R.string.yes_label)) { _, _ ->
+                    cListViewModel.resetData()
+                    findNavController().navigate(
+                        ChallengeListFragmentDirections.challengeListToWelcome()
+                    )
+                }
+
+
+            showAlert(builder, true)
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Dialog Helper Functions //////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Displays the alert and changes the font of the text inside
+     *
+     * @param builder The dialog builder to be used to create the alert
+     * @param swapped True if yes and no button positions are swapped, false otherwise
+     */
+    private fun showAlert(builder: AlertDialog.Builder, swapped: Boolean) {
+        val alert = builder.create()
+        alert.show()
+        setDialogFont(alert, swapped)
+    }
+
+    /**
+     * Creates and returns the initial dialog with the title and message
+     *
+     * @param title The title of the dialog
+     * @param message The message displayed by the dialog
+     * @return The initial dialog
+     */
     private fun buildDialog(title: String, message: String): AlertDialog.Builder {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val appContext = activity?.applicationContext
 
         if (appContext != null) {
-            builder.setCustomTitle(
-                createDialogTitle(title)
-            )
             builder
+                .setCustomTitle(createDialogTitle(title))
                 .setMessage(message)
-                .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ -> }
         }
 
         return builder
     }
 
-    private fun showAlert(builder: AlertDialog.Builder) {
-        val alert = builder.create()
-        alert.show()
-        setDialogFont(alert)
-    }
-
+    /**
+     * Creates the custom text view for the title in the dialog boxes
+     *
+     * @param text The title text of the dialog
+     * @return The text view to be passes into the dialog builder
+     */
     private fun createDialogTitle(text: String): TextView {
         val appContext = activity?.applicationContext
 
@@ -152,7 +209,13 @@ class ChallengeListFragment: Fragment() {
         return title
     }
 
-    private fun setDialogFont(alert: AlertDialog) {
+    /**
+     * Sets the fonts and text colour of the message and buttons
+     *
+     * @param alert The alert dialog containing the message and buttons
+     * @param swapped True if yes and no button positions are swapped, false otherwise
+     */
+    private fun setDialogFont(alert: AlertDialog, swapped: Boolean) {
         val window: Window? = alert.window
         val appContext = activity?.applicationContext
 
@@ -161,18 +224,37 @@ class ChallengeListFragment: Fragment() {
             val buttonFont: Typeface? = ResourcesCompat.getFont(appContext, R.font.asap_bold)
 
             if (window != null) {
-                window.findViewById<TextView>(android.R.id.message).typeface = messageFont
-                window.findViewById<TextView>(android.R.id.button1).typeface = buttonFont
+                val buttonPositive: TextView = window.findViewById(android.R.id.button1)
+                val buttonNeutral: TextView = window.findViewById(android.R.id.button3)
 
-                val buttonNo: TextView = window.findViewById(android.R.id.button3)
-                buttonNo.typeface = buttonFont
-                buttonNo.setTextColor(ResourcesCompat.getColor(
+                window.findViewById<TextView>(android.R.id.message).typeface = messageFont
+                buttonPositive.typeface = buttonFont
+                buttonNeutral.typeface = buttonFont
+
+                val red: Int = ResourcesCompat.getColor(
                     resources, android.R.color.holo_red_light, null
-                ))
+                )
+
+                if (swapped) {
+                    buttonPositive.setTextColor(red)
+                }
+                else {
+                    buttonNeutral.setTextColor(red)
+                }
             }
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////// Inner  Classes //////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Class which manages the items to be displayed in the challenge list recycler view
+     *
+     * @param challengeItems The list of items to be displayed
+     */
     private inner class ChallengeListAdapter(
         private val challengeItems: List<ChallengeListItem>
     ): RecyclerView.Adapter<ChallengeListAdapter.ChallengeHolder>() {
@@ -190,6 +272,11 @@ class ChallengeListFragment: Fragment() {
             holder.bind(challengeItems[position], position == 0)
         }
 
+        /**
+         * Class that holds and binds the information to each challenge item in the recycler view
+         *
+         * @param view The challenge item view
+         */
         private inner class ChallengeHolder(view: View): RecyclerView.ViewHolder(view) {
             val challengeItem: CardView = view.findViewById(R.id.challenge_item)
             val title: TextView = view.findViewById(R.id.item_title)
@@ -197,6 +284,13 @@ class ChallengeListFragment: Fragment() {
             val lastCompleted: TextView = view.findViewById(R.id.item_last_completed)
             val totalCompleted: TextView = view.findViewById(R.id.item_total_completed)
 
+            /**
+             * Assigns the text to text views, sets appropriate margins and sets a listener to
+             * navigate to the read more page of the appropriate challenge
+             *
+             * @param item The data class containing the challenge item information
+             * @param isFirst Boolean stating if the item is the first in the list
+             */
             fun bind(item: ChallengeListItem, isFirst: Boolean) {
                 title.text = item.title
                 category.text = item.category
