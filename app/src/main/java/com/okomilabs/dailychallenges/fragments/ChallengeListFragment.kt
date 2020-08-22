@@ -116,8 +116,9 @@ class ChallengeListFragment: Fragment() {
                 .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
                     showResetDialog2()
                 }
+                .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ -> }
 
-            showAlert(builder)
+            showAlert(builder, false)
         }
     }
 
@@ -134,14 +135,16 @@ class ChallengeListFragment: Fragment() {
             )
 
             builder
-                .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
+                .setPositiveButton(appContext.getString(R.string.no_label)) { _, _ -> }
+                .setNeutralButton(appContext.getString(R.string.yes_label)) { _, _ ->
                     cListViewModel.resetData()
                     findNavController().navigate(
                         ChallengeListFragmentDirections.challengeListToWelcome()
                     )
                 }
 
-            showAlert(builder)
+
+            showAlert(builder, true)
         }
     }
 
@@ -154,11 +157,12 @@ class ChallengeListFragment: Fragment() {
      * Displays the alert and changes the font of the text inside
      *
      * @param builder The dialog builder to be used to create the alert
+     * @param swapped True if yes and no button positions are swapped, false otherwise
      */
-    private fun showAlert(builder: AlertDialog.Builder) {
+    private fun showAlert(builder: AlertDialog.Builder, swapped: Boolean) {
         val alert = builder.create()
         alert.show()
-        setDialogFont(alert)
+        setDialogFont(alert, swapped)
     }
 
     /**
@@ -173,12 +177,9 @@ class ChallengeListFragment: Fragment() {
         val appContext = activity?.applicationContext
 
         if (appContext != null) {
-            builder.setCustomTitle(
-                createDialogTitle(title)
-            )
             builder
+                .setCustomTitle(createDialogTitle(title))
                 .setMessage(message)
-                .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ -> }
         }
 
         return builder
@@ -212,8 +213,9 @@ class ChallengeListFragment: Fragment() {
      * Sets the fonts and text colour of the message and buttons
      *
      * @param alert The alert dialog containing the message and buttons
+     * @param swapped True if yes and no button positions are swapped, false otherwise
      */
-    private fun setDialogFont(alert: AlertDialog) {
+    private fun setDialogFont(alert: AlertDialog, swapped: Boolean) {
         val window: Window? = alert.window
         val appContext = activity?.applicationContext
 
@@ -222,14 +224,23 @@ class ChallengeListFragment: Fragment() {
             val buttonFont: Typeface? = ResourcesCompat.getFont(appContext, R.font.asap_bold)
 
             if (window != null) {
-                window.findViewById<TextView>(android.R.id.message).typeface = messageFont
-                window.findViewById<TextView>(android.R.id.button1).typeface = buttonFont
+                val buttonPositive: TextView = window.findViewById(android.R.id.button1)
+                val buttonNeutral: TextView = window.findViewById(android.R.id.button3)
 
-                val buttonNo: TextView = window.findViewById(android.R.id.button3)
-                buttonNo.typeface = buttonFont
-                buttonNo.setTextColor(ResourcesCompat.getColor(
+                window.findViewById<TextView>(android.R.id.message).typeface = messageFont
+                buttonPositive.typeface = buttonFont
+                buttonNeutral.typeface = buttonFont
+
+                val red: Int = ResourcesCompat.getColor(
                     resources, android.R.color.holo_red_light, null
-                ))
+                )
+
+                if (swapped) {
+                    buttonPositive.setTextColor(red)
+                }
+                else {
+                    buttonNeutral.setTextColor(red)
+                }
             }
         }
     }
