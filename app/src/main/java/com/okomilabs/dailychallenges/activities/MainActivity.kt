@@ -1,8 +1,7 @@
 package com.okomilabs.dailychallenges.activities
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -56,15 +55,16 @@ class MainActivity: AppCompatActivity() {
             }
         }
 
-        // Checks if this is the user's first time launching the app and redirects if true
-        val settingsPrefs: SharedPreferences = getSharedPreferences(
-            getString(R.string.settings_key), Context.MODE_PRIVATE
-        )
-        val firstLaunchStr: String = getString(R.string.first_launch)
-
-        if (!settingsPrefs.getBoolean(firstLaunchStr, false)) {
-            settingsPrefs.edit().putBoolean(firstLaunchStr, true).apply()
-            findNavController(R.id.nav_host_fragment).navigate(R.id.first_launch_fragment)
+        // Changes toolbar depending on fragment
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.first_launch_fragment ||
+                destination.id == R.id.welcome_fragment
+            ) {
+                toolbar.visibility = View.GONE
+            }
+            else {
+                toolbar.visibility = View.VISIBLE
+            }
         }
 
         // AdMob setup
