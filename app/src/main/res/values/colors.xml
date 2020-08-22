@@ -16,6 +16,8 @@
     <color name="link_label_color">#606060</color>
     <color name="pointer_color">#384D9E</color>
 
-    <color name="actionBarPrimary">#00A86B</color>
-    <color name="actionBarSecondary">@android:color/black</color>
+    <color name="secondary_color">@android:color/white</color>
+
+    <color name="action_bar_primary">#00A86B</color>
+    <color name="action_bar_secondary">@android:color/black</color>
 </resources>
