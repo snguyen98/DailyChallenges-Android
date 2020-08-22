@@ -1,8 +1,8 @@
 <resources>
     <!--  Base application theme  -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/actionBarPrimary</item>
-        <item name="colorPrimaryDark">@color/actionBarSecondary</item>
+        <item name="colorPrimary">@color/action_bar_primary</item>
+        <item name="colorPrimaryDark">@color/action_bar_secondary</item>
         <item name="android:windowBackground">@color/screenBackground</item>
     </style>
 
@@ -132,6 +132,7 @@
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:layout_marginBottom">25dp</item>
 
+        <item name="android:alpha">0</item>
         <item name="background">@color/lightGray</item>
         <item name="contentPadding">20dp</item>
         <item name="cardCornerRadius">8dp</item>
@@ -146,6 +147,7 @@
         <item name="android:layout_marginStart">45dp</item>
         <item name="android:layout_marginEnd">45dp</item>
 
+        <item name="android:alpha">0</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:fontFamily">@font/asap</item>
     </style>

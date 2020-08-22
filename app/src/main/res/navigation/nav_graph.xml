@@ -16,6 +16,12 @@
             app:popUpTo="@id/welcome_fragment"
             app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/welcome_to_first_launch"
+            app:destination="@id/first_launch_fragment"
+            app:popUpTo="@id/welcome_fragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
