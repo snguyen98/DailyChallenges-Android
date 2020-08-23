@@ -17,13 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/action_bar_primary"
             app:title="@string/app_name"
-            app:titleTextAppearance="@font/asap_bold"
             app:titleTextColor="@color/secondary_color"
             app:theme="@style/ToolbarTheme" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"

@@ -106,6 +106,7 @@
     </style>
     
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/action_bar_primary</item>
         <item name="android:fontFamily">@font/asap_bold</item>
         <item name="android:textSize">20sp</item>
     </style>
