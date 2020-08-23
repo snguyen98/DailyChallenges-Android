@@ -58,6 +58,7 @@
         <item name="android:background">@color/secondary_colour</item>
     </style>
 
+
     <style name="InfoListItemLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -88,6 +89,7 @@
         <item name="android:fontFamily">@font/timeless</item>
         <item name="android:textSize">12sp</item>
     </style>
+
 
     <style name="ChallengeListSmallValue" parent="ChallengeListSmallLabel">
         <item name="android:layout_alignParentBottom">true</item>
@@ -136,6 +138,21 @@
       
         <item name="android:fontFamily">@font/timeless</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
+
+    <style name="CenteredMessage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">25dp</item>
+
+        <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textColor">@color/secondary_colour</item>
+        <item name="android:textAlignment">center</item>
+
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">3sp</item>
     </style>

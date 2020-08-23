@@ -114,7 +114,7 @@
 
     <!--  Text View Messages  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
-    <string name="completed_list_message">Your completed challenges will appear here</string>
+    <string name="completed_list_message">Your completed challenges\nwill appear here</string>
 
     <string name="tutorial_text_1">
         You get a new randomly generated challenge everyday. Tap the challenge card for interesting
