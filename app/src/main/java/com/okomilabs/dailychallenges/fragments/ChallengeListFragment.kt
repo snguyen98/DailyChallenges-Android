@@ -83,6 +83,8 @@ class ChallengeListFragment: Fragment() {
             else {
                 listView.visibility = View.GONE
                 message.visibility = View.VISIBLE
+
+                startPostponedEnterTransition()
             }
         }
 
