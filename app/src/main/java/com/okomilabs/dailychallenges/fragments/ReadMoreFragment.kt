@@ -276,6 +276,7 @@ class ReadMoreFragment: Fragment() {
      * @param text The text to be displayed on the text view
      * @return The text view holding the link
      */
+    @Suppress("DEPRECATION")
     private fun generateLinkView(text: String): TextView {
         val linkView = TextView(context)
 
@@ -304,6 +305,7 @@ class ReadMoreFragment: Fragment() {
     /**
      * Factory to allow a challenge ID to be passed to the read more view model
      */
+    @Suppress("UNCHECKED_CAST")
     private inner class ReadMoreFactory(
         app: Application, challengeId: Int
     ): ViewModelProvider.NewInstanceFactory() {
