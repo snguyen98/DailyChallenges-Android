@@ -102,7 +102,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
             val total: Int = challengeRepo.getTotal()
-            val id: Int = chooseRandomChallenge(total)                // Sets challenge ID instance variable
+            val id: Int = chooseRandomChallenge(total)      // Sets challenge ID instance variable
 
             // Adds all challenge info to shared preferences
             with (appContext.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {
@@ -175,7 +175,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         setSkipsRemaining(2)
         resetSkippedChallenges()
 
-        setChallengeToday()     // Gets new challenge for the day
+        // Gets new challenge for the day
+        setChallengeToday()
     }
 
 
@@ -202,7 +203,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets the date instance variable to today in the form dd/MM/yyyy
      */
     private fun getDateToday() {
-        date = SimpleDateFormat("dd/MM/yyyy").format(Date())
+        date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
     }
 
 
@@ -214,13 +215,15 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Sets today's challenge as complete in the view model, shared preferences and logged day db
      */
     fun markComplete() {
-        addLoggedDay(State.COMPLETE)
-        updateListItem()
+        addLoggedDay(State.COMPLETE)        // Logs the challenge completion today
+        updateListItem()        // Updates the last completed and total completed for this challenge
 
+        // Increment the streak
         setStreak(appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
 
+        // If seven consecutive challenges in a row are completed then add a freeze
         if (getStreak() % 7 == 0) {
             setFreezesRemaining(
                 appContext
@@ -240,10 +243,12 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             val item: ChallengeListItem? = challengeListItemRepo.getListItemById(id)
             var total = 1
 
+            // Increment the total if it has been initialised
             if (item != null) {
                 total = item.totalCompleted + 1
             }
 
+            // Add item to the db
             challengeListItemRepo.addListItem(
                 ChallengeListItem(
                     id,
@@ -334,6 +339,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
             .getInt(skipsLeftPrefs, 0)
 
+        // If there are skips remaining then decrement the skips
         if (skipsRemaining > 0) {
             setSkipsRemaining(skipsRemaining - 1)
             setChallengeToday()
@@ -425,6 +431,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @return True if freeze message should be shown and false otherwise
      */
     fun showFreezeMsg(): Boolean {
+        // If there are non-zero freezes and the streak is a multiple of seven then show the msg
         val show: Boolean =
             appContext
                 .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
@@ -434,11 +441,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .getInt(streakPrefs, 0) % 7 == 0
 
         return if (show) {
+            // Only shows the message once in the day
             if (
                 !appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .getBoolean(shownFreezePrefs, false)
             ) {
+                // Sets shown pref to true
                 appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                     .edit()
@@ -450,7 +459,9 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 false
             }
         }
+
         else {
+            // Keeps show pref as false
             appContext
                 .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
                 .edit()
