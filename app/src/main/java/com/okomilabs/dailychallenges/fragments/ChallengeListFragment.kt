@@ -45,9 +45,10 @@ class ChallengeListFragment: Fragment() {
         observeList(listView, root.findViewById(R.id.completed_list_message))
         resetButtonFunctionality(root.findViewById(R.id.reset_button))
 
+        // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
-        postponeEnterTransition()
+        postponeEnterTransition()       // Postpones until the recycler view has been rendered
 
         return root
     }
@@ -71,20 +72,22 @@ class ChallengeListFragment: Fragment() {
      */
     private fun observeList(listView: RecyclerView, message: TextView) {
         val listObserver = Observer<List<ChallengeListItem>> { newList ->
+            // Checks if the challenge list is empty and shows appropriate views
             if (!newList.isNullOrEmpty()) {
                 listView.adapter = ChallengeListAdapter(newList)
                 listView.visibility = View.VISIBLE
                 message.visibility = View.GONE
 
                 listView.post {
-                    startPostponedEnterTransition()
+                    startPostponedEnterTransition()     // Show transition after recycler renders
                 }
             }
+
             else {
                 listView.visibility = View.GONE
                 message.visibility = View.VISIBLE
 
-                startPostponedEnterTransition()
+                startPostponedEnterTransition()         // No recycler view so show transition
             }
         }
 
@@ -111,48 +114,39 @@ class ChallengeListFragment: Fragment() {
      * Displays the first dialog asking if the user wants to reset their data
      */
     private fun showResetDialog1() {
-        val appContext = activity?.applicationContext
+        val builder: AlertDialog.Builder = buildDialog(
+            getString(R.string.reset_title_1),
+            getString(R.string.reset_message_1)
+        )
 
-        if (appContext != null) {
-            val builder: AlertDialog.Builder = buildDialog(
-                appContext.getString(R.string.reset_title_1),
-                appContext.getString(R.string.reset_message_1)
-            )
+        builder
+            .setPositiveButton(getString(R.string.yes_label)) { _, _ ->
+                showResetDialog2()
+            }
+            .setNeutralButton(getString(R.string.no_label)) { _, _ -> }
 
-            builder
-                .setPositiveButton(appContext.getString(R.string.yes_label)) { _, _ ->
-                    showResetDialog2()
-                }
-                .setNeutralButton(appContext.getString(R.string.no_label)) { _, _ -> }
-
-            showAlert(builder, false)
-        }
+        showAlert(builder, false)
     }
 
     /**
      * Displays the second dialog confirming that the user wants to reset all their data
      */
     private fun showResetDialog2() {
-        val appContext = activity?.applicationContext
+        val builder: AlertDialog.Builder = buildDialog(
+            getString(R.string.reset_title_2),
+            getString(R.string.reset_message_2)
+        )
 
-        if (appContext != null) {
-            val builder: AlertDialog.Builder = buildDialog(
-                appContext.getString(R.string.reset_title_2),
-                appContext.getString(R.string.reset_message_2)
-            )
+        builder
+            .setPositiveButton(getString(R.string.no_label)) { _, _ -> }
+            .setNeutralButton(getString(R.string.yes_label)) { _, _ ->
+                cListViewModel.resetData()
+                findNavController().navigate(
+                    ChallengeListFragmentDirections.challengeListToWelcome()
+                )
+            }
 
-            builder
-                .setPositiveButton(appContext.getString(R.string.no_label)) { _, _ -> }
-                .setNeutralButton(appContext.getString(R.string.yes_label)) { _, _ ->
-                    cListViewModel.resetData()
-                    findNavController().navigate(
-                        ChallengeListFragmentDirections.challengeListToWelcome()
-                    )
-                }
-
-
-            showAlert(builder, true)
-        }
+        showAlert(builder, true)
     }
 
 
@@ -181,13 +175,10 @@ class ChallengeListFragment: Fragment() {
      */
     private fun buildDialog(title: String, message: String): AlertDialog.Builder {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        val appContext = activity?.applicationContext
 
-        if (appContext != null) {
-            builder
-                .setCustomTitle(createDialogTitle(title))
-                .setMessage(message)
-        }
+        builder
+            .setCustomTitle(createDialogTitle(title))
+            .setMessage(message)
 
         return builder
     }
@@ -242,6 +233,7 @@ class ChallengeListFragment: Fragment() {
                     resources, android.R.color.holo_red_light, null
                 )
 
+                // Sets colour of whichever button is no to red
                 if (swapped) {
                     buttonPositive.setTextColor(red)
                 }
@@ -304,12 +296,14 @@ class ChallengeListFragment: Fragment() {
                 lastCompleted.text = item.lastCompleted
                 totalCompleted.text = item.totalCompleted.toString()
 
+                // Navigates each challenge item to the appropiate read more section
                 challengeItem.setOnClickListener {
                     findNavController().navigate(
                         ChallengeListFragmentDirections.challengeListToReadMore(item.id)
                     )
                 }
 
+                // Applies margin above first element only
                 if (isFirst) {
                     val params: ViewGroup.MarginLayoutParams =
                         challengeItem.layoutParams as ViewGroup.MarginLayoutParams

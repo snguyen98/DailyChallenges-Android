@@ -27,63 +27,54 @@ class AboutFragment: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_about, container, false)
 
-        activity?.applicationContext?.let { appContext ->
-            setList(
-                root.findViewById(R.id.about_list),
-                appContext.getString(R.string.about_label),
-                AboutListAdapter(
-                    listOf(
-                        Pair(
-                            appContext.getString(R.string.twitter_label),
-                            appContext.getString(R.string.twitter_link)
-                        ),
-                        Pair(
-                            appContext.getString(R.string.instagram_label),
-                            appContext.getString(R.string.instagram_link)
-                        ),
-                        Pair(
-                            appContext.getString(R.string.facebook_label),
-                            appContext.getString(R.string.facebook_link)
-                        ),
-                        Pair(
-                            appContext.getString(R.string.linkedin_label),
-                            appContext.getString(R.string.linkedin_link)
-                        ),
-                        Pair(appContext.getString(R.string.team_label), "")
-                    )
+        // Sets up recycler view adapter for about list
+        setList(
+            root.findViewById(R.id.about_list),
+            getString(R.string.about_label),
+            AboutListAdapter(
+                listOf(
+                    Pair(getString(R.string.twitter_label), getString(R.string.twitter_link)),
+                    Pair(getString(R.string.instagram_label), getString(R.string.instagram_link)),
+                    Pair(getString(R.string.facebook_label), getString(R.string.facebook_link)),
+                    Pair(getString(R.string.linkedin_label), getString(R.string.linkedin_link)),
+                    Pair(getString(R.string.team_label), "")
                 )
             )
+        )
 
-            setList(
-                root.findViewById(R.id.legal_list),
-                appContext.getString(R.string.legal_label),
-                AboutListAdapter(
-                    listOf(
-                        Pair(appContext.getString(R.string.terms_label),
-                            appContext.getString(R.string.terms_link)
-                        ),
-                        Pair(appContext.getString(R.string.privacy_label),
-                            appContext.getString(R.string.privacy_link)
-                        )
-                    )
+        // Sets up recycler view adapter for legal list
+        setList(
+            root.findViewById(R.id.legal_list),
+            getString(R.string.legal_label),
+            AboutListAdapter(
+                listOf(
+                    Pair(getString(R.string.terms_label), getString(R.string.terms_link)),
+                    Pair(getString(R.string.privacy_label), getString(R.string.privacy_link))
                 )
             )
-        }
+        )
 
+        // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
 
         return root
     }
 
+    /**
+     * Sets up the recycler view given a layout, heading and adapter
+     *
+     * @param layout The layout containing the recycler view
+     * @param heading The heading label
+     * @param adapter The adapter to be assigned to the recycler view
+     */
     private fun setList(layout: LinearLayout, heading: String, adapter: AboutListAdapter) {
-        val appContext = activity?.applicationContext
         val recyclerView: RecyclerView = layout.findViewById(R.id.list_items)
 
         layout.findViewById<TextView>(R.id.list_heading).text = heading
 
         recyclerView.layoutManager = LinearLayoutManager(
-            appContext,
+            activity?.applicationContext,
             RecyclerView.VERTICAL,
             false
         )
@@ -91,6 +82,11 @@ class AboutFragment: Fragment() {
         recyclerView.adapter = adapter
     }
 
+    /**
+     * Class which manages the items to be displayed in the about and legal list recycler views
+     *
+     * @param aboutItems The list of items to be displayed
+     */
     private inner class AboutListAdapter(
         private val aboutItems: List<Pair<String, String>>
     ): RecyclerView.Adapter<AboutListAdapter.AboutItemHolder>() {
@@ -108,16 +104,30 @@ class AboutFragment: Fragment() {
             holder.bind(aboutItems[position], position == 0)
         }
 
+        /**
+         * Class that holds and binds the information to each about item in the recycler view
+         *
+         * @param view The about item view
+         */
         private inner class AboutItemHolder(view: View): RecyclerView.ViewHolder(view) {
             val aboutItem: RelativeLayout = view.findViewById(R.id.about_item)
             val aboutText: TextView = view.findViewById(R.id.about_text)
             val aboutIcon: ImageView = view.findViewById(R.id.about_icon)
             val topDivider: View = view.findViewById(R.id.top_divider)
 
+            /**
+             * Assigns the text to text views, sets appropriate links, icons and a divider above
+             * the first element
+             *
+             * @param item The pair containing the about item label and link
+             * @param isFirst Boolean stating if the item is the first in the list
+             */
             fun bind(item: Pair<String, String>, isFirst: Boolean) {
                 val (label, link) = item
 
                 aboutText.text = label
+
+                // Assigns the appropriate link to the about item
                 aboutItem.setOnClickListener {
                     if (item.second != "") {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
@@ -127,30 +137,31 @@ class AboutFragment: Fragment() {
                     }
                 }
 
-                activity?.applicationContext?.let { appContext ->
-                    when (label) {
-                        appContext.getString(R.string.twitter_label) ->
-                            aboutIcon.setImageResource(R.mipmap.twitter_icon)
+                // Assigns the appropriate icon to the about item
+                when (label) {
+                    getString(R.string.twitter_label) ->
+                        aboutIcon.setImageResource(R.mipmap.twitter_icon)
 
-                        appContext.getString(R.string.instagram_label) ->
-                            aboutIcon.setImageResource(R.mipmap.instagram_icon)
+                    getString(R.string.instagram_label) ->
+                        aboutIcon.setImageResource(R.mipmap.instagram_icon)
 
-                        appContext.getString(R.string.facebook_label) ->
-                            aboutIcon.setImageResource(R.mipmap.facebook_icon)
+                    getString(R.string.facebook_label) ->
+                        aboutIcon.setImageResource(R.mipmap.facebook_icon)
 
-                        appContext.getString(R.string.linkedin_label) ->
-                            aboutIcon.setImageResource(R.mipmap.linkedin_icon)
+                    getString(R.string.linkedin_label) ->
+                        aboutIcon.setImageResource(R.mipmap.linkedin_icon)
 
-                        appContext.getString(R.string.team_label) ->
-                            aboutIcon.setImageResource(R.mipmap.team_icon)
+                    getString(R.string.team_label) ->
+                        aboutIcon.setImageResource(R.mipmap.team_icon)
 
-                        appContext.getString(R.string.terms_label) ->
-                            aboutIcon.setImageResource(R.mipmap.terms_icon)
+                    getString(R.string.terms_label) ->
+                        aboutIcon.setImageResource(R.mipmap.terms_icon)
 
-                        appContext.getString(R.string.privacy_label) ->
-                            aboutIcon.setImageResource(R.mipmap.privacy_icon)
-                    }
+                    getString(R.string.privacy_label) ->
+                        aboutIcon.setImageResource(R.mipmap.privacy_icon)
                 }
+
+                // Places divider on top of first element only
                 if (isFirst) {
                     topDivider.visibility = View.VISIBLE
                 }

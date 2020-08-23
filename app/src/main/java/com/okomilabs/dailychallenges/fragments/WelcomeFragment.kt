@@ -23,7 +23,23 @@ class WelcomeFragment: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_welcome, container, false)
 
-        if (!checkFirstLaunch()) {
+        // If first launch, set first launch shared prefs to false and redirect to first launch page
+        if (checkFirstLaunch()) {
+            activity?.applicationContext?.let { appContext ->
+                appContext
+                    .getSharedPreferences(
+                        getString(R.string.settings_key), Context.MODE_PRIVATE
+                    )
+                    .edit()
+                    .putBoolean(getString(R.string.first_launch), false)
+                    .apply()
+
+                findNavController().navigate(WelcomeFragmentDirections.welcomeToFirstLaunch())
+            }
+        }
+
+        // Otherwise animate welcome message
+        else {
             val welcome: TextView = root.findViewById(R.id.welcome_message)
             animateWelcome(welcome)
         }
@@ -41,20 +57,18 @@ class WelcomeFragment: Fragment() {
             val settingsPrefs: SharedPreferences = it.getSharedPreferences(
                 getString(R.string.settings_key), Context.MODE_PRIVATE
             )
-            val firstLaunchStr: String = getString(R.string.first_launch)
 
-            return if (!settingsPrefs.getBoolean(firstLaunchStr, false)) {
-                settingsPrefs.edit().putBoolean(firstLaunchStr, true).apply()
-                findNavController().navigate(WelcomeFragmentDirections.welcomeToFirstLaunch())
-                true
-            } else {
-                false
-            }
+            return !settingsPrefs.getBoolean(getString(R.string.first_launch), true)
         }
 
         return false
     }
 
+    /**
+     * Starts the animation to show of the welcome message
+     *
+     * @param welcome The text view containing the welcome message
+     */
     private fun animateWelcome(welcome: TextView) {
         welcome
             .animate()
@@ -64,7 +78,7 @@ class WelcomeFragment: Fragment() {
             .setStartDelay(300L)
             .setListener(object: Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator?) {
-                    hideWelcome(welcome)
+                    hideWelcome(welcome)    // Waits and then hides the welcome message
                 }
                 override fun onAnimationStart(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
@@ -74,6 +88,11 @@ class WelcomeFragment: Fragment() {
 
     }
 
+    /**
+     * Starts the animation to hide the welcome message
+     *
+     * @param welcome The text view containing the welcome message
+     */
     private fun hideWelcome(welcome: TextView) {
         welcome
             .animate()
@@ -83,7 +102,7 @@ class WelcomeFragment: Fragment() {
             .setStartDelay(300L)
             .setListener(object: Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator?) {
-                    navigateToChallenge()
+                    navigateToChallenge()       // Waits and then redirects to the challenge page
                 }
                 override fun onAnimationStart(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
@@ -92,6 +111,9 @@ class WelcomeFragment: Fragment() {
             .interpolator = AccelerateInterpolator()
     }
 
+    /**
+     * Redirects to the challenge fragment
+     */
     private fun navigateToChallenge() {
         val navController: NavController = findNavController()
 

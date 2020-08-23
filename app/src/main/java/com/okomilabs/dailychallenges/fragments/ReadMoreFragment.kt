@@ -43,7 +43,6 @@ class ReadMoreFragment: Fragment() {
         val id: Int? = arguments?.getInt("challengeId")
 
         if (app != null && id != null) {
-
             readMoreViewModel = ViewModelProvider(
                 this,
                 ReadMoreFactory(app, id)
@@ -55,6 +54,7 @@ class ReadMoreFragment: Fragment() {
             addLinks(detail)
             observeState(root.findViewById(R.id.read_more_pointer), detail)
 
+            // Transitions
             enterTransition = Slide().setInterpolator(LinearOutSlowInInterpolator())
             allowEnterTransitionOverlap = false
 
@@ -115,7 +115,7 @@ class ReadMoreFragment: Fragment() {
         val stateObserver = Observer<Boolean> { _ ->
             hasDesc.value?.let { hasDescVal ->
                 hasLinks.value?.let { hasLinksVal ->
-
+                    // If there is a description then show pointer and hide detail
                     if (hasDescVal) {
                         pointer.visibility = View.VISIBLE
                         detail.visibility = View.GONE
@@ -124,23 +124,30 @@ class ReadMoreFragment: Fragment() {
                         detail.findViewById<TextView>(R.id.info_label).visibility = View.VISIBLE
                         detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.VISIBLE
 
+                        // If there are links then show the links label
                         if (hasLinksVal) {
                             detail.findViewById<TextView>(R.id.links_label).visibility =
                                 View.VISIBLE
                         }
+
+                        // Otherwise hide it
                         else {
                             detail.findViewById<TextView>(R.id.links_label).visibility = View.GONE
                         }
                     }
 
+                    // If there is no description then hide the pointer, info label and desc
                     else {
                         pointer.visibility = View.GONE
                         detail.findViewById<TextView>(R.id.info_label).visibility = View.GONE
                         detail.findViewById<TextView>(R.id.challenge_desc).visibility = View.GONE
 
+                        // If there are links then show the whole of the detail layout
                         if (hasLinksVal) {
                             detail.visibility = View.VISIBLE
                         }
+
+                        // Otherwise hide it
                         else {
                             detail.visibility = View.GONE
                         }
@@ -228,25 +235,21 @@ class ReadMoreFragment: Fragment() {
      * @param category The current challenge category
      */
     private fun showCategoryIcon(icon: ImageView, category: String) {
-        val context = activity?.applicationContext
+        when (category) {
+            getString(R.string.physical_wellbeing) ->
+                icon.setImageResource(R.mipmap.physical_wellbeing)
 
-        if (context != null) {
-            when (category) {
-                context.getString(R.string.physical_wellbeing) ->
-                    icon.setImageResource(R.mipmap.physical_wellbeing)
+            getString(R.string.mental_wellbeing) ->
+                icon.setImageResource(R.mipmap.mental_wellbeing)
 
-                context.getString(R.string.mental_wellbeing) ->
-                    icon.setImageResource(R.mipmap.mental_wellbeing)
+            getString(R.string.socialising) ->
+                icon.setImageResource(R.mipmap.socialising)
 
-                context.getString(R.string.socialising) ->
-                    icon.setImageResource(R.mipmap.socialising)
+            getString(R.string.education_learning) ->
+                icon.setImageResource(R.mipmap.education_learning)
 
-                context.getString(R.string.education_learning) ->
-                    icon.setImageResource(R.mipmap.education_learning)
-
-                context.getString(R.string.skills_hobbies) ->
-                    icon.setImageResource(R.mipmap.skills_hobbies)
-            }
+            getString(R.string.skills_hobbies) ->
+                icon.setImageResource(R.mipmap.skills_hobbies)
         }
     }
 
@@ -280,16 +283,17 @@ class ReadMoreFragment: Fragment() {
     private fun generateLinkView(text: String): TextView {
         val linkView = TextView(context)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            linkView.setTextAppearance(R.style.SubText)
-        }
-        else {
-            linkView.setTextAppearance(context, R.style.SubText)
-        }
+        activity?.applicationContext?.let { appContext ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                linkView.setTextAppearance(R.style.SubText)
+            }
 
-        linkView.setPadding(0, 15, 0, 15)
-        linkView.typeface = activity?.applicationContext?.let {
-            ResourcesCompat.getFont(it, R.font.timeless)
+            else {
+                linkView.setTextAppearance(appContext, R.style.SubText)
+            }
+
+            linkView.setPadding(0, 15, 0, 15)
+            linkView.typeface = ResourcesCompat.getFont(appContext, R.font.timeless)
         }
 
         linkView.text = text
