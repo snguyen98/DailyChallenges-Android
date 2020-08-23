@@ -182,6 +182,7 @@ class ChallengeFragment: Fragment() {
                         findNavController()
                             .navigate(ChallengeFragmentDirections.challengeToWelcome())
                     }
+                    .setCancelable(false)
 
                 val alert = builder.create()
                 alert.show()
