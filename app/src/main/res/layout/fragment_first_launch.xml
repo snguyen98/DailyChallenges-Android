@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/launch_message_1"
         android:layout_above="@id/launch_message_2"
-        style="@style/first_launch_message_box">
+        style="@style/FirstLaunchMessageBox">
 
         <TextView
             android:layout_width="match_parent"
@@ -22,7 +22,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/launch_message_2"
         android:layout_centerInParent="true"
-        style="@style/first_launch_message_box">
+        style="@style/FirstLaunchMessageBox">
 
         <TextView
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/rounded_button"
         android:text="@string/first_launch_no_button"
-        style="@style/first_launch_button" />
+        style="@style/FirstLaunchButton" />
 
     <Button
         android:id="@+id/launch_yes_button"
@@ -46,6 +46,6 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/rounded_button"
         android:text="@string/first_launch_yes_button"
-        style="@style/first_launch_button" />
+        style="@style/FirstLaunchButton" />
 
 </RelativeLayout>

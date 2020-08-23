@@ -3,13 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
     android:id="@+id/challenge_card"
     android:transitionName="card_element"
-    style="@style/ChallengeCard">
+    app:cardBackgroundColor="@color/light_gray"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="15dp">
 
     <RelativeLayout
-        android:layout_gravity="center"
-        style="@style/MatchHeight">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/challenge_category"

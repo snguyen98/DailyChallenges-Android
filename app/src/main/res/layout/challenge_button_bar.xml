@@ -10,7 +10,7 @@
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/asap"
         android:text="@string/skip_label"
-        style="@style/WrapAll" />
+        style="@style/ChallengeButton" />
 
     <Button
         android:id="@+id/complete_button"
@@ -20,6 +20,6 @@
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/asap"
         android:text="@string/complete_label"
-        style="@style/WrapAll" />
+        style="@style/ChallengeButton" />
 
 </RelativeLayout>

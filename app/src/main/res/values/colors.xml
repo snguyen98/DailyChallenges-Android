@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lightGray">#F3F3F3</color>
+    <color name="light_gray">#F3F3F3</color>
+    <color name="dark_gray">@android:color/darker_gray</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="screenBackground">#50C864</color>
     <color name="freeze_icon">#3CC0F2</color>
