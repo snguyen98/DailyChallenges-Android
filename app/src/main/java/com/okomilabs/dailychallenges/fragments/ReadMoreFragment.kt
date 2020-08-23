@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -36,9 +37,6 @@ class ReadMoreFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Simple slide enter transition
-        enterTransition = Slide()
-
         val root = inflater.inflate(R.layout.fragment_read_more, container, false)
 
         val app = activity?.application
@@ -51,13 +49,14 @@ class ReadMoreFragment: Fragment() {
                 ReadMoreFactory(app, id)
             ).get(ReadMoreViewModel::class.java)
 
-
-
             val detail: LinearLayout = root.findViewById(R.id.read_more_detail)
 
             setTextViews(root.findViewById(R.id.read_more_summary), detail)
             addLinks(detail)
             observeState(root.findViewById(R.id.read_more_pointer), detail)
+
+            enterTransition = Slide().setInterpolator(LinearOutSlowInInterpolator())
+            allowEnterTransitionOverlap = false
 
             /* Shared element transition
             val callback: SharedElementCallback = object: SharedElementCallback() {

@@ -47,6 +47,7 @@ class ChallengeListFragment: Fragment() {
 
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        postponeEnterTransition()
 
         return root
     }
@@ -74,6 +75,10 @@ class ChallengeListFragment: Fragment() {
                 listView.adapter = ChallengeListAdapter(newList)
                 listView.visibility = View.VISIBLE
                 message.visibility = View.GONE
+
+                listView.post {
+                    startPostponedEnterTransition()
+                }
             }
             else {
                 listView.visibility = View.GONE
