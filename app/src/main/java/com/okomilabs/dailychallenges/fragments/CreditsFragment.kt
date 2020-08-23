@@ -111,7 +111,6 @@ class CreditsFragment: Fragment() {
             false
         )
 
-        recyclerView.suppressLayout(true)
         recyclerView.adapter = adapter
     }
 

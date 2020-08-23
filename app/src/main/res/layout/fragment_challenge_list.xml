@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:overScrollMode="never" />
 
         <TextView
             android:id="@+id/completed_list_message"
@@ -26,7 +27,7 @@
             android:text="@string/completed_list_message"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/secondary_colour"
             style="@style/BodyText" />
 
     </RelativeLayout>

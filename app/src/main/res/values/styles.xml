@@ -3,11 +3,10 @@
     <!--                                     Main App Themes                                     -->
     <!--                                                                                         -->
 
-
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/action_bar_primary</item>
         <item name="colorPrimaryDark">@color/action_bar_secondary</item>
-        <item name="android:windowBackground">@color/screenBackground</item>
+        <item name="android:windowBackground">@color/primary_colour</item>
     </style>
 
 
@@ -28,7 +27,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">start</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@color/secondary_colour</item>
     </style>
 
 
@@ -38,12 +37,61 @@
 
 
     <!--                                                                                         -->
-    <!--                                     Page Padding                                        -->
+    <!--                                       Page Padding                                      -->
     <!--                                                                                         -->
 
     <style name="ReadMorePadding">
         <item name="android:paddingStart">18dp</item>
         <item name="android:paddingEnd">18dp</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                About and Credits Styling                                -->
+    <!--                                                                                         -->
+
+    <style name="InfoListLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/secondary_colour</item>
+    </style>
+
+    <style name="InfoListItemLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
+    <style name="InfoListItemName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">14dp</item>
+
+        <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                 Challenge List Styling                                  -->
+    <!--                                                                                         -->
+
+    <style name="ChallengeListSmallLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/timeless</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ChallengeListSmallValue" parent="ChallengeListSmallLabel">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginStart">8dp</item>
     </style>
 
 

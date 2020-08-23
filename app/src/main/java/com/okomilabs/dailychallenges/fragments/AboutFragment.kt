@@ -88,7 +88,6 @@ class AboutFragment: Fragment() {
             false
         )
 
-        recyclerView.suppressLayout(true)
         recyclerView.adapter = adapter
     }
 
