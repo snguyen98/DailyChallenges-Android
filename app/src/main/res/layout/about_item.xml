@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/about_item"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/selectable_list_item"
     tools:ignore="RtlSymmetry"
     style="@style/InfoListItemLayout">
 
