@@ -76,7 +76,13 @@ class MainActivity: AppCompatActivity() {
 
         MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
-                .setTestDeviceIds(listOf(applicationContext.getString(R.string.sang_oppo)))
+                .setTestDeviceIds(
+                    listOf(
+                        getString(R.string.sang_oppo),
+                        getString(R.string.ned_motorola),
+                        getString(R.string.saif_pixel)
+                    )
+                )
                 .build()
         )
     }
