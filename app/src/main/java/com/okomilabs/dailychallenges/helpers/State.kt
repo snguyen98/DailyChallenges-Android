@@ -1,5 +1,8 @@
 package com.okomilabs.dailychallenges.helpers
 
+/**
+ * Class which assigns integers to possible states of a challenge for a login day
+ */
 class State {
     companion object {
         const val INCOMPLETE = 0

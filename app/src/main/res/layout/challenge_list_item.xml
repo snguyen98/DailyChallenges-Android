@@ -10,7 +10,7 @@
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     app:contentPadding="17dp"
-    app:cardBackgroundColor="@color/lightGray"
+    app:cardBackgroundColor="@color/light_gray"
     app:cardCornerRadius="5dp"
     app:cardElevation="3dp">
 
@@ -27,47 +27,35 @@
         <TextView
             android:id="@+id/item_category"
             android:layout_above="@id/item_last_completed"
-            android:textSize="12sp"
-            style="@style/SubText" />
+            android:layout_marginBottom="3dp"
+            style="@style/ChallengeListSmallLabel" />
 
         <TextView
             android:id="@+id/last_completed_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:paddingEnd="8dp"
             android:text="@string/last_completed_label"
-            android:textSize="12sp"
             tools:ignore="RtlSymmetry"
-            style="@style/SubText" />
+            style="@style/ChallengeListSmallLabel" />
 
         <TextView
             android:id="@+id/item_last_completed"
-            android:layout_width="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_toEndOf="@id/last_completed_label"
-            android:textSize="12sp"
-            style="@style/SubText" />
+            style="@style/ChallengeListSmallValue" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@id/item_total_completed"
             android:text="@string/total_completed_label"
-            android:textSize="12sp"
             tools:ignore="RelativeOverlap"
-            style="@style/SubText" />
+            style="@style/ChallengeListSmallLabel" />
 
         <TextView
             android:id="@+id/item_total_completed"
-            android:layout_width="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:paddingStart="8dp"
-            android:textSize="12sp"
             tools:ignore="RtlSymmetry"
-            style="@style/SubText" />
+            style="@style/ChallengeListSmallValue" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

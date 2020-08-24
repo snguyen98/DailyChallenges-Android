@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/info_label"
         android:text="@string/info_label"
-        android:textColor="@color/info_label_color"
+        android:textColor="@color/info_label_colour"
         android:textSize="29sp"
         style="@style/DetailHeading" />
 
@@ -19,14 +19,13 @@
     <TextView
         android:id="@+id/challenge_desc"
         android:layout_marginTop="25dp"
-        android:textColor="@android:color/black"
         style="@style/BodyText" />
 
     <TextView
         android:id="@+id/links_label"
         android:layout_marginTop="40dp"
         android:text="@string/links_label"
-        android:textColor="@color/link_label_color"
+        android:textColor="@color/link_label_colour"
         android:textSize="24sp"
         style="@style/DetailHeading" />
 

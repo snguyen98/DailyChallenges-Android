@@ -3,12 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/about_item"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground"
-    tools:ignore="RtlSymmetry">
+    android:background="@drawable/selectable_list_item"
+    tools:ignore="RtlSymmetry"
+    style="@style/InfoListItemLayout">
 
     <View
         android:id="@+id/top_divider"
@@ -26,15 +23,11 @@
 
     <TextView
         android:id="@+id/about_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/top_divider"
         android:layout_toEndOf="@id/about_icon"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
         android:layout_marginBottom="14dp"
-        android:fontFamily="@font/asap"
-        android:textSize="17sp" />
+        style="@style/InfoListItemName" />
 
     <ImageView
         android:layout_width="16dp"

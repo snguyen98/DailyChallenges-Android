@@ -20,8 +20,8 @@ class ReadMoreViewModel(application: Application, id: Int): AndroidViewModel(app
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            challenge.postValue(challengeRepo.challengeById(challengeId))
-            links.postValue(challengeRepo.getLinksById(challengeId))
+            challenge.postValue(challengeRepo.challengeById(challengeId))   // Gets challenge by id
+            links.postValue(challengeRepo.getLinksById(challengeId))        // Gets links by id
         }
     }
 }

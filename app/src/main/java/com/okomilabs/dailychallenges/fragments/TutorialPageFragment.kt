@@ -22,6 +22,7 @@ class TutorialPageFragment(pos: Int): Fragment() {
         val image: ImageView = root.findViewById(R.id.example_image)
         val text: TextView = root.findViewById(R.id.tutorial_text)
 
+        // Sets the image and text depending on the current page
         when (position) {
             0 -> {
                 image.setImageResource(R.mipmap.tutorial_page_1)

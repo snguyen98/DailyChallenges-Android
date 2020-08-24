@@ -1,36 +1,106 @@
 <resources>
-    <!--  Base application theme  -->
+    <!--                                                                                         -->
+    <!--                                     Main App Themes                                     -->
+    <!--                                                                                         -->
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/action_bar_primary</item>
         <item name="colorPrimaryDark">@color/action_bar_secondary</item>
-        <item name="android:windowBackground">@color/screenBackground</item>
+        <item name="android:windowBackground">@color/primary_colour</item>
     </style>
 
-    <!--  Splash screen theme  -->
+
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-    <!--  Style for navigation drawer  -->
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/action_bar_primary</item>
+        <item name="android:fontFamily">@font/asap_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
     <style name="DrawerTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">start</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@color/secondary_colour</item>
     </style>
 
-    <!--  Style for challenge card  -->
-    <style name="ChallengeCard">
+
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textAppearance">@font/asap</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                       Page Padding                                      -->
+    <!--                                                                                         -->
+
+    <style name="ReadMorePadding">
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                About and Credits Styling                                -->
+    <!--                                                                                         -->
+
+    <style name="InfoListLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">220dp</item>
+        <item name="android:layout_height">match_parent</item>
 
-        <item name="cardBackgroundColor">@color/lightGray</item>
-        <item name="cardCornerRadius">15dp</item>
-        <item name="cardElevation">15dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/secondary_colour</item>
     </style>
 
-    <!--  Style for bold text views  -->
+
+    <style name="InfoListItemLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
+    <style name="InfoListItemName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">14dp</item>
+
+        <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                 Challenge List Styling                                  -->
+    <!--                                                                                         -->
+
+    <style name="ChallengeListSmallLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/timeless</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="ChallengeListSmallValue" parent="ChallengeListSmallLabel">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                     Text Styling                                        -->
+    <!--                                                                                         -->
+
     <style name="BoldHeading">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -39,7 +109,7 @@
         <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
-    <!--  Style for text views in the detail section of read more page  -->
+
     <style name="DetailHeading">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -50,7 +120,7 @@
         <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
-    <!--  Style for Sub Heading text  -->
+
     <style name="SubText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -60,7 +130,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!--  Style for descriptions  -->
+
     <style name="BodyText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -72,76 +142,37 @@
         <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
-    <style name="PagerDot">
-        <item name="android:layout_width">10dp</item>
-        <item name="android:layout_height">10dp</item>
 
-        <item name="android:layout_marginStart">3dp</item>
-        <item name="android:layout_marginEnd">3dp</item>
-    </style>
-
-    <!--  Layout style for vertical linear layouts  -->
-    <style name="VerticalLayout">
+    <style name="CenteredMessage">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">25dp</item>
+
+        <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textColor">@color/secondary_colour</item>
+        <item name="android:textAlignment">center</item>
+
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
-    <!--  Layout style for read more page  -->
-    <style name="ReadMorePadding">
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">18dp</item>
-    </style>
 
-    <!--  Style for views to fill the whole screen  -->
-    <style name="MatchHeight">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
+    <!--                                                                                         -->
+    <!--                                     Button Styling                                      -->
+    <!--                                                                                         -->
 
-    <!--  Style for views to be contained within itself  -->
-    <style name="WrapAll">
+    <style name="ChallengeButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-    
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="android:background">@color/action_bar_primary</item>
-        <item name="android:fontFamily">@font/asap_bold</item>
-        <item name="android:textSize">20sp</item>
-    </style>
 
-    <style name="AsapTextAppearance">
+        <item name="android:layout_below">@id/challenge_card</item>
+        <item name="android:layout_marginTop">25dp</item>
         <item name="android:fontFamily">@font/asap</item>
     </style>
 
-    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <item name="android:textAppearance">@font/asap</item>
-    </style>
 
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">?android:attr/listDivider</item>
-    </style>
-
-    <style name="first_launch_message_box">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-
-        <item name="android:layout_marginStart">20dp</item>
-        <item name="android:layout_marginEnd">20dp</item>
-        <item name="android:layout_marginBottom">25dp</item>
-
-        <item name="android:alpha">0</item>
-        <item name="background">@color/lightGray</item>
-        <item name="contentPadding">20dp</item>
-        <item name="cardCornerRadius">8dp</item>
-        <item name="cardElevation">3dp</item>
-    </style>
-
-
-    <style name="first_launch_button">
+    <style name="FirstLaunchButton">
         <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">wrap_content</item>
 
@@ -150,6 +181,47 @@
 
         <item name="android:alpha">0</item>
         <item name="android:letterSpacing">0.01</item>
+        <item name="android:fontFamily">@font/asap</item>
+    </style>
+
+
+    <!--                                                                                         -->
+    <!--                                     Other View Styling                                  -->
+    <!--                                                                                         -->
+
+    <style name="FirstLaunchMessageBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_marginBottom">25dp</item>
+
+        <item name="android:alpha">0</item>
+        <item name="background">@color/light_gray</item>
+        <item name="contentPadding">20dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+
+    <style name="PagerDot">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+
+        <item name="android:layout_marginStart">3dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+    </style>
+
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+
+    <style name="AsapTextAppearance">
         <item name="android:fontFamily">@font/asap</item>
     </style>
 

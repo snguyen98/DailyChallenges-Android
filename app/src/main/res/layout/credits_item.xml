@@ -3,12 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/credits_item"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?attr/selectableItemBackground"
-    tools:ignore="RtlSymmetry">
+    android:background="@drawable/selectable_list_item"
+    tools:ignore="RtlSymmetry"
+    style="@style/InfoListItemLayout">
 
     <View
         android:id="@+id/top_divider"
@@ -17,14 +14,9 @@
 
     <TextView
         android:id="@+id/credits_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/top_divider"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="3dp"
-        android:fontFamily="@font/asap"
-        android:textSize="17sp" />
+        style="@style/InfoListItemName" />
 
     <TextView
         android:id="@+id/credits_role"
@@ -32,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/credits_name"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="14dp"
         android:fontFamily="@font/timeless"
         android:textSize="14sp" />

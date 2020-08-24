@@ -17,14 +17,12 @@
 
         <TextView
             android:id="@+id/challenge_category"
-            android:textColor="@color/summary_text_color"
             android:transitionName="category_element"
             style="@style/SubText" />
 
         <TextView
             android:id="@+id/challenge_title"
             android:layout_marginTop="3dp"
-            android:textColor="@color/summary_text_color"
             android:textSize="34sp"
             android:transitionName="title_element"
             style="@style/BoldHeading" />
@@ -40,7 +38,6 @@
 
         <TextView
             android:id="@+id/challenge_summary"
-            android:textColor="@color/summary_text_color"
             style="@style/BodyText" />
 
         <TextView
@@ -50,12 +47,12 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="6dp"
             android:text="@string/read_more_label"
-            android:textColor="@color/pointer_color"
+            android:textColor="@color/pointer_colour"
             android:textAlignment="center"
             android:textSize="18sp"
             android:drawablePadding="6dp"
             app:drawableBottomCompat="@mipmap/read_more_arrow"
-            app:drawableTint="@color/pointer_color"
+            app:drawableTint="@color/pointer_colour"
             style="@style/BoldHeading" />
 
     </LinearLayout>

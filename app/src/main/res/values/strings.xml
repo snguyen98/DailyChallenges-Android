@@ -55,7 +55,7 @@
     <string name="ned_role">UI Designer, Content Writer</string>
     <string name="saif_role">Business Director, Content Writer</string>
     <string name="ross_role">Content Manager, Administrator</string>
-    <string name="kenny_role">For supporting us</string>
+    <string name="kenny_role">For helping us coordinate our startup</string>
     <string name="rijal_role">For designing our logo</string>
 
     <string name="sang_link">https://www.linkedin.com/in/sang-nguyen-a42712a7/</string>
@@ -114,14 +114,14 @@
 
     <!--  Text View Messages  -->
     <string name="welcome_message">Welcome, your\nchallenge today is…</string>
-    <string name="completed_list_message">Your completed challenges will appear here</string>
+    <string name="completed_list_message">Your completed challenges\nwill appear here</string>
 
     <string name="tutorial_text_1">
         You get a new randomly generated challenge everyday. Tap the challenge card for interesting
         trivia and useful links.
     </string>
     <string name="tutorial_text_2">
-        If, for any reason, you are unable to complete a challenge, such as weather, you skip the
+        If, for any reason such as weather, you are unable to complete a challenge, you can skip the
         challenge up to 2 times a day.
     </string>
     <string name="tutorial_text_3">
