@@ -80,7 +80,8 @@ class MainActivity: AppCompatActivity() {
                     listOf(
                         getString(R.string.sang_oppo),
                         getString(R.string.ned_motorola),
-                        getString(R.string.saif_pixel)
+                        getString(R.string.saif_pixel),
+                        getString(R.string.ross_huawei)
                     )
                 )
                 .build()
