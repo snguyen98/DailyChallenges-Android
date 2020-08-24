@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -174,7 +175,7 @@ class ReadMoreFragment: Fragment() {
      * @param summary The linear layout containing the title, category, image and read more button
      * @param detail The linear layout containing the challenge description and links
      */
-    private fun setTextViews(summary: LinearLayout, detail: LinearLayout) {
+    private fun setTextViews(summary: RelativeLayout, detail: LinearLayout) {
         val challengeObserver = Observer<Challenge> { newChallenge ->
             summary.findViewById<TextView>(R.id.challenge_title).text = newChallenge.title
             summary.findViewById<TextView>(R.id.challenge_category).text = newChallenge.category
@@ -270,7 +271,7 @@ class ReadMoreFragment: Fragment() {
         pointer.visibility = View.VISIBLE
 
         pointer.setOnClickListener {
-            pointer.visibility = View.GONE
+            pointer.visibility = View.INVISIBLE
             detail.visibility = View.VISIBLE
         }
     }

@@ -55,7 +55,7 @@
     <string name="ned_role">UI Designer, Content Writer</string>
     <string name="saif_role">Business Director, Content Writer</string>
     <string name="ross_role">Content Manager, Administrator</string>
-    <string name="kenny_role">For helping us coordinate our startup</string>
+    <string name="kenny_role">For helping coordinate our startup</string>
     <string name="rijal_role">For designing our logo</string>
 
     <string name="sang_link">https://www.linkedin.com/in/sang-nguyen-a42712a7/</string>
@@ -121,7 +121,7 @@
         trivia and useful links.
     </string>
     <string name="tutorial_text_2">
-        If, for any reason such as weather, you are unable to complete a challenge, you can skip the
+        If, for any reason, you are unable to complete a challenge, you can skip the
         challenge up to 2 times a day.
     </string>
     <string name="tutorial_text_3">
@@ -174,6 +174,9 @@
 
     <!--  AdMob Test Device IDs  -->
     <string name="sang_oppo">1805DBC7E2E5F4F767CC5BBD50879F8B</string>
+    <string name="ned_motorola">724ACB32D31860CB411FA8FAEFF1ABF0</string>
+    <string name="saif_pixel">2E7D1F0D183432DE37EC93B817A53EFC</string>
+    <string name="ross_huawei">8B6B70DA26722EF2013A4859BE7D3265</string>
 
 
     <!--  AdMob IDs  -->

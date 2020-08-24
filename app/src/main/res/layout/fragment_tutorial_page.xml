@@ -21,6 +21,6 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="5dp"
-        style="@style/SubText" />
+        style="@style/BodyText" />
 
 </RelativeLayout>

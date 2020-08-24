@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardBackgroundColor="@color/rm_detail_background"
-    android:transitionName="card_element">
+    android:transitionName="card_element"
+    app:cardBackgroundColor="@color/rm_detail_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +20,12 @@
             <include
                 android:id="@+id/read_more_summary"
                 layout="@layout/read_more_summary" />
+
+            <View
+                android:id="@+id/yellow_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rm_gradient" />
 
             <include
                 android:id="@+id/read_more_detail"

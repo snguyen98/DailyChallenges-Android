@@ -1,8 +1,6 @@
 package com.okomilabs.dailychallenges.fragments
 
 import android.animation.Animator
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,56 +9,42 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.okomilabs.dailychallenges.R
+import com.okomilabs.dailychallenges.viewmodels.WelcomeViewModel
 
 class WelcomeFragment: Fragment() {
+    private lateinit var welcomeViewModel: WelcomeViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        welcomeViewModel = ViewModelProvider(this).get(WelcomeViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_welcome, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // If first launch, set first launch shared prefs to false and redirect to first launch page
-        if (checkFirstLaunch()) {
-            activity?.applicationContext?.let { appContext ->
-                appContext
-                    .getSharedPreferences(
-                        getString(R.string.settings_key), Context.MODE_PRIVATE
-                    )
-                    .edit()
-                    .putBoolean(getString(R.string.first_launch), false)
-                    .apply()
+        if (welcomeViewModel.checkFirstLaunch()) {
+            welcomeViewModel.disableFirstLaunch()
 
-                findNavController().navigate(WelcomeFragmentDirections.welcomeToFirstLaunch())
-            }
+            findNavController().navigate(WelcomeFragmentDirections.welcomeToFirstLaunch())
         }
 
         // Otherwise animate welcome message after view has loaded
         else {
-            animateWelcome(view.findViewById(R.id.welcome_message))
+            if (welcomeViewModel.hasShownWelcome()) {
+                navigateToChallenge()
+            }
+            else {
+                animateWelcome(view.findViewById(R.id.welcome_message))
+            }
         }
-    }
-
-    /**
-     * Checks if this is the user's first time launching the app and redirects if true
-     *
-     * @return True if first launch, false otherwise
-     */
-    private fun checkFirstLaunch(): Boolean {
-        activity?.applicationContext?.let {
-            val settingsPrefs: SharedPreferences = it.getSharedPreferences(
-                getString(R.string.settings_key), Context.MODE_PRIVATE
-            )
-
-            return settingsPrefs.getBoolean(getString(R.string.first_launch), true)
-        }
-
-        return false
     }
 
     /**
