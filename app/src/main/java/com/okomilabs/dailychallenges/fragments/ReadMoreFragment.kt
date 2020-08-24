@@ -57,6 +57,7 @@ class ReadMoreFragment: Fragment() {
             // Transitions
             enterTransition = Slide().setInterpolator(LinearOutSlowInInterpolator())
             allowEnterTransitionOverlap = false
+            postponeEnterTransition()
 
             /* Shared element transition
             val callback: SharedElementCallback = object: SharedElementCallback() {
@@ -80,6 +81,7 @@ class ReadMoreFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loadBannerAd(view.findViewById(R.id.banner_ad))
+        startPostponedEnterTransition()
     }
 
     override fun onDestroy() {

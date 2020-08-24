@@ -18,19 +18,19 @@ class FirstLaunchFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_first_launch, container, false)
-
-        animateMessage(
-            root.findViewById(R.id.launch_message_1),
-            root.findViewById(R.id.launch_message_2),
-            root.findViewById(R.id.launch_yes_button),
-            root.findViewById(R.id.launch_no_button)
-        )
-
         // Exit transition
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
 
-        return root
+        return inflater.inflate(R.layout.fragment_first_launch, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        animateMessage(
+            view.findViewById(R.id.launch_message_1),
+            view.findViewById(R.id.launch_message_2),
+            view.findViewById(R.id.launch_yes_button),
+            view.findViewById(R.id.launch_no_button)
+        )
     }
 
     /**

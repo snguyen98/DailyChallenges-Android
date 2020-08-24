@@ -21,8 +21,10 @@ class WelcomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_welcome, container, false)
+        return inflater.inflate(R.layout.fragment_welcome, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // If first launch, set first launch shared prefs to false and redirect to first launch page
         if (checkFirstLaunch()) {
             activity?.applicationContext?.let { appContext ->
@@ -38,13 +40,10 @@ class WelcomeFragment: Fragment() {
             }
         }
 
-        // Otherwise animate welcome message
+        // Otherwise animate welcome message after view has loaded
         else {
-            val welcome: TextView = root.findViewById(R.id.welcome_message)
-            animateWelcome(welcome)
+            animateWelcome(view.findViewById(R.id.welcome_message))
         }
-
-        return root
     }
 
     /**
@@ -58,7 +57,7 @@ class WelcomeFragment: Fragment() {
                 getString(R.string.settings_key), Context.MODE_PRIVATE
             )
 
-            return !settingsPrefs.getBoolean(getString(R.string.first_launch), true)
+            return settingsPrefs.getBoolean(getString(R.string.first_launch), true)
         }
 
         return false

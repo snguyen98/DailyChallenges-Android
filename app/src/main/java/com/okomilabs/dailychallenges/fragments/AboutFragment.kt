@@ -57,8 +57,13 @@ class AboutFragment: Fragment() {
         // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        postponeEnterTransition()
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        startPostponedEnterTransition()
     }
 
     /**

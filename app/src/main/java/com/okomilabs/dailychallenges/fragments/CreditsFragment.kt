@@ -80,8 +80,13 @@ class CreditsFragment: Fragment() {
 
         // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
+        postponeEnterTransition()
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        startPostponedEnterTransition()
     }
 
     /**

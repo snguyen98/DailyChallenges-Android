@@ -62,6 +62,7 @@ class ChallengeFragment: Fragment() {
         // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        postponeEnterTransition()
 
         return root
     }
@@ -69,6 +70,7 @@ class ChallengeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setNavigation(view.findViewById(R.id.challenge_card))
         loadRewardedAd()
+        startPostponedEnterTransition()
     }
 
     override fun onDestroy() {
