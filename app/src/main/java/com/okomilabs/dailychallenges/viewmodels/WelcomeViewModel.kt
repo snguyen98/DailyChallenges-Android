@@ -49,7 +49,7 @@ class WelcomeViewModel(application: Application): AndroidViewModel(application) 
         appContext
             .getSharedPreferences(settingsKey, Context.MODE_PRIVATE)
             .edit()
-            .putBoolean(settingsKey, false)
+            .putBoolean(firstLaunchPrefs, false)
             .apply()
     }
 
