@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.transition.Slide
-import android.util.TypedValue
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -192,12 +191,12 @@ class ChallengeListFragment: Fragment() {
     private fun createDialogTitle(text: String): TextView {
         val appContext = activity?.applicationContext
 
-        val paddingVal: Int = (resources.displayMetrics.density * 22f).toInt()
+        val paddingVal: Int = resources.getDimension(R.dimen.dialog_margin).toInt()
         val title = TextView(appContext)
         title.setPadding(paddingVal, paddingVal, paddingVal, 0)
 
         title.text = text
-        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
+        title.textSize = resources.getDimension(R.dimen.dialog_text_size)
 
         if (appContext != null) {
             title.setTextColor(ContextCompat.getColor(appContext, android.R.color.black))

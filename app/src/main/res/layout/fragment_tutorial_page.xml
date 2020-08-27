@@ -18,9 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/example_image"
         android:layout_centerHorizontal="true"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="5dp"
+        android:paddingStart="@dimen/help_text_padding_horizontal"
+        android:paddingEnd="@dimen/help_text_padding_horizontal"
+        android:paddingTop="@dimen/help_text_padding_above"
         style="@style/BodyText" />
 
 </RelativeLayout>
