@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/example_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/help_image_height"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/help_image_margin_above"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/tutorial_desc" />
 

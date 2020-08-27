@@ -307,7 +307,9 @@ class ChallengeListFragment: Fragment() {
                     val params: ViewGroup.MarginLayoutParams =
                         challengeItem.layoutParams as ViewGroup.MarginLayoutParams
 
-                    params.topMargin = (resources.displayMetrics.density * 10f).toInt()
+                    params.topMargin = resources.getDimension(
+                        R.dimen.challenge_list_item_margin
+                    ).toInt()
                     challengeItem.layoutParams = params
                 }
             }

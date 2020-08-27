@@ -48,7 +48,6 @@
     <dimen name="rm_pointer_arrow_padding">6dp</dimen>
     <dimen name="rm_desc_margin_above">25dp</dimen>
     <dimen name="rm_link_label_margin_above">40dp</dimen>
-    <dimen name="rm_link_padding_vertical">12dp</dimen>
 
     <dimen name="rm_icon_height">150dp</dimen>
     <dimen name="rm_gradient_height">40dp</dimen>
@@ -92,6 +91,12 @@
     <dimen name="help_text_padding_horizontal">20dp</dimen>
     <dimen name="help_text_padding_above">5dp</dimen>
 
+    <dimen name="help_button_margin_horizontal">35dp</dimen>
+    <dimen name="help_button_margin_above">35dp</dimen>
+    <dimen name="help_button_margin_below">35dp</dimen>
+
+    <dimen name="help_image_height">270dp</dimen>
+    <dimen name="help_image_margin_above">2dp</dimen>
     <dimen name="help_dots_size">10dp</dimen>
 
 
