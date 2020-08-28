@@ -9,11 +9,11 @@
         android:id="@+id/list_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/divided_list_heading_margin_start"
+        android:layout_marginTop="@dimen/divided_list_heading_margin_above"
+        android:layout_marginBottom="@dimen/divided_list_heading_margin_below"
         android:fontFamily="@font/asap_bold"
-        android:textSize="13sp" />
+        android:textSize="@dimen/divided_list_heading_size" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_items"

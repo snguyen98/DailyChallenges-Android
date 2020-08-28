@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/example_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/help_image_height"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/help_image_margin_above"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/tutorial_desc" />
 
@@ -18,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/example_image"
         android:layout_centerHorizontal="true"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="5dp"
+        android:paddingStart="@dimen/help_text_padding_horizontal"
+        android:paddingEnd="@dimen/help_text_padding_horizontal"
+        android:paddingTop="@dimen/help_text_padding_above"
         style="@style/BodyText" />
 
 </RelativeLayout>

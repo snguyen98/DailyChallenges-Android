@@ -7,12 +7,12 @@
     android:background="@color/primary_colour">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/nav_header_width"
+        android:layout_height="@dimen/nav_header_height"
         android:gravity="start"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/nav_header_margin_start"
+        android:layout_marginTop="@dimen/nav_header_margin_above"
+        android:layout_marginBottom="@dimen/nav_header_margin_below"
         android:src="@mipmap/drawer_logo"
         android:contentDescription="@string/venture_logo_desc" />
 

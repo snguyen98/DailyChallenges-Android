@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/credits_name"
         android:layout_below="@id/top_divider"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/divided_list_item_margin_horizontal"
         style="@style/InfoListItemName" />
 
     <TextView
@@ -23,19 +23,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/credits_name"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="@dimen/divided_list_item_margin_horizontal"
+        android:layout_marginTop="@dimen/credits_role_margin_above"
+        android:layout_marginBottom="@dimen/divided_list_item_margin_vertical"
         android:fontFamily="@font/timeless"
-        android:textSize="14sp" />
+        android:textSize="@dimen/credits_role_size" />
 
     <ImageView
         android:id="@+id/credits_link_icon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="@dimen/credits_icon_size"
+        android:layout_height="@dimen/credits_icon_size"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/divided_list_item_margin_horizontal"
         android:contentDescription="@string/credited_link_desc" />
 
     <View

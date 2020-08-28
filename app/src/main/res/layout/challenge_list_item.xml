@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/challenge_item"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    app:contentPadding="17dp"
+    android:layout_height="@dimen/challenge_list_item_height"
+    android:layout_marginBottom="@dimen/challenge_list_item_margin"
+    android:layout_marginStart="@dimen/challenge_list_item_margin"
+    android:layout_marginEnd="@dimen/challenge_list_item_margin"
+    app:contentPadding="@dimen/challenge_list_item_padding"
     app:cardBackgroundColor="@color/light_gray"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="@dimen/challenge_list_item_corner"
+    app:cardElevation="@dimen/challenge_list_item_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,13 +21,13 @@
         <TextView
             android:id="@+id/item_title"
             android:layout_alignParentTop="true"
-            android:textSize="20sp"
+            android:textSize="@dimen/challenge_list_item_title_size"
             style="@style/BoldHeading" />
 
         <TextView
             android:id="@+id/item_category"
             android:layout_above="@id/item_last_completed"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="@dimen/challenge_item_category_margin"
             style="@style/ChallengeListSmallLabel" />
 
         <TextView

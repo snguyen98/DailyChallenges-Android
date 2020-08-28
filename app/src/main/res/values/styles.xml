@@ -18,7 +18,7 @@
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:background">@color/action_bar_primary</item>
         <item name="android:fontFamily">@font/asap_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/toolbar_text_size</item>
     </style>
 
 
@@ -41,8 +41,8 @@
     <!--                                                                                         -->
 
     <style name="ReadMorePadding">
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingStart">@dimen/rm_layout_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/rm_layout_padding_horizontal</item>
     </style>
 
 
@@ -71,10 +71,10 @@
     <style name="InfoListItemName">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginTop">@dimen/divided_list_item_margin_vertical</item>
 
         <item name="android:fontFamily">@font/asap</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">@dimen/divided_list_name_size</item>
     </style>
 
 
@@ -87,13 +87,13 @@
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:fontFamily">@font/timeless</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/challenge_list_item_subtext_size</item>
     </style>
 
 
     <style name="ChallengeListSmallValue" parent="ChallengeListSmallLabel">
         <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginStart">@dimen/challenge_list_item_value_margin</item>
     </style>
 
 
@@ -105,7 +105,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:color">@android:color/black</item>
+        <item name="android:textColor">@color/main_text_colour</item>
         <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
@@ -114,9 +114,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:layout_marginBottom">10dp</item>
-
-        <item name="android:color">@android:color/black</item>
+        <item name="android:layout_marginBottom">@dimen/detail_heading_margin_below</item>
         <item name="android:fontFamily">@font/asap_bold</item>
     </style>
 
@@ -125,21 +123,21 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingBottom">@dimen/sub_text_padding_below</item>
         <item name="android:fontFamily">@font/timeless</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/sub_text_size</item>
     </style>
 
 
     <style name="BodyText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingBottom">@dimen/body_text_padding_below</item>
       
         <item name="android:fontFamily">@font/timeless</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/body_text_size</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:lineSpacingExtra">@dimen/wider_line_spacing</item>
     </style>
 
 
@@ -147,14 +145,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerInParent">true</item>
-        <item name="android:layout_margin">25dp</item>
+        <item name="android:layout_margin">@dimen/centered_text_margin</item>
 
         <item name="android:fontFamily">@font/asap</item>
         <item name="android:textColor">@color/secondary_colour</item>
         <item name="android:textAlignment">center</item>
 
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:lineSpacingExtra">@dimen/wider_line_spacing</item>
     </style>
 
 
@@ -167,21 +165,24 @@
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:layout_below">@id/challenge_card</item>
-        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:layout_marginTop">@dimen/challenge_button_margin_above</item>
+
         <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textSize">@dimen/challenge_button_size</item>
     </style>
 
 
     <style name="FirstLaunchButton">
-        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_width">@dimen/first_launch_button_width</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:layout_marginStart">45dp</item>
-        <item name="android:layout_marginEnd">45dp</item>
+        <item name="android:layout_marginStart">@dimen/first_launch_button_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/first_launch_button_margin_horizontal</item>
 
         <item name="android:alpha">0</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:fontFamily">@font/asap</item>
+        <item name="android:textSize">@dimen/first_launch_button_size</item>
     </style>
 
 
@@ -193,30 +194,30 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
-        <item name="android:layout_marginStart">20dp</item>
-        <item name="android:layout_marginEnd">20dp</item>
-        <item name="android:layout_marginBottom">25dp</item>
+        <item name="android:layout_marginStart">@dimen/first_launch_box_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/first_launch_box_margin_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/first_launch_box_margin_bottom</item>
 
         <item name="android:alpha">0</item>
         <item name="background">@color/light_gray</item>
-        <item name="contentPadding">20dp</item>
-        <item name="cardCornerRadius">8dp</item>
-        <item name="cardElevation">3dp</item>
+        <item name="contentPadding">@dimen/first_launch_box_content_padding</item>
+        <item name="cardCornerRadius">@dimen/first_launch_box_corner</item>
+        <item name="cardElevation">@dimen/first_launch_box_elevation</item>
     </style>
 
 
     <style name="PagerDot">
-        <item name="android:layout_width">10dp</item>
-        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_width">@dimen/help_dots_size</item>
+        <item name="android:layout_height">@dimen/help_dots_size</item>
 
-        <item name="android:layout_marginStart">3dp</item>
-        <item name="android:layout_marginEnd">3dp</item>
+        <item name="android:layout_marginStart">@dimen/help_dots_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/help_dots_margin_horizontal</item>
     </style>
 
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 

@@ -14,27 +14,27 @@
 
     <ImageView
         android:id="@+id/about_icon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="@dimen/about_icon_size"
+        android:layout_height="@dimen/about_icon_size"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/divided_list_item_margin_horizontal"
         android:contentDescription="@string/about_icon_desc" />
 
     <TextView
         android:id="@+id/about_text"
         android:layout_below="@id/top_divider"
         android:layout_toEndOf="@id/about_icon"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="@dimen/about_text_margin_start"
+        android:layout_marginBottom="@dimen/divided_list_item_margin_vertical"
         style="@style/InfoListItemName" />
 
     <ImageView
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/about_arrow_size"
+        android:layout_height="@dimen/about_arrow_size"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/divided_list_item_margin_horizontal"
         android:contentDescription="@string/arrow_icon_desc"
         android:src="@mipmap/arrow_right_icon" />
 

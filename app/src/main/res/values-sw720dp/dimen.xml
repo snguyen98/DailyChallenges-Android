@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--                                                                                         -->
+    <!--                                    Dimensions in dp                                     -->
+    <!--                                                                                         -->
+
+    <!--  Universal View Dimensions  -->
+
+    <dimen name="sub_text_padding_below">17dp</dimen>
+    <dimen name="body_text_padding_below">17dp</dimen>
+    <dimen name="centered_text_margin">75dp</dimen>
+
+    <dimen name="dialog_margin">26dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+
+
+    <!--  Challenge Fragment Dimensions  -->
+
+    <dimen name="challenge_margin">190dp</dimen>
+    <dimen name="challenge_card_margin_horizontal">50dp</dimen>
+
+    <dimen name="card_icon_margin">20dp</dimen>
+    <dimen name="streak_value_margin_top">28dp</dimen>
+    <dimen name="streak_value_margin_start">5dp</dimen>
+
+    <dimen name="challenge_button_dist">80dp</dimen>
+    <dimen name="challenge_button_margin_above">50dp</dimen>
+    <dimen name="challenge_card_height">450dp</dimen>
+
+    <dimen name="streak_icon_size">45dp</dimen>
+    <dimen name="freeze_icon_size">49dp</dimen>
+
+
+    <!--  Read More Fragment Dimensions  -->
+
+    <dimen name="rm_layout_padding_horizontal">110dp</dimen>
+    <dimen name="rm_layout_padding_above">60dp</dimen>
+    <dimen name="rm_layout_padding_below">80dp</dimen>
+
+    <dimen name="rm_desc_margin_above">35dp</dimen>
+    <dimen name="rm_link_label_margin_above">55dp</dimen>
+    <dimen name="rm_icon_height">250dp</dimen>
+
+
+    <!--  Challenge List Fragment Dimensions  -->
+
+    <dimen name="challenge_list_item_height">220dp</dimen>
+    <dimen name="challenge_list_item_margin">45dp</dimen>
+    <dimen name="challenge_list_item_padding">29dp</dimen>
+
+    <dimen name="challenge_item_category_margin">10dp</dimen>
+    <dimen name="challenge_list_item_value_margin">20dp</dimen>
+
+
+    <!--  About and Credits Fragment Dimensions  -->
+
+    <dimen name="divided_list_heading_margin_above">45dp</dimen>
+    <dimen name="divided_list_heading_margin_below">17dp</dimen>
+    <dimen name="divided_list_heading_margin_start">40dp</dimen>
+
+    <dimen name="divided_list_item_margin_horizontal">50dp</dimen>
+    <dimen name="divided_list_item_margin_vertical">30dp</dimen>
+
+    <dimen name="about_text_margin_start">27dp</dimen>
+    <dimen name="credits_role_margin_above">7dp</dimen>
+
+    <dimen name="about_arrow_size">33dp</dimen>
+    <dimen name="about_icon_size">37dp</dimen>
+    <dimen name="credits_icon_size">42dp</dimen>
+
+
+    <!--  Help Fragment Dimensions  -->
+
+    <dimen name="help_dots_margin_above">30dp</dimen>
+    <dimen name="help_dots_margin_horizontal">7dp</dimen>
+
+    <dimen name="help_text_padding_horizontal">90dp</dimen>
+    <dimen name="help_text_padding_above">70dp</dimen>
+
+    <dimen name="help_button_margin_horizontal">250dp</dimen>
+    <dimen name="help_button_margin_above">40dp</dimen>
+    <dimen name="help_button_margin_below">220dp</dimen>
+
+    <dimen name="help_image_margin_above">300dp</dimen>
+    <dimen name="help_dots_size">16dp</dimen>
+
+
+    <!--  First Launch Fragment Dimensions  -->
+
+    <dimen name="first_launch_box_margin_horizontal">160dp</dimen>
+    <dimen name="first_launch_box_margin_bottom">37dp</dimen>
+    <dimen name="first_launch_box_content_padding">32dp</dimen>
+
+    <dimen name="first_launch_button_width">160dp</dimen>
+    <dimen name="first_launch_button_margin_horizontal">200dp</dimen>
+
+
+    <!--                                                                                         -->
+    <!--                                    Dimensions in sp                                     -->
+    <!--                                                                                         -->
+
+    <!--  Universal Text Sizes  -->
+
+    <dimen name="sub_text_size">23sp</dimen>
+    <dimen name="body_text_size">26sp</dimen>
+    <dimen name="wider_line_spacing">3sp</dimen>
+    <dimen name="dialog_text_size">17sp</dimen>
+
+
+    <!--  Challenge Text Sizes  -->
+
+    <dimen name="challenge_card_title_size">30sp</dimen>
+    <dimen name="challenge_button_size">20sp</dimen>
+    <dimen name="streak_value_size">28sp</dimen>
+
+
+    <!--  Read More Text Sizes  -->
+
+    <dimen name="rm_title_size">50sp</dimen>
+    <dimen name="rm_info_label_size">45sp</dimen>
+    <dimen name="rm_links_label_size">35sp</dimen>
+    <dimen name="rm_pointer_size">28sp</dimen>
+
+
+    <!--  Challenge List Text Sizes  -->
+
+    <dimen name="challenge_list_item_title_size">36sp</dimen>
+    <dimen name="challenge_list_item_subtext_size">22sp</dimen>
+    <dimen name="challenge_list_message_size">43sp</dimen>
+    <dimen name="challenge_list_reset_size">30sp</dimen>
+
+
+    <!--  About and Credits Text Sizes  -->
+
+    <dimen name="divided_list_heading_size">21sp</dimen>
+    <dimen name="divided_list_name_size">32sp</dimen>
+    <dimen name="credits_role_size">20sp</dimen>
+
+
+    <!--  Other Text Sizes  -->
+
+    <dimen name="welcome_text_size">55sp</dimen>
+    <dimen name="first_launch_button_size">20sp</dimen>
+    <dimen name="toolbar_text_size">60sp</dimen>
+
+</resources>

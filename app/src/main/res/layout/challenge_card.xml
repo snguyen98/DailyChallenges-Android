@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="@dimen/challenge_card_height"
     android:id="@+id/challenge_card"
     android:transitionName="card_element"
     app:cardBackgroundColor="@color/light_gray"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="15dp">
+    app:cardCornerRadius="@dimen/challenge_card_corner"
+    app:cardElevation="@dimen/challenge_card_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,22 +25,22 @@
 
         <TextView
             android:id="@+id/challenge_title"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="@dimen/challenge_card_margin_horizontal"
+            android:layout_marginEnd="@dimen/challenge_card_margin_horizontal"
             android:transitionName="title_element"
             android:layout_centerInParent="true"
             android:textAlignment="center"
-            android:textSize="22sp"
+            android:textSize="@dimen/challenge_card_title_size"
             style="@style/BoldHeading" />
 
         <ImageView
             android:id="@+id/streak_icon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/streak_icon_size"
+            android:layout_height="@dimen/streak_icon_size"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="@dimen/card_icon_margin"
+            android:layout_marginTop="@dimen/card_icon_margin"
             android:visibility="gone"
             android:contentDescription="@string/streak_icon_desc"
             app:srcCompat="@mipmap/streak_icon" />
@@ -50,18 +50,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/streak_icon"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginTop="@dimen/streak_value_margin_top"
+            android:layout_marginStart="@dimen/streak_value_margin_start"
             android:fontFamily="@font/asap_bold"
-            android:textSize="15sp"
+            android:textSize="@dimen/streak_value_size"
             tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/freeze_icon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="@dimen/freeze_icon_size"
+            android:layout_height="@dimen/freeze_icon_size"
+            android:layout_marginEnd="@dimen/card_icon_margin"
+            android:layout_marginTop="@dimen/card_icon_margin"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/freeze_icon_desc"

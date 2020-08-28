@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/completed_list_message"
             android:text="@string/completed_list_message"
-            android:textSize="24sp"
+            android:textSize="@dimen/challenge_list_message_size"
             style="@style/CenteredMessage" />
 
     </RelativeLayout>
@@ -33,6 +33,6 @@
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/asap"
         android:text="@string/reset_label"
-        android:textSize="18sp" />
+        android:textSize="@dimen/challenge_list_reset_size" />
 
 </RelativeLayout>

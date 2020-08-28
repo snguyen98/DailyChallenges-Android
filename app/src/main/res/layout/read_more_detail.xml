@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="30dp"
+    android:paddingBottom="@dimen/rm_layout_padding_below"
     android:orientation="vertical"
     style="@style/ReadMorePadding">
 
@@ -11,22 +11,22 @@
         android:id="@+id/info_label"
         android:text="@string/info_label"
         android:textColor="@color/info_label_colour"
-        android:textSize="29sp"
+        android:textSize="@dimen/rm_info_label_size"
         style="@style/DetailHeading" />
 
     <View style="@style/Divider" />
 
     <TextView
         android:id="@+id/challenge_desc"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/rm_desc_margin_above"
         style="@style/BodyText" />
 
     <TextView
         android:id="@+id/links_label"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/rm_link_label_margin_above"
         android:text="@string/links_label"
         android:textColor="@color/link_label_colour"
-        android:textSize="24sp"
+        android:textSize="@dimen/rm_links_label_size"
         style="@style/DetailHeading" />
 
 </LinearLayout>

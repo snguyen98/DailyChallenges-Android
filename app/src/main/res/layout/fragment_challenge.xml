@@ -8,16 +8,16 @@
     <include
         android:id="@+id/challenge_card"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="@dimen/challenge_card_height"
+        android:layout_marginStart="@dimen/challenge_margin"
+        android:layout_marginEnd="@dimen/challenge_margin"
         layout="@layout/challenge_card" />
 
     <Button
         android:id="@+id/skip_button"
         android:layout_below="@id/challenge_card"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="@dimen/challenge_margin"
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/asap"
         android:text="@string/skip_label"
@@ -28,8 +28,8 @@
         android:layout_below="@id/challenge_card"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/skip_button"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="@dimen/challenge_button_dist"
+        android:layout_marginEnd="@dimen/challenge_margin"
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/asap"
         android:text="@string/complete_label"
