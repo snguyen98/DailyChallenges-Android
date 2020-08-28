@@ -1,5 +1,6 @@
 package com.okomilabs.dailychallenges.fragments
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.Slide
@@ -16,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.okomilabs.dailychallenges.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val PAGES = 4
 
@@ -47,6 +50,7 @@ class HelpFragment: Fragment() {
         // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        allowEnterTransitionOverlap = false
         postponeEnterTransition()
 
         return root
@@ -125,8 +129,30 @@ class HelpFragment: Fragment() {
      */
     private fun finishButtonFunctionality(button: Button) {
         button.setOnClickListener {
-            findNavController().navigate(HelpFragmentDirections.helpToWelcome())
+            if (hasShownWelcome()) {
+                findNavController().navigate(HelpFragmentDirections.helpToChallenge())
+            }
+            else {
+                findNavController().navigate(HelpFragmentDirections.helpToWelcome())
+            }
         }
+    }
+
+    /**
+     * Checks if the welcome has been shown today by comparing the last login to the date today
+     *
+     * @return True if welcome has been shown and false otherwise
+     */
+    private fun hasShownWelcome(): Boolean {
+        val today = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+        activity?.applicationContext?.let { appContext ->
+            return today == appContext
+                .getSharedPreferences(getString(R.string.challenge_key), Context.MODE_PRIVATE)
+                .getString(getString(R.string.last_login), "")
+        }
+
+        return false
     }
 
     /**
