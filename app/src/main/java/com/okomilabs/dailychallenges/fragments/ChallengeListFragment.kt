@@ -47,6 +47,7 @@ class ChallengeListFragment: Fragment() {
         // Transitions
         enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
         exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        allowEnterTransitionOverlap = false
         postponeEnterTransition()       // Postpones until the recycler view has been rendered
 
         return root
