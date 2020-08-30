@@ -102,7 +102,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
             val total: Int = challengeRepo.getTotal()
-            val id: Int = chooseRandomChallenge(total)      // Sets challenge ID instance variable
+            val id: Int = chooseRandomChallenge(total)
 
             // Adds all challenge info to shared preferences
             with (appContext.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {

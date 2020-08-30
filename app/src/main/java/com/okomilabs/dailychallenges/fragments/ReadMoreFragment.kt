@@ -59,22 +59,6 @@ class ReadMoreFragment: Fragment() {
             enterTransition = Slide().setInterpolator(LinearOutSlowInInterpolator())
             allowEnterTransitionOverlap = false
             postponeEnterTransition()
-
-            /* Shared element transition
-            val callback: SharedElementCallback = object: SharedElementCallback() {
-                override fun onSharedElementEnd(
-                    sharedElementNames: MutableList<String>?,
-                    sharedElements: MutableList<View>?,
-                    sharedElementSnapshots: MutableList<View>?
-                ) {
-                    super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
-                }
-            }
-
-            sharedElementEnterTransition = TransitionInflater.from(context)
-                .inflateTransition(R.transition.read_more_transition)
-
-            setEnterSharedElementCallback(callback) */
         }
 
         return root

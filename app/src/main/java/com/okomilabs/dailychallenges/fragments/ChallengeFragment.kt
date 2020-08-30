@@ -233,7 +233,7 @@ class ChallengeFragment: Fragment() {
             }
 
             rewardedAd = RewardedAd(
-                activity?.applicationContext, getString(R.string.test_reward_ad)
+                activity?.applicationContext, getString(R.string.reward_ad)
             )
             rewardedAd.loadAd(AdRequest.Builder().build(), adCallback)
         }
