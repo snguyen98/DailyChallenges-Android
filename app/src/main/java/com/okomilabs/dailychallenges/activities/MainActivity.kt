@@ -10,7 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE
 import com.google.android.material.navigation.NavigationView
 import com.okomilabs.dailychallenges.R
 
@@ -75,7 +76,8 @@ class MainActivity: AppCompatActivity() {
         MobileAds.initialize(this)
 
         MobileAds.setRequestConfiguration(
-            RequestConfiguration.Builder()
+            MobileAds.getRequestConfiguration()
+                .toBuilder()
                 .setTestDeviceIds(
                     listOf(
                         getString(R.string.sang_oppo),
@@ -84,6 +86,9 @@ class MainActivity: AppCompatActivity() {
                         getString(R.string.ross_huawei)
                     )
                 )
+                .setTagForChildDirectedTreatment(TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
+                .setTagForUnderAgeOfConsent(TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE)
+                .setMaxAdContentRating("G")
                 .build()
         )
     }
