@@ -280,7 +280,7 @@ class ReadMoreFragment: Fragment() {
             }
 
             val padding: Int = resources.getDimension(R.dimen.rm_link_padding_vertical).toInt()
-            linkView.setPadding(padding, 0, padding, 0)
+            linkView.setPadding(0, padding, 0, padding)
             linkView.typeface = ResourcesCompat.getFont(appContext, R.font.timeless)
         }
 
