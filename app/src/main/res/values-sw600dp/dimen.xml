@@ -113,7 +113,7 @@
     <dimen name="sub_text_size">20sp</dimen>
     <dimen name="body_text_size">24sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
-    <dimen name="dialog_text_size">15sp</dimen>
+    <dimen name="dialog_text_size">12sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->
