@@ -331,8 +331,7 @@ class ChallengeFragment: Fragment() {
                                 "You have $skips skip(s) left." +
                                 getString(R.string.skip_available_message)
                             )
-                            .setPositiveButton(
-                                getString(R.string.yes_label)) { _, _ ->
+                            .setPositiveButton(getString(R.string.yes_label)) { _, _ ->
                                 if (!checkIsNewDay()) {
                                     showRewardedAd()
                                 }
