@@ -196,7 +196,6 @@ class ChallengeFragment: Fragment() {
                 .setMessage(getString(R.string.refresh_message))
                 .setPositiveButton(getString(R.string.ok_label)) { _, _ ->
                     // Refreshes the view model code and navigates back to welcome fragment
-                    challengeViewModel.initialise()
                     findNavController()
                         .navigate(ChallengeFragmentDirections.challengeToWelcome())
                 }

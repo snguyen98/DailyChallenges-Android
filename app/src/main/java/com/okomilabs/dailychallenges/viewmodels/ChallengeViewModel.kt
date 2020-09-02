@@ -59,12 +59,13 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     /**
      * Performs checks and sets data when the fragment is created or refreshed
      */
-    fun initialise() {
+    private fun initialise() {
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
             checkStreak()
             refreshChallenge()
         }
+
         // Gets the challenge and login day info from shared preferences
         else {
             viewModelScope.launch {
