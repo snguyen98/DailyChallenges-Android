@@ -21,7 +21,7 @@
             app:titleTextColor="@color/secondary_colour"
             app:theme="@style/ToolbarTheme" />
 
-        <androidx.fragment.app.FragmentContainerView
+        <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
