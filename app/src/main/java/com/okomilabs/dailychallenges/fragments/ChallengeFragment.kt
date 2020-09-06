@@ -5,13 +5,17 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.transition.Slide
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
@@ -59,8 +63,22 @@ class ChallengeFragment: Fragment() {
         )
 
         // Transitions
-        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
-        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        enterTransition = Slide(
+            GravityCompat
+                .getAbsoluteGravity(
+                    GravityCompat.END,
+                    resources.configuration.layoutDirection
+                )
+        ).setInterpolator(LinearOutSlowInInterpolator())
+
+        exitTransition = Slide(
+            GravityCompat
+                .getAbsoluteGravity(
+                    GravityCompat.START,
+                    resources.configuration.layoutDirection
+                )
+        ).setInterpolator(LinearOutSlowInInterpolator())
+
         allowEnterTransitionOverlap = false
         postponeEnterTransition()
 

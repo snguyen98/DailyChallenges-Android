@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
@@ -48,8 +48,22 @@ class HelpFragment: Fragment() {
         })
 
         // Transitions
-        enterTransition = Slide(Gravity.END).setInterpolator(LinearOutSlowInInterpolator())
-        exitTransition = Slide(Gravity.START).setInterpolator(LinearOutSlowInInterpolator())
+        enterTransition = Slide(
+            GravityCompat
+                .getAbsoluteGravity(
+                    GravityCompat.END,
+                    resources.configuration.layoutDirection
+                )
+        ).setInterpolator(LinearOutSlowInInterpolator())
+
+        exitTransition = Slide(
+            GravityCompat
+                .getAbsoluteGravity(
+                    GravityCompat.START,
+                    resources.configuration.layoutDirection
+                )
+        ).setInterpolator(LinearOutSlowInInterpolator())
+
         allowEnterTransitionOverlap = false
         postponeEnterTransition()
 
