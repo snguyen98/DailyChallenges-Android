@@ -50,7 +50,7 @@
     <dimen name="rm_link_label_margin_above">40dp</dimen>
     <dimen name="rm_link_padding_vertical">8dp</dimen>
 
-    <dimen name="rm_icon_height">150dp</dimen>
+    <dimen name="rm_icon_height">120dp</dimen>
     <dimen name="rm_gradient_height">40dp</dimen>
 
 
