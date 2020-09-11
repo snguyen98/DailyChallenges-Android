@@ -272,8 +272,9 @@ class ChallengeFragment: Fragment() {
                     if (skip) {
                         challengeViewModel.skipChallenge()
                     }
-                    skip = false
                 }
+
+                skip = false
             }
 
             override fun onRewardedAdFailedToShow(errorCode: Int) {
