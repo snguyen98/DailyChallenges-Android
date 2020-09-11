@@ -218,8 +218,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
 
-        // If seven consecutive challenges in a row are completed then add a freeze
-        if (getStreak() % 7 == 0) {
+        // If five consecutive challenges in a row are completed then add a freeze
+        if (getStreak() % 5 == 0) {
             setFreezesRemaining(
                 appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
@@ -454,7 +454,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .getInt(freezesLeftPrefs, 0) != 0 &&
             appContext
                 .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
-                .getInt(streakPrefs, 0) % 7 == 0
+                .getInt(streakPrefs, 0) % 5 == 0
 
         return if (show) {
             // Only shows the message once in the day
