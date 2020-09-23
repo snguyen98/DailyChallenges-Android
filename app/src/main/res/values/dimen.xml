@@ -50,7 +50,7 @@
     <dimen name="rm_link_label_margin_above">40dp</dimen>
     <dimen name="rm_link_padding_vertical">8dp</dimen>
 
-    <dimen name="rm_icon_height">150dp</dimen>
+    <dimen name="rm_icon_height">120dp</dimen>
     <dimen name="rm_gradient_height">40dp</dimen>
 
 
@@ -131,7 +131,7 @@
     <dimen name="sub_text_size">16sp</dimen>
     <dimen name="body_text_size">18sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
-    <dimen name="dialog_text_size">13sp</dimen>
+    <dimen name="dialog_text_size">9sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->

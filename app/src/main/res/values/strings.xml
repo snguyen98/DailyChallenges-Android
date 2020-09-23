@@ -164,7 +164,8 @@
     <string name="streak_value">streak</string>
 
     <string name="resources_key">com.okomilabs.dailychallenges.resources</string>
-    <string name="skipped_challenge">skipped</string>
+    <string name="skip_challenges">skip_challenge_</string>
+    <string name="num_skipped">num_skipped</string>
     <string name="skips_remaining">skips</string>
     <string name="freezes_remaining">freezes</string>
     <string name="shown_freeze_msg">shown_freeze</string>
