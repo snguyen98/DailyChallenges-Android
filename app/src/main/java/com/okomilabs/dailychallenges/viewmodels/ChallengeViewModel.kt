@@ -43,6 +43,14 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private val freezesLeftPrefs: String = appContext.getString(R.string.freezes_remaining)
     private val shownFreezePrefs: String = appContext.getString(R.string.shown_freeze_msg)
 
+    // Shared preferences listeners
+    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                idPrefs -> viewModelScope.launch { updateChallenge() }
+            }
+        }
+
     // Instance variables
     private var date: String = ""
     var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
@@ -60,6 +68,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Performs checks and sets data when the fragment is created or refreshed
      */
     private fun initialise() {
+        // Keeps challenge info updated with shared preferences
+        appContext
+            .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(listener)
+
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
             checkStreak()
@@ -73,6 +86,15 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 updateLoginDay()
             }
         }
+    }
+
+    /**
+     * Detaches listener when the view model is cleared
+     */
+    override fun onCleared() {
+        appContext
+            .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+            .unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     /**
@@ -113,7 +135,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 apply()
             }
 
-            updateChallenge()
             addLoggedDay(State.INCOMPLETE)
         }
     }
