@@ -9,6 +9,7 @@
     <dimen name="sub_text_padding_below">17dp</dimen>
     <dimen name="body_text_padding_below">17dp</dimen>
     <dimen name="centered_text_margin">75dp</dimen>
+    <dimen name="text_box_content_padding">32dp</dimen>
 
     <dimen name="dialog_margin">26dp</dimen>
     <dimen name="divider_height">1dp</dimen>
@@ -89,7 +90,6 @@
 
     <dimen name="first_launch_box_margin_horizontal">160dp</dimen>
     <dimen name="first_launch_box_margin_bottom">37dp</dimen>
-    <dimen name="first_launch_box_content_padding">32dp</dimen>
 
     <dimen name="first_launch_button_width">160dp</dimen>
     <dimen name="first_launch_button_margin_horizontal">200dp</dimen>
