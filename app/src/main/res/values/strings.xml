@@ -96,7 +96,7 @@
     <string name="reset_title_2">ARE YOU SURE?</string>
 
     <string name="skip_unavailable_message">You have no skips. Please wait until tomorrow.</string>
-    <string name="skip_no_ads_message">Sorry, no ads are available right now.</string>
+    <string name="skip_no_ads_message">Please connect to the internet to load an ad first.</string>
     <string name="skip_available_message">
         Would you like to watch a short ad to skip this challenge?
     </string>
