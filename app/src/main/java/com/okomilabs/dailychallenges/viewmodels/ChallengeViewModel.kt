@@ -2,6 +2,7 @@ package com.okomilabs.dailychallenges.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -242,7 +243,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
 
         // If five consecutive challenges in a row are completed then add a freeze
-        if (getStreak() % 5 == 0) {
+        if (shouldGainFreeze()) {
             setFreezesRemaining(
                 appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
@@ -316,7 +317,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     private fun streakBroken() {
         setStreak(0)                // Resets streak to zero
-        setFreezesRemaining(0)      // Resets freezes to zero
         // Store best streak when stats page is made //
     }
 
@@ -464,22 +464,23 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     /**
+     * Checks if the user should gain a freeze by seeing if the streak is a non-zero multiple of 5
+     *
+     * @return The freezes remaining
+     */
+    private fun shouldGainFreeze(): Boolean {
+        return getStreak() % 5 == 0 && getStreak() != 0
+    }
+
+    /**
      * Checks if the user gained a freeze for completing their last challenge and ensures the freeze
      * message is only shown once
      *
      * @return True if freeze message should be shown and false otherwise
      */
     fun showFreezeMsg(): Boolean {
-        // If there are non-zero freezes and the streak is a multiple of seven then show the msg
-        val show: Boolean =
-            appContext
-                .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
-                .getInt(freezesLeftPrefs, 0) != 0 &&
-            appContext
-                .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
-                .getInt(streakPrefs, 0) % 5 == 0
-
-        return if (show) {
+        // If there are non-zero freezes and the streak is a multiple of five then show the msg
+        return if (shouldGainFreeze()) {
             // Only shows the message once in the day
             if (
                 !appContext
@@ -506,6 +507,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .edit()
                 .putBoolean(shownFreezePrefs, false)
                 .apply()
+
             false
         }
     }
