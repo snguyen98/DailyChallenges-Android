@@ -126,7 +126,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
             val total: Int = challengeRepo.getTotal()
-            val id: Int = chooseRandomChallenge(total)
+            val completeLastWeek: List<Int> = loginDayRepo.getIdsFromDateWithState(
+                DateHelper().dateToInt(date) - 7,
+                State.COMPLETE
+            )
+            val id: Int = chooseRandomChallenge(total, completeLastWeek)
 
             // Adds all challenge info to shared preferences
             with (appContext.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {
@@ -145,7 +149,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * @param total The total number of challenges in the database
      * @return The chosen challenge
      */
-    private fun chooseRandomChallenge(total: Int): Int {
+    private fun chooseRandomChallenge(total: Int, completeLastWeek: List<Int>): Int {
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
 
         // Takes the last assigned challenge and adds it to the skipped set
@@ -158,9 +162,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .getInt(numSkippedPrefs, 0) + 1
         )
 
-        challenges.minus(getSkipChallenges())
-
-        return challenges.random()
+        return challenges.minus(getSkipChallenges()).minus(completeLastWeek).toMutableSet().random()
     }
 
     /**
