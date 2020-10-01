@@ -20,6 +20,9 @@ interface LoginDayDao {
     @Query("SELECT * FROM LoginDay WHERE date IN (:dateVal)")
     suspend fun getLoginDayByDate(dateVal: Int): List<LoginDay>
 
+    @Query("SELECT DISTINCT Challenge FROM LoginDay WHERE date >= (:dateFrom) AND state IN (:state)")
+    suspend fun getIdsFromDateWithState(dateFrom: Int, state: Int): List<Int>
+
     @Query("DELETE FROM LoginDay")
     suspend fun deleteAll()
 

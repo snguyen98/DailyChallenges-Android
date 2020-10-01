@@ -31,6 +31,10 @@ class LoginDayRepo(application: Application) {
         }
     }
 
+    suspend fun getIdsFromDateWithState(dateFrom: Int, state: Int): List<Int> {
+        return dao.getIdsFromDateWithState(dateFrom, state)
+    }
+
     suspend fun deleteAll() {
         dao.deleteAll()
     }
