@@ -76,7 +76,7 @@
     <dimen name="help_dots_margin_horizontal">7dp</dimen>
 
     <dimen name="help_text_padding_horizontal">90dp</dimen>
-    <dimen name="help_text_padding_above">70dp</dimen>
+    <dimen name="help_text_padding_above">170dp</dimen>
 
     <dimen name="help_button_margin_horizontal">250dp</dimen>
     <dimen name="help_button_margin_above">40dp</dimen>
@@ -105,6 +105,7 @@
     <dimen name="body_text_size">26sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
     <dimen name="dialog_text_size">11sp</dimen>
+    <dimen name="boxed_text_size">22sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->

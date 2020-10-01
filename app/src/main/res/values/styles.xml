@@ -140,6 +140,15 @@
         <item name="android:lineSpacingExtra">@dimen/wider_line_spacing</item>
     </style>
 
+    <style name="BoxedText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/timeless</item>
+        <item name="android:textSize">@dimen/boxed_text_size</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">@dimen/wider_line_spacing</item>
+    </style>
 
     <style name="CenteredMessage">
         <item name="android:layout_width">match_parent</item>

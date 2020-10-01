@@ -132,6 +132,7 @@
     <dimen name="body_text_size">18sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
     <dimen name="dialog_text_size">9sp</dimen>
+    <dimen name="boxed_text_size">14sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->
