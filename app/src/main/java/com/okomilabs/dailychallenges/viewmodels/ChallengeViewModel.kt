@@ -44,7 +44,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private val freezesLeftPrefs: String = appContext.getString(R.string.freezes_remaining)
     private val shownFreezePrefs: String = appContext.getString(R.string.shown_freeze_msg)
 
-    // Shared preferences listeners
+    // Shared preferences listener
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             when (key) {
@@ -148,6 +148,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Chooses a random challenge from the database excluding those that were skipped today
      *
      * @param total The total number of challenges in the database
+     * @param completeLastWeek A list ids of challenges in the last 7 days
      * @return The chosen challenge
      */
     private fun chooseRandomChallenge(total: Int, completeLastWeek: List<Int>): Int {
@@ -466,7 +467,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     /**
      * Checks if the user should gain a freeze by seeing if the streak is a non-zero multiple of 5
      *
-     * @return The freezes remaining
+     * @return True if the user should gain a freeze and false otherwise
      */
     private fun shouldGainFreeze(): Boolean {
         return getStreak() % 5 == 0 && getStreak() != 0
