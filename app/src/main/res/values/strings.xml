@@ -159,6 +159,7 @@
     <string name="challenge_key">com.okomilabs.dailychallenges.challenge</string>
     <string name="last_login">login</string>
     <string name="curr_id">id</string>
+    <string name="challenge_complete">challenge_complete</string>
 
     <string name="stats_key">com.okomilabs.dailychallenges.stats</string>
     <string name="streak_value">streak</string>
@@ -187,4 +188,5 @@
     <string name="reward_ad">ca-app-pub-6520975918360419/1352942751</string>
     <string name="test_banner_ad">ca-app-pub-3940256099942544/6300978111</string>
     <string name="test_reward_ad">ca-app-pub-3940256099942544/5224354917</string>
+
 </resources>
