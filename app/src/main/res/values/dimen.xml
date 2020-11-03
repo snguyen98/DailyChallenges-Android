@@ -9,6 +9,7 @@
     <dimen name="sub_text_padding_below">2dp</dimen>
     <dimen name="body_text_padding_below">2dp</dimen>
     <dimen name="centered_text_margin">25dp</dimen>
+    <dimen name="text_box_content_padding">20dp</dimen>
 
     <dimen name="dialog_margin">22dp</dimen>
     <dimen name="divider_height">1dp</dimen>
@@ -105,7 +106,6 @@
 
     <dimen name="first_launch_box_margin_horizontal">20dp</dimen>
     <dimen name="first_launch_box_margin_bottom">25dp</dimen>
-    <dimen name="first_launch_box_content_padding">20dp</dimen>
     <dimen name="first_launch_box_corner">8dp</dimen>
     <dimen name="first_launch_box_elevation">3dp</dimen>
 
@@ -132,6 +132,7 @@
     <dimen name="body_text_size">18sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
     <dimen name="dialog_text_size">9sp</dimen>
+    <dimen name="boxed_text_size">14sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->

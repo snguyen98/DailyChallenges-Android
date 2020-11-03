@@ -9,6 +9,7 @@
     <dimen name="sub_text_padding_below">17dp</dimen>
     <dimen name="body_text_padding_below">17dp</dimen>
     <dimen name="centered_text_margin">75dp</dimen>
+    <dimen name="text_box_content_padding">32dp</dimen>
 
     <dimen name="dialog_margin">26dp</dimen>
     <dimen name="divider_height">1dp</dimen>
@@ -75,7 +76,7 @@
     <dimen name="help_dots_margin_horizontal">7dp</dimen>
 
     <dimen name="help_text_padding_horizontal">90dp</dimen>
-    <dimen name="help_text_padding_above">70dp</dimen>
+    <dimen name="help_text_padding_above">170dp</dimen>
 
     <dimen name="help_button_margin_horizontal">250dp</dimen>
     <dimen name="help_button_margin_above">40dp</dimen>
@@ -89,7 +90,6 @@
 
     <dimen name="first_launch_box_margin_horizontal">160dp</dimen>
     <dimen name="first_launch_box_margin_bottom">37dp</dimen>
-    <dimen name="first_launch_box_content_padding">32dp</dimen>
 
     <dimen name="first_launch_button_width">160dp</dimen>
     <dimen name="first_launch_button_margin_horizontal">200dp</dimen>
@@ -105,6 +105,7 @@
     <dimen name="body_text_size">26sp</dimen>
     <dimen name="wider_line_spacing">3sp</dimen>
     <dimen name="dialog_text_size">11sp</dimen>
+    <dimen name="boxed_text_size">22sp</dimen>
 
 
     <!--  Challenge Text Sizes  -->

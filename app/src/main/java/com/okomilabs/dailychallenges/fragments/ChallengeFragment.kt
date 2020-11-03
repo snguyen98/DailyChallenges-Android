@@ -428,7 +428,7 @@ class ChallengeFragment: Fragment() {
                 .setMessage(
                     getString(
                         R.string.freeze_gained_message) +
-                        "You have ${challengeViewModel.getFreezes()} freeze(s)."
+                    " You have ${challengeViewModel.getFreezes()} freeze(s)."
                 )
                 .setPositiveButton(getString(R.string.ok_label)) { _, _ -> checkIsNewDay() }
 

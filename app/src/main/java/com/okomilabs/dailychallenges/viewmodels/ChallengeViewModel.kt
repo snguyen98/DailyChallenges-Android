@@ -2,6 +2,7 @@ package com.okomilabs.dailychallenges.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -43,6 +44,14 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private val freezesLeftPrefs: String = appContext.getString(R.string.freezes_remaining)
     private val shownFreezePrefs: String = appContext.getString(R.string.shown_freeze_msg)
 
+    // Shared preferences listener
+    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                idPrefs -> viewModelScope.launch { updateChallenge() }
+            }
+        }
+
     // Instance variables
     private var date: String = ""
     var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
@@ -60,6 +69,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Performs checks and sets data when the fragment is created or refreshed
      */
     private fun initialise() {
+        // Keeps challenge info updated with shared preferences
+        appContext
+            .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(listener)
+
         // Doesn't refresh challenge if it's the same day
         if (isNewDay()) {
             checkStreak()
@@ -73,6 +87,15 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 updateLoginDay()
             }
         }
+    }
+
+    /**
+     * Detaches listener when the view model is cleared
+     */
+    override fun onCleared() {
+        appContext
+            .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+            .unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     /**
@@ -104,7 +127,11 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private fun setChallengeToday() {
         viewModelScope.launch(Dispatchers.IO) {
             val total: Int = challengeRepo.getTotal()
-            val id: Int = chooseRandomChallenge(total)
+            val completeLastWeek: List<Int> = loginDayRepo.getIdsFromDateWithState(
+                DateHelper().dateToInt(date) - 7,
+                State.COMPLETE
+            )
+            val id: Int = chooseRandomChallenge(total, completeLastWeek)
 
             // Adds all challenge info to shared preferences
             with (appContext.getSharedPreferences(challengeKey, Context.MODE_PRIVATE).edit()) {
@@ -113,7 +140,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 apply()
             }
 
-            updateChallenge()
             addLoggedDay(State.INCOMPLETE)
         }
     }
@@ -122,9 +148,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      * Chooses a random challenge from the database excluding those that were skipped today
      *
      * @param total The total number of challenges in the database
+     * @param completeLastWeek A list ids of challenges in the last 7 days
      * @return The chosen challenge
      */
-    private fun chooseRandomChallenge(total: Int): Int {
+    private fun chooseRandomChallenge(total: Int, completeLastWeek: List<Int>): Int {
         val challenges: MutableSet<Int> = (1..total).toMutableSet()
 
         // Takes the last assigned challenge and adds it to the skipped set
@@ -137,9 +164,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .getInt(numSkippedPrefs, 0) + 1
         )
 
-        challenges.minus(getSkipChallenges())
-
-        return challenges.random()
+        return challenges.minus(getSkipChallenges()).minus(completeLastWeek).toMutableSet().random()
     }
 
     /**
@@ -218,8 +243,8 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
 
-        // If seven consecutive challenges in a row are completed then add a freeze
-        if (getStreak() % 7 == 0) {
+        // If five consecutive challenges in a row are completed then add a freeze
+        if (shouldGainFreeze()) {
             setFreezesRemaining(
                 appContext
                     .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
@@ -293,7 +318,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
      */
     private fun streakBroken() {
         setStreak(0)                // Resets streak to zero
-        setFreezesRemaining(0)      // Resets freezes to zero
         // Store best streak when stats page is made //
     }
 
@@ -441,22 +465,23 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     }
 
     /**
+     * Checks if the user should gain a freeze by seeing if the streak is a non-zero multiple of 5
+     *
+     * @return True if the user should gain a freeze and false otherwise
+     */
+    private fun shouldGainFreeze(): Boolean {
+        return getStreak() % 5 == 0 && getStreak() != 0
+    }
+
+    /**
      * Checks if the user gained a freeze for completing their last challenge and ensures the freeze
      * message is only shown once
      *
      * @return True if freeze message should be shown and false otherwise
      */
     fun showFreezeMsg(): Boolean {
-        // If there are non-zero freezes and the streak is a multiple of seven then show the msg
-        val show: Boolean =
-            appContext
-                .getSharedPreferences(resourcesKey, Context.MODE_PRIVATE)
-                .getInt(freezesLeftPrefs, 0) != 0 &&
-            appContext
-                .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
-                .getInt(streakPrefs, 0) % 7 == 0
-
-        return if (show) {
+        // If there are non-zero freezes and the streak is a multiple of five then show the msg
+        return if (shouldGainFreeze()) {
             // Only shows the message once in the day
             if (
                 !appContext
@@ -483,6 +508,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                 .edit()
                 .putBoolean(shownFreezePrefs, false)
                 .apply()
+
             false
         }
     }
