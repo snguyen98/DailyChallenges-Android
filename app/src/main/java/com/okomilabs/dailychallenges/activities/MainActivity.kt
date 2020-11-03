@@ -1,5 +1,10 @@
 package com.okomilabs.dailychallenges.activities
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +19,8 @@ import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TR
 import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE
 import com.google.android.material.navigation.NavigationView
 import com.okomilabs.dailychallenges.R
+import com.okomilabs.dailychallenges.helpers.ReminderReceiver
+import java.util.*
 
 class MainActivity: AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -87,6 +94,8 @@ class MainActivity: AppCompatActivity() {
                 .setMaxAdContentRating("G")
                 .build()
         )
+
+        setReminder()
     }
 
     /**
@@ -100,6 +109,27 @@ class MainActivity: AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun setReminder() {
+        val calendar: Calendar = Calendar.getInstance()
+
+        calendar.set(Calendar.HOUR, 19)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 3)
+
+        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent: PendingIntent = PendingIntent.getBroadcast(
+            ContextWrapper(applicationContext),
+            0,
+            Intent(ContextWrapper(applicationContext), ReminderReceiver::class.java),
+            0
+        )
+
+        alarmManager.cancel(pendingIntent)
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
+        )
     }
 
 }

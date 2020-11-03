@@ -144,6 +144,10 @@
     <string name="first_launch_no_button">No, thanks</string>
 
 
+    <!--  Notification Text  -->
+    <string name="reminder_notif_title">Challenge Reminder</string>
+    <string name="reminder_notif_message">Remember to complete your challenge today</string>
+
     <!--  Image Content Descriptions  -->
     <string name="venture_logo_desc">Venture Logo</string>
     <string name="streak_icon_desc">Streak Icon</string>
@@ -173,6 +177,12 @@
 
     <string name="settings_key">com.okomilabs.dailychallenges.settings</string>
     <string name="first_launch">first_launch</string>
+
+
+    <!--  Notification Channel Strings  -->
+    <string name="reminder_channel_id">Notification Reminder Channel</string>
+    <string name="reminder_channel_name">Reminder Notification</string>
+    <string name="reminder_channel_desc">Daily Challenge Reminder</string>
 
 
     <!--  AdMob Test Device IDs  -->

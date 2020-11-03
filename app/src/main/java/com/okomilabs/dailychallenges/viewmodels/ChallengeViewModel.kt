@@ -2,6 +2,7 @@ package com.okomilabs.dailychallenges.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -22,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ChallengeViewModel(application: Application): AndroidViewModel(application) {
-    private val appContext = application.applicationContext
+    private val appContext = ContextWrapper(application.applicationContext)
 
     // Room database repositories
     private val challengeRepo: ChallengeRepo = ChallengeRepo(application)
@@ -37,6 +38,7 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     // Shared preferences strings
     private val lastLoginPrefs: String = appContext.getString(R.string.last_login)
     private val idPrefs: String = appContext.getString(R.string.curr_id)
+    private val completePrefs: String = appContext.getString(R.string.challenge_complete)
     private val streakPrefs: String = appContext.getString(R.string.streak_value)
     private val skipChallengesPrefs: String = appContext.getString(R.string.skip_challenges)
     private val numSkippedPrefs: String = appContext.getString(R.string.num_skipped)
@@ -58,17 +60,6 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
 
     init {
-        initialise()
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////// Setting Functions /////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Performs checks and sets data when the fragment is created or refreshed
-     */
-    private fun initialise() {
         // Keeps challenge info updated with shared preferences
         appContext
             .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
@@ -88,6 +79,10 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Setting Functions /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Detaches listener when the view model is cleared
@@ -141,6 +136,12 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
             }
 
             addLoggedDay(State.INCOMPLETE)
+
+            appContext
+                .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(completePrefs, false)
+                .apply()
         }
     }
 
@@ -242,6 +243,12 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
         setStreak(appContext
             .getSharedPreferences(statsKey, Context.MODE_PRIVATE)
             .getInt(streakPrefs, -1) + 1)   // Increments the streak
+        
+        appContext
+            .getSharedPreferences(challengeKey, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(completePrefs, true)
+            .apply()
 
         // If five consecutive challenges in a row are completed then add a freeze
         if (shouldGainFreeze()) {
