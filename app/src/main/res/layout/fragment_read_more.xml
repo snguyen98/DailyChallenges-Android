@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/test_banner_ad" />
+                ads:adUnitId="@string/banner_ad" />
 
         </LinearLayout>
     </ScrollView>
