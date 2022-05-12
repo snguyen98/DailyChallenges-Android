@@ -123,5 +123,9 @@
         android:id="@+id/credits_fragment"
         android:name="com.okomilabs.dailychallenges.fragments.CreditsFragment"
         android:label="Credits" />
+    <fragment
+        android:id="@+id/notification_fragment"
+        android:name="com.okomilabs.dailychallenges.fragments.NotificationFragment"
+        android:label="Settings"/>
 
 </navigation>
