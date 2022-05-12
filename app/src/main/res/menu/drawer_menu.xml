@@ -21,6 +21,10 @@
             android:id="@+id/help_fragment"
             android:title="@string/help_label"
             android:icon="@mipmap/help_icon" />
+        <item
+            android:id="@+id/notification_fragment"
+            android:title="Settings"
+            android:icon="@mipmap/notification_bell" />
 
     </group>
 </menu>
