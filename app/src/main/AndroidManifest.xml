@@ -28,6 +28,12 @@
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
 
+        <receiver
+            android:name=".utilities.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_id" />
