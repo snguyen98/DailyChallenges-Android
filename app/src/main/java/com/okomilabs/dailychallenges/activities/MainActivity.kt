@@ -35,6 +35,7 @@ class MainActivity: AppCompatActivity() {
                 R.id.challenge_list_fragment,
                 R.id.help_fragment,
                 R.id.about_fragment,
+                R.id.notification_fragment,
                 R.id.first_launch_fragment
             ),
             drawerLayout
