@@ -1,9 +1,15 @@
 package com.okomilabs.dailychallenges.viewmodels
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.PendingIntent.*
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,6 +22,8 @@ import com.okomilabs.dailychallenges.data.repos.ChallengeRepo
 import com.okomilabs.dailychallenges.data.repos.LoginDayRepo
 import com.okomilabs.dailychallenges.helpers.DateHelper
 import com.okomilabs.dailychallenges.helpers.State
+import com.okomilabs.dailychallenges.utilities.AlarmReceiver
+import com.okomilabs.dailychallenges.utilities.cancelNotifications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -56,6 +64,20 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
     private var date: String = ""
     var loginDay: MutableLiveData<LoginDay> = MutableLiveData<LoginDay>()
     var challenge: MutableLiveData<Challenge> = MutableLiveData<Challenge>()
+
+    // Notification Variables
+    private val notificationKey: String = appContext.getString(R.string.notifications_key)
+    private var alarmMgr: AlarmManager? = null
+    private val notifyIntent = Intent(application, AlarmReceiver::class.java)
+    private lateinit var alarmIntent: PendingIntent
+    private lateinit var cancelIntent: PendingIntent
+
+    //Set time for Notification to be sent
+    private val calendar: Calendar = Calendar.getInstance().apply {
+        timeInMillis = System.currentTimeMillis()
+        set(Calendar.HOUR_OF_DAY, 12)
+        set(Calendar.MINUTE,5)
+    }
 
     init {
         initialise()
@@ -251,6 +273,35 @@ class ChallengeViewModel(application: Application): AndroidViewModel(application
                     .getInt(freezesLeftPrefs, 0) + 1
             )
         }
+        //Check to see if notifications are on
+        val key = appContext
+            .getSharedPreferences(notificationKey, Context.MODE_PRIVATE)
+            .getBoolean(notificationKey,false)
+        if (key) {
+            calendar.add(Calendar.DATE, 1)
+            setNewAlarm(calendar)
+        }
+
+    }
+
+    /**
+     * Cancels current alarm and sets a new one starting from next day
+     */
+    private fun setNewAlarm(calendar: Calendar){
+        //Cancel old alarm
+        cancelIntent = getBroadcast(getApplication(), 0, notifyIntent, FLAG_CANCEL_CURRENT);
+        cancelIntent
+        //Set new alarm from tomorrow
+        alarmIntent = getBroadcast(getApplication(), 0,notifyIntent, FLAG_UPDATE_CURRENT)
+        alarmMgr?.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmIntent
+        )
+        //Cancel pre-existing notifications
+        val notificationManager = ContextCompat.getSystemService(appContext,NotificationManager::class.java) as NotificationManager
+        notificationManager.cancelNotifications()
     }
 
     /**
